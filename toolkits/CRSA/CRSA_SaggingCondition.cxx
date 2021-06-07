@@ -20,106 +20,86 @@
 // ============================================================================
 
 
-// MCL1d
-#include <MCL1d_Elastic.hxx>
+// Spartacus
+#include <CRSA_SaggingCondition.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Constructor
 */
 // ============================================================================
-MCL1d_Elastic::MCL1d_Elastic(const Standard_Real E)
-    : myE(E)
-{
-    RevertToInitialState();
-}
-
-// ============================================================================
-/*!
-    \brief Destructor
-*/
-// ============================================================================
-MCL1d_Elastic::~MCL1d_Elastic()
+CRSA_SaggingCondition::CRSA_SaggingCondition()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitStiffness()
+ *  \brief Constructor
 */
 // ============================================================================
-Standard_Real MCL1d_Elastic::GetCommitStiffness() const
+CRSA_SaggingCondition::CRSA_SaggingCondition(Handle(CRSA_LoadCase) theLoadCase,
+                                             const Standard_Real theHorizontalTension)
+    : myLoadCase(theLoadCase),
+      myHorizontalTension(theHorizontalTension)
 {
-    return myE;
+
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitStrain()
+ *  \brief Destructor
 */
 // ============================================================================
-Standard_Real MCL1d_Elastic::GetCommitStrain() const
+CRSA_SaggingCondition::~CRSA_SaggingCondition()
 {
-    return myCommitStrain;
+
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitStress()
+ *  \brief GetHorizontalTension()
 */
 // ============================================================================
-Standard_Real MCL1d_Elastic::GetCommitStress() const
+Standard_Real CRSA_SaggingCondition::GetHorizontalTension()
 {
-    return myE * myCommitStrain;
+    return myHorizontalTension;
 }
 
 // ============================================================================
 /*!
-    \brief GetInitialStiffness()
+ *  \brief GetLoadCase()
 */
 // ============================================================================
-Standard_Real MCL1d_Elastic::GetInitialStiffness() const
+Handle(CRSA_LoadCase) CRSA_SaggingCondition::GetLoadCase()
 {
-    return myE;
+    return myLoadCase;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialStiffness()
+ *  \brief SetHorizontalTension()
 */
 // ============================================================================
-Standard_Real MCL1d_Elastic::GetTrialStiffness() const
+void CRSA_SaggingCondition::SetHorizontalTension(const Standard_Real theHorizontalTension)
 {
-    return myE;
+    myHorizontalTension = theHorizontalTension;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialStress()
+ *  \brief SetLoadCase()
 */
 // ============================================================================
-Standard_Real MCL1d_Elastic::GetTrialStress() const
+void CRSA_SaggingCondition::SetLoadCase(Handle(CRSA_LoadCase) theLoadCase)
 {
-    return myE * myTrialStrain;
-}
-
-// ============================================================================
-/*!
-    \brief RevertToInitialState()
-*/
-// ============================================================================
-void MCL1d_Elastic::RevertToInitialState()
-{
-    myCommitStrain = 0.;
-    myTrialStrain = 0.;
+    myLoadCase = theLoadCase;
 }
 
 
 // ****************************************************************************
 // HANDLES
 // ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(MCL1d_Elastic, MCL1d_Material)
-IMPLEMENT_STANDARD_RTTIEXT(MCL1d_Elastic, MCL1d_Material)
-
+IMPLEMENT_STANDARD_HANDLE(CRSA_SaggingCondition, Standard_Transient);
+IMPLEMENT_STANDARD_RTTIEXT(CRSA_SaggingCondition, Standard_Transient);

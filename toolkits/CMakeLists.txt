@@ -25,11 +25,10 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${OpenCASCADE_INCLUDE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/cable
+    ${CMAKE_CURRENT_SOURCE_DIR}/CRSA
     ${CMAKE_CURRENT_SOURCE_DIR}/FE
-    ${CMAKE_CURRENT_SOURCE_DIR}/MCL
-    ${CMAKE_CURRENT_SOURCE_DIR}/MCL1d
-    ${CMAKE_CURRENT_SOURCE_DIR}/RS
+    ${CMAKE_CURRENT_SOURCE_DIR}/FLib
+    ${CMAKE_CURRENT_SOURCE_DIR}/UMM
     ${CMAKE_CURRENT_SOURCE_DIR}/XSM
 )
 
@@ -42,30 +41,32 @@ set(StkFEData_LinkedLibraries
 )
 
 set(StkFEData_Headers
-    cable/cable_SpanGeometry.hxx
+    CRSA/CRSA_Error.hxx
+    CRSA/CRSA_LoadCase.hxx
+    CRSA/CRSA_SaggingAnalysis.hxx
+    CRSA/CRSA_SaggingCondition.hxx
+    CRSA/CRSA_SpanGeometry.hxx
     FE/FE_Domain.hxx
     FE/FE_Node.hxx
-    MCL/MCL_Material.hxx
-    MCL1d/MCL1d_Elastic.hxx
-    MCL1d/MCL1d_Material.hxx
-    RS/RS_SaggingAnalysis.hxx
-    RS/RS_SpanGeometry.hxx
-    XSM/XSM_Generic.hxx
-    XSM/XSM_Section.hxx
+    FLib/FLib_Catenary.hxx
+    UMM/UMM_Model.hxx
+    XSM/XSM_Elastic.hxx
+    XSM/XSM_Model.hxx
 )
 
 set(StkFEData_Sources
-    cable/cable_SpanGeometry.cxx
+    CRSA/CRSA_LoadCase.cxx
+    CRSA/CRSA_SaggingAnalysis.cxx
+    CRSA/CRSA_SaggingCondition.cxx
+    CRSA/CRSA_SpanGeometry.cxx
     FE/FE_Domain.cxx
     FE/FE_Node.cxx
-    MCL/MCL_Material.cxx
-    MCL1d/MCL1d_Elastic.cxx
-    MCL1d/MCL1d_Material.cxx
-    RS/RS_SaggingAnalysis.cxx
-    RS/RS_SpanGeometry.cxx
-    XSM/XSM_Generic.cxx
-    XSM/XSM_Section.cxx
+    FLib/FLib_Catenary.cxx
+    UMM/UMM_Model.cxx
+    XSM/XSM_Elastic.cxx
+    XSM/XSM_Model.cxx
 )
 
-add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})
+#add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})
+add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_SaggingAnalysis.cxx)
 target_link_libraries(StkFEData ${StkFEData_LinkedLibraries})

@@ -19,55 +19,37 @@
 //
 // ============================================================================
 
+#include <iostream>
+using namespace std;
 
-#ifndef __MCL1d_Elastic_hxx__
-#define __MCL1d_Elastic_hxx__
-
-// MCL1d
-#include <MCL1d_Material.hxx>
-
-// Forward declarations
-class MCL1d_Elastic;
-
-// Handles
-DEFINE_STANDARD_HANDLE(MCL1d_Elastic, MCL1d_Material);
+// CCLM1d
+#include <CCLM1d_CableWire01.hxx>
 
 
 // ============================================================================
 /*!
-    \brief MCL1d_Elastic
-    Base class implementation of a uniaxial material.
+ *  \brief Test_CableCreep01
+ *  Test of uniaxial material CCLM1d_CableCreep01.
 */
 // ============================================================================
-class MCL1d_Elastic : public MCL1d_Material
+int main(int argc, char** argv)
 {
+    Standard_Real Alpha = 1.35;
+    Standard_Real K = 6.1;
+    Standard_Real Mu = 0.21;
+    Standard_Real Phi = 0.025;
 
-public:
-    // constructors
-    MCL1d_Elastic(const Standard_Real E);
-    // destructors
-    ~MCL1d_Elastic();
+    Handle(CCLM1d_CableWire01) aCreepModel =
+            new CCLM1d_CableWire01(K, Phi, Alpha, Mu);
+    aCreepModel->SetTrialTemperature(100.);
+    aCreepModel->SetTrialStress(100E6);
+    aCreepModel->SetTrialTime(0);
+    aCreepModel->CommitState();
+    aCreepModel->SetTrialTemperature(100.);
+    aCreepModel->SetTrialStress(100E6);
+    aCreepModel->SetTrialTime(40000.);
+    cout << aCreepModel->GetTrialStrain() << endl;
 
-public:
 
-    virtual Standard_Real   GetCommitStiffness() const;
-    virtual Standard_Real   GetCommitStrain() const;
-    virtual Standard_Real   GetCommitStress() const;
-    virtual Standard_Real   GetInitialStiffness() const;
-    virtual Standard_Real   GetTrialStiffness() const;
-    virtual Standard_Real   GetTrialStress() const;
-    virtual void            RevertToInitialState();
+}
 
-private:
-
-    Standard_Real           myCommitStrain;
-    Standard_Real           myE;
-    Standard_Real           myTrialStrain;
-
-public:
-
-    DEFINE_STANDARD_RTTIEXT(MCL1d_Elastic, MCL1d_Material);
-
-};
-
-#endif  // __MCL1d_Elastic_hxx__

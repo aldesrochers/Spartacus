@@ -20,56 +20,51 @@
 // ============================================================================
 
 
-#ifndef __XSM_Section_hxx__
-#define __XSM_Section_hxx__
+#ifndef __CRSA_SpanGeometry_hxx__
+#define __CRSA_SpanGeometry_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
-#include <Standard_Transient.hxx>
 #include <Standard_DefineHandle.hxx>
+#include <Standard_Transient.hxx>
 
 // Forward declarations
-class XSM_Section;
+class CRSA_SpanGeometry;
 
 // Handles
-DEFINE_STANDARD_HANDLE(XSM_Section, Standard_Transient);
+DEFINE_STANDARD_HANDLE(CRSA_SpanGeometry, Standard_Transient);
 
 
 // ============================================================================
 /*!
-    \brief XSM_Section
-    Base class implementation of cross-section behaviour.
+    \brief CRSA_SpanGeometry
 */
 // ============================================================================
-class XSM_Section : public Standard_Transient
+class CRSA_SpanGeometry : public Standard_Transient
 {
 
 public:
     // constructors
-    XSM_Section();
+    CRSA_SpanGeometry(const Standard_Real Length);
+    CRSA_SpanGeometry(const Standard_Real Length,
+                      const Standard_Real Slope);
     // destructors
-    ~XSM_Section();
+    ~CRSA_SpanGeometry();
 
 public:
 
-    virtual Standard_Real       GetCommitForce() const = 0;
-    virtual Standard_Real       GetCommitStiffness() const = 0;
-    virtual Standard_Real       GetCommitStrain() const = 0;
-    virtual Standard_Real       GetInitialStiffnes() const = 0;
-    virtual Standard_Real       GetTrialForce() const = 0;
-    virtual Standard_Real       GetTrialStiffness() const = 0;
-    virtual Standard_Real       GetTrialStrain() const;
-    virtual void                RevertToInitialState() = 0;
-    virtual void                SetTrialStrain(const Standard_Real theStrain);
+    Standard_Real       Length() const;
+    Standard_Real       Slope() const;
 
-protected:
+private:
 
-    Standard_Real               myTrialStrain;
+    Standard_Real       myLength;
+    Standard_Real       mySlope;
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(XSM_Section, Standard_Transient);
+    DEFINE_STANDARD_RTTIEXT(CRSA_SpanGeometry, Standard_Transient);
 
 };
 
-#endif  // __XSM_Section_hxx__
+#endif  // __CRSA_SpanGeometry_hxx__

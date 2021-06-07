@@ -20,40 +20,52 @@
 // ============================================================================
 
 
-#ifndef __MCL_Material_hxx__
-#define __MCL_Material_hxx__
+#ifndef __TECLM1d_Model_hxx__
+#define __TECLM1d_Model_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
-#include <Standard_Transient.hxx>
 #include <Standard_DefineHandle.hxx>
+#include <Standard_Transient.hxx>
 
 // Forward declarations
-class MCL_Material;
+class TECLM1d_Model;
 
 // Handles
-DEFINE_STANDARD_HANDLE(MCL_Material, Standard_Transient);
+DEFINE_STANDARD_HANDLE(TECLM1d_Model, Standard_Transient);
 
 
 // ============================================================================
 /*!
-    \brief MCL_Material
-    Base class implementation of a material constitutive law.
+    \brief TECLM1d_Model
+    Base class implementation of a 1d thermal expansion law.
+    The thermal expansion law use an initial temperature as reference and
+    compute a trial train based on the provided trial temperature.
 */
 // ============================================================================
-class MCL_Material : public Standard_Transient
+class TECLM1d_Model : public Standard_Transient
 {
 
 public:
     // constructors
-    MCL_Material();
+    TECLM1d_Model();
     // destructors
-    ~MCL_Material();
+    ~TECLM1d_Model();
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(MCL_Material, Standard_Transient);
+    virtual Standard_Boolean    CommitState() = 0;
+    virtual Standard_Real       GetInitialTemperature() = 0;
+    virtual Standard_Real       GetTrialStrain() = 0;
+    virtual Standard_Real       GetTrialTemperature() = 0;
+    virtual Standard_Boolean    RevertToCommitState() = 0;
+    virtual Standard_Boolean    RevertToInitialState() = 0;
+    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) = 0;
+
+public:
+
+    DEFINE_STANDARD_RTTIEXT(TECLM1d_Model, Standard_Transient);
 
 };
 
-#endif  // __MCL_Material_hxx__
+#endif  // __TECLM1d_Model_hxx__

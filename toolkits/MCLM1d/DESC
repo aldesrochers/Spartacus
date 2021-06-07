@@ -1,0 +1,5 @@
+ MCLM1
+ M -> Material
+ CL -> Constitutive Law
+ M -> Model
+ 1d -> Uniaxial model

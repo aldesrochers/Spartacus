@@ -19,35 +19,40 @@
 //
 // ============================================================================
 
+#include <iostream>
+using namespace std;
 
-// MCL
-#include <MCL_Material.hxx>
-
-
-// ============================================================================
-/*!
-    \brief Constructor
-*/
-// ============================================================================
-MCL_Material::MCL_Material()
-{
-
-}
+// Spartacus
+#include <XSM_Elastic.hxx>
 
 // ============================================================================
 /*!
-    \brief Destructor
+ *  \brief Test
 */
 // ============================================================================
-MCL_Material::~MCL_Material()
+int main(int argc, char** argv)
 {
+    Standard_Real A = 0.1;
+    Standard_Real E = 2E11;
+    Standard_Real Alpha = 0.001;
+
+    Handle(XSM_Elastic) aSection = new XSM_Elastic(A, E, Alpha);
+
+    // initialize
+    aSection->SetTrialTime(0.);
+    aSection->SetTrialTemperature(0.);
+    aSection->SetTrialStrain(0.);
+    aSection->CommitState();
+
+    // add strain
+    aSection->SetTrialStrain(0.1);
+    cout << aSection->GetTrialForce() << endl;
+    aSection->CommitState();
+
+    // add temperature
+    aSection->SetTrialTemperature(20);
+    cout << aSection->GetTrialForce() << endl;
+    aSection->CommitState();
 
 }
-
-
-// ****************************************************************************
-// HANDLES
-// ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(MCL_Material, Standard_Transient)
-IMPLEMENT_STANDARD_RTTIEXT(MCL_Material, Standard_Transient)
 

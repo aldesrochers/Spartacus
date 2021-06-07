@@ -20,51 +20,58 @@
 // ============================================================================
 
 
-#ifndef __RS_SpanGeometry_hxx__
-#define __RS_SpanGeometry_hxx__
+#ifndef __MCLM1d_Model_hxx__
+#define __MCLM1d_Model_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
 #include <Standard_DefineHandle.hxx>
 #include <Standard_Transient.hxx>
 
+// Spartacus
+#include <CCLM1d_Model.hxx>
+#include <SSCLM1d_Model.hxx>
+#include <TECLM1d_Model.hxx>
+
 // Forward declarations
-class RS_SpanGeometry;
+class MCLM1d_Model;
 
 // Handles
-DEFINE_STANDARD_HANDLE(RS_SpanGeometry, Standard_Transient);
+DEFINE_STANDARD_HANDLE(MCLM1d_Model, Standard_Transient);
 
 
 // ============================================================================
 /*!
-    \brief RS_SpanGeometry
+    \brief MCLM1d_Model
 */
 // ============================================================================
-class RS_SpanGeometry : public Standard_Transient
+class MCLM1d_Model : public Standard_Transient
 {
 
 public:
     // constructors
-    RS_SpanGeometry(const Standard_Real Length);
-    RS_SpanGeometry(const Standard_Real Length,
-                    const Standard_Real Slope);
+    MCLM1d_Model();
     // destructors
-    ~RS_SpanGeometry();
+    ~MCLM1d_Model();
 
 public:
 
-    Standard_Real       Length() const;
-    Standard_Real       Slope() const;
-
-private:
-
-    Standard_Real       myLength;
-    Standard_Real       mySlope;
+    virtual Standard_Boolean    CommitState() = 0;
+    virtual Standard_Real       GetTrialStiffness() = 0;
+    virtual Standard_Real       GetTrialStrain() = 0;
+    virtual Standard_Real       GetTrialStress() = 0;
+    virtual Standard_Real       GetTrialTemperature() = 0;
+    virtual Standard_Real       GetTrialTime() = 0;
+    virtual Standard_Boolean    RevertToCommitState() = 0;
+    virtual Standard_Boolean    RevertToInitialState() = 0;
+    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) = 0;
+    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) = 0;
+    virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime) = 0;
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(RS_SpanGeometry, Standard_Transient);
+    DEFINE_STANDARD_RTTIEXT(MCLM1d_Model, Standard_Transient);
 
 };
 
-#endif  // __RS_SpanGeometry_hxx__
+#endif  // __MCLM1d_Model_hxx__

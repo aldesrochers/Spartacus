@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-// XSM
-#include <XSM_Section.hxx>
+// MCLM1d
+#include <UMM_Model.hxx>
 
 
 // ============================================================================
@@ -29,8 +29,7 @@
     \brief Constructor
 */
 // ============================================================================
-XSM_Section::XSM_Section()
-    : myTrialStrain(0.)
+UMM_Model::UMM_Model()
 {
 
 }
@@ -40,35 +39,16 @@ XSM_Section::XSM_Section()
     \brief Destructor
 */
 // ============================================================================
-XSM_Section::~XSM_Section()
+UMM_Model::~UMM_Model()
 {
 
 }
 
-// ============================================================================
-/*!
-    \brief GetTrialStrain()
-*/
-// ============================================================================
-Standard_Real XSM_Section::GetTrialStrain() const
-{
-    return myTrialStrain;
-}
-
-// ============================================================================
-/*!
-    \brief SetTrialStrain()
-*/
-// ============================================================================
-void XSM_Section::SetTrialStrain(const Standard_Real theStrain)
-{
-    myTrialStrain = theStrain;
-}
 
 
 // ****************************************************************************
 // HANDLES
 // ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(XSM_Section, Standard_Transient)
-IMPLEMENT_STANDARD_RTTIEXT(XSM_Section, Standard_Transient)
+IMPLEMENT_STANDARD_HANDLE(UMM_Model, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(UMM_Model, Standard_Transient)
 

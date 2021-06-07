@@ -20,48 +20,51 @@
 // ============================================================================
 
 
-#ifndef __XSM_Generic_hxx__
-#define __XSM_Generic_hxx__
+#ifndef __SSCLM1d_Model_hxx__
+#define __SSCLM1d_Model_hxx__
 
-// XSM
-#include <XSM_Section.hxx>
+// OpenCascade
+#include <Standard.hxx>
+#include <Standard_DefineHandle.hxx>
+#include <Standard_Transient.hxx>
 
 // Forward declarations
-class XSM_Generic;
+class SSCLM1d_Model;
 
 // Handles
-DEFINE_STANDARD_HANDLE(XSM_Generic, XSM_Section);
+DEFINE_STANDARD_HANDLE(SSCLM1d_Model, Standard_Transient);
 
 
 // ============================================================================
 /*!
-    \brief XSM_Generic
-    Class implementation of a generic cross-section.
+    \brief SSCLM1d_Model
+    Base class implementation of a uniaxial material.
 */
 // ============================================================================
-class XSM_Generic : public XSM_Section
+class SSCLM1d_Model : public Standard_Transient
 {
 
 public:
     // constructors
-    XSM_Generic();
+    SSCLM1d_Model();
     // destructors
-    ~XSM_Generic();
+    ~SSCLM1d_Model();
 
 public:
 
-    virtual Standard_Real       GetCommitForce() const = 0;
-    virtual Standard_Real       GetCommitStiffness() const = 0;
-    virtual Standard_Real       GetCommitStrain() const = 0;
-    virtual Standard_Real       GetInitialStiffnes() const = 0;
-    virtual Standard_Real       GetTrialForce() const = 0;
-    virtual Standard_Real       GetTrialStiffness() const = 0;
-    virtual void                RevertToInitialState() = 0;
+    virtual Standard_Boolean    CommitState() = 0;
+    virtual Standard_Real       GetInitialStiffness() = 0;
+    virtual Standard_Real       GetTrialStiffness() = 0;
+    virtual Standard_Real       GetTrialStrain() = 0;
+    virtual Standard_Real       GetTrialStress() = 0;
+    virtual Standard_Boolean    RevertToCommitState() = 0;
+    virtual Standard_Boolean    RevertToInitialState() = 0;
+    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) = 0;
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(XSM_Generic, XSM_Section);
+    DEFINE_STANDARD_RTTIEXT(SSCLM1d_Model, Standard_Transient);
 
 };
 
-#endif  // __XSM_Generic_hxx__
+#endif  // __SSCLM1d_Model_hxx__

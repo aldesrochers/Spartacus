@@ -20,54 +20,57 @@
 // ============================================================================
 
 
-#ifndef __MCL1d_Material_hxx__
-#define __MCL1d_Material_hxx__
+#ifndef __SSCLM1d_Elastic_hxx__
+#define __SSCLM1d_Elastic_hxx__
 
-// MCL
-#include <MCL_Material.hxx>
+// SSCLM1d
+#include <SSCLM1d_Model.hxx>
 
 // Forward declarations
-class MCL1d_Material;
+class SSCLM1d_Elastic;
 
 // Handles
-DEFINE_STANDARD_HANDLE(MCL1d_Material, MCL_Material);
+DEFINE_STANDARD_HANDLE(SSCLM1d_Elastic, SSCLM1d_Model);
 
 
 // ============================================================================
 /*!
-    \brief MCL1d_Material
+    \brief SSCLM1d_Elastic
     Base class implementation of a uniaxial material.
 */
 // ============================================================================
-class MCL1d_Material : public MCL_Material
+class SSCLM1d_Elastic : public SSCLM1d_Model
 {
 
 public:
     // constructors
-    MCL1d_Material();
+    SSCLM1d_Elastic(const Standard_Real E);
     // destructors
-    ~MCL1d_Material();
+    ~SSCLM1d_Elastic();
 
 public:
 
-    virtual Standard_Real   GetCommitStiffness() const = 0;
-    virtual Standard_Real   GetCommitStrain() const = 0;
-    virtual Standard_Real   GetCommitStress() const = 0;
-    virtual Standard_Real   GetInitialStiffness() const = 0;
-    virtual Standard_Real   GetTrialStiffness() const = 0;
-    virtual Standard_Real   GetTrialStrain() const;
-    virtual Standard_Real   GetTrialStress() const = 0;
-    virtual void            RevertToInitialState() = 0;
-    virtual void            SetTrialStrain(const Standard_Real theStrain);
+    virtual Standard_Boolean    CommitState() Standard_OVERRIDE;
+    virtual Standard_Real       GetInitialStiffness() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStiffness() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStrain() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStress() Standard_OVERRIDE;
+    virtual Standard_Boolean    RevertToCommitState() Standard_OVERRIDE;
+    virtual Standard_Boolean    RevertToInitialState() Standard_OVERRIDE;
+    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) Standard_OVERRIDE;
 
-protected:
+private:
 
+    Standard_Real           myCommitStrain;
+    Standard_Real           myCommitStress;
+    Standard_Real           myE;
     Standard_Real           myTrialStrain;
+    Standard_Real           myTrialStress;
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(MCL1d_Material, MCL_Material);
+    DEFINE_STANDARD_RTTIEXT(SSCLM1d_Elastic, SSCLM1d_Model);
 
 };
 
-#endif  // __MCL1d_Material_hxx__
+#endif  // __SSCLM1d_Elastic_hxx__

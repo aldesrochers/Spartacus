@@ -21,7 +21,7 @@
 
 
 // RS
-#include <RS_SpanGeometry.hxx>
+#include <CRSA_SpanGeometry.hxx>
 
 
 // ============================================================================
@@ -29,7 +29,7 @@
     \brief Constructor
 */
 // ============================================================================
-RS_SpanGeometry::RS_SpanGeometry(const Standard_Real Length)
+CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real Length)
     : myLength(Length),
       mySlope(0.)
 {
@@ -41,8 +41,8 @@ RS_SpanGeometry::RS_SpanGeometry(const Standard_Real Length)
     \brief Constructor
 */
 // ============================================================================
-RS_SpanGeometry::RS_SpanGeometry(const Standard_Real Length,
-                                 const Standard_Real Slope)
+CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real Length,
+                                     const Standard_Real Slope)
     : myLength(Length),
       mySlope(Slope)
 {
@@ -54,7 +54,7 @@ RS_SpanGeometry::RS_SpanGeometry(const Standard_Real Length,
     \brief Destructor
 */
 // ============================================================================
-RS_SpanGeometry::~RS_SpanGeometry()
+CRSA_SpanGeometry::~CRSA_SpanGeometry()
 {
 
 }
@@ -64,7 +64,7 @@ RS_SpanGeometry::~RS_SpanGeometry()
     \brief Length()
 */
 // ============================================================================
-Standard_Real RS_SpanGeometry::Length() const
+Standard_Real CRSA_SpanGeometry::Length() const
 {
     return myLength;
 }
@@ -74,7 +74,7 @@ Standard_Real RS_SpanGeometry::Length() const
     \brief Slope()
 */
 // ============================================================================
-Standard_Real RS_SpanGeometry::Slope() const
+Standard_Real CRSA_SpanGeometry::Slope() const
 {
     return mySlope;
 }
@@ -83,7 +83,7 @@ Standard_Real RS_SpanGeometry::Slope() const
 // ****************************************************************************
 // HANDLES
 // ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(RS_SpanGeometry, Standard_Transient);
-IMPLEMENT_STANDARD_RTTIEXT(RS_SpanGeometry, Standard_Transient);
+IMPLEMENT_STANDARD_HANDLE(CRSA_SpanGeometry, Standard_Transient);
+IMPLEMENT_STANDARD_RTTIEXT(CRSA_SpanGeometry, Standard_Transient);
 
 

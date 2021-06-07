@@ -20,16 +20,16 @@
 // ============================================================================
 
 
-// MCL1d
-#include <MCL1d_Material.hxx>
+// CCLM1d
+#include <CCLM1d_Model.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Constructor
 */
 // ============================================================================
-MCL1d_Material::MCL1d_Material()
+CCLM1d_Model::CCLM1d_Model()
 {
 
 }
@@ -39,35 +39,15 @@ MCL1d_Material::MCL1d_Material()
     \brief Destructor
 */
 // ============================================================================
-MCL1d_Material::~MCL1d_Material()
+CCLM1d_Model::~CCLM1d_Model()
 {
 
-}
-
-// ============================================================================
-/*!
-    \brief GetTrialStrain()
-*/
-// ============================================================================
-Standard_Real MCL1d_Material::GetTrialStrain() const
-{
-    return myTrialStrain;
-}
-
-// ============================================================================
-/*!
-    \brief SetTrialStrain()
-*/
-// ============================================================================
-void MCL1d_Material::SetTrialStrain(const Standard_Real theStrain)
-{
-    myTrialStrain = theStrain;
 }
 
 
 // ****************************************************************************
 // HANDLES
 // ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(MCL1d_Material, MCL_Material)
-IMPLEMENT_STANDARD_RTTIEXT(MCL1d_Material, MCL_Material)
+IMPLEMENT_STANDARD_HANDLE(CCLM1d_Model, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(CCLM1d_Model, Standard_Transient)
 

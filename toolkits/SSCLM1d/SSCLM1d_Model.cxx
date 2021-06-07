@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-// RS
-#include <RS_SaggingAnalysis.hxx>
+// SSCLM1d
+#include <SSCLM1d_Model.hxx>
 
 
 // ============================================================================
@@ -29,7 +29,7 @@
     \brief Constructor
 */
 // ============================================================================
-RS_SaggingAnalysis::RS_SaggingAnalysis()
+SSCLM1d_Model::SSCLM1d_Model()
 {
 
 }
@@ -39,7 +39,15 @@ RS_SaggingAnalysis::RS_SaggingAnalysis()
     \brief Destructor
 */
 // ============================================================================
-RS_SaggingAnalysis::~RS_SaggingAnalysis()
+SSCLM1d_Model::~SSCLM1d_Model()
 {
 
 }
+
+
+// ****************************************************************************
+// HANDLES
+// ****************************************************************************
+IMPLEMENT_STANDARD_HANDLE(SSCLM1d_Model, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(SSCLM1d_Model, Standard_Transient)
+

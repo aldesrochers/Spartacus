@@ -20,34 +20,22 @@
 // ============================================================================
 
 
-// XSM
-#include <XSM_Generic.hxx>
-
-
-// ============================================================================
-/*!
-    \brief Constructor
-*/
-// ============================================================================
-XSM_Generic::XSM_Generic()
-{
-
-}
+#ifndef __CRSA_Error_hxx__
+#define __CRSA_Error_hxx__
 
 // ============================================================================
 /*!
-    \brief Destructor
+ *  \brief CRSA_Error
+ *  Enumeration of standard analysis errors.
 */
 // ============================================================================
-XSM_Generic::~XSM_Generic()
+enum CRSA_Error
 {
+    CRSA_AnalysisDone,
+    CRSA_AnalysisNotDone,
+    CRSA_SolutionNotFound,
+    CRSA_UndefinedGeometry,
+    CRSA_UndefinedSectionModel
+};
 
-}
-
-
-// ****************************************************************************
-// HANDLES
-// ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(XSM_Generic, XSM_Section)
-IMPLEMENT_STANDARD_RTTIEXT(XSM_Generic, XSM_Section)
-
+#endif  // __CRSA_Error_hxx__

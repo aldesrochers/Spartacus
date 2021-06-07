@@ -20,33 +20,35 @@
 // ============================================================================
 
 
-#ifndef __RS_SaggingAnalysis_hxx__
-#define __RS_SaggingAnalysis_hxx__
-
-// OpenCascade
-#include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
+// MCLM1d
+#include <MCLM1d_Model.hxx>
 
 
 // ============================================================================
 /*!
-    \brief RS_SaggingAnalysis
-    Class implementation of a 'RulingSpan' single span geometry.
+    \brief Constructor
 */
 // ============================================================================
-class RS_SaggingAnalysis
+MCLM1d_Model::MCLM1d_Model()
 {
 
-public:
+}
 
-    DEFINE_STANDARD_ALLOC;
+// ============================================================================
+/*!
+    \brief Destructor
+*/
+// ============================================================================
+MCLM1d_Model::~MCLM1d_Model()
+{
 
-public:
-    // constructors
-    RS_SaggingAnalysis();
-    // destructors
-    ~RS_SaggingAnalysis();
+}
 
-};
 
-#endif  // __RS_SaggingAnalysis_hxx__
+
+// ****************************************************************************
+// HANDLES
+// ****************************************************************************
+IMPLEMENT_STANDARD_HANDLE(MCLM1d_Model, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(MCLM1d_Model, Standard_Transient)
+
