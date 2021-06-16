@@ -20,48 +20,48 @@
 // ============================================================================
 
 
-#ifndef __CRSA_SpanGeometry_hxx__
-#define __CRSA_SpanGeometry_hxx__
-
-// OpenCascade
-#include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
+// MCLM1d
+#include <USSM_Elastic.hxx>
 
 
 // ============================================================================
 /*!
-    \brief CRSA_SpanGeometry
+    \brief Constructor
 */
 // ============================================================================
-class CRSA_SpanGeometry
+USSM_Elastic::USSM_Elastic(const Standard_Real E)
+    : myE(E)
 {
 
-public:
+}
 
-    DEFINE_STANDARD_ALLOC;
+// ============================================================================
+/*!
+    \brief Destructor
+*/
+// ============================================================================
+USSM_Elastic::~USSM_Elastic()
+{
 
-public:
-    // constructors
-    CRSA_SpanGeometry();
-    CRSA_SpanGeometry(const Standard_Real theLength);
-    CRSA_SpanGeometry(const Standard_Real theLength,
-                      const Standard_Real theSlope);
-    // destructors
-    ~CRSA_SpanGeometry();
+}
 
-public:
+// ============================================================================
+/*!
+    \brief UpdateInternalState()
+*/
+// ============================================================================
+Standard_Boolean USSM_Elastic::UpdateInternalState()
+{
+    myTrialStress = myE * myTrialStrain;
+    myTrialStiffness = myE;
+    myMustBeUpdated = Standard_False;
+    return Standard_True;
+}
 
-    Standard_Real       Length() const;
-    Standard_Real       Slope() const;
 
-    void                SetLength(const Standard_Real theLength);
-    void                SetSlope(const Standard_Real theSlope);
+// ****************************************************************************
+// HANDLES
+// ****************************************************************************
+IMPLEMENT_STANDARD_HANDLE(USSM_Elastic, USSM_Model)
+IMPLEMENT_STANDARD_RTTIEXT(USSM_Elastic, USSM_Model)
 
-private:
-
-    Standard_Real   myLength;
-    Standard_Real   mySlope;
-
-};
-
-#endif  // __CRSA_SpanGeometry_hxx__

@@ -20,16 +20,31 @@
 // ============================================================================
 
 
-// TECLM1d
-#include <TECLM1d_Model.hxx>
+// MCLM1d
+#include <UMM_Elastic.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief Constructor
+    \brief Constructor
 */
 // ============================================================================
-TECLM1d_Model::TECLM1d_Model()
+UMM_Elastic::UMM_Elastic(const Standard_Real E)
+    : myAlpha(0.),
+      myE(E)
+{
+
+}
+
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+UMM_Elastic::UMM_Elastic(const Standard_Real E,
+                         const Standard_Real Alpha)
+    : myAlpha(Alpha),
+      myE(E)
 {
 
 }
@@ -39,15 +54,37 @@ TECLM1d_Model::TECLM1d_Model()
     \brief Destructor
 */
 // ============================================================================
-TECLM1d_Model::~TECLM1d_Model()
+UMM_Elastic::~UMM_Elastic()
 {
 
 }
+
+// ============================================================================
+/*!
+    \brief UpdateInternalState()
+*/
+// ============================================================================
+Standard_Boolean UMM_Elastic::UpdateInternalState()
+{
+    // compute thermal strain
+    myTrialThermalStrain = myCommitThermalStrain
+            + myAlpha * (myTrialTemperature - myCommitTemperature);
+    // compute stress strain
+    myTrialStressStrain = myTrialStrain - myTrialThermalStrain;
+    // compute stress
+    myTrialStress = myE * myTrialStressStrain;
+    // compute tangent stiffness
+    myTrialStiffness = myE;
+    // setup update flag
+    myMustBeUpdated = Standard_False;
+    return Standard_True;
+}
+
 
 
 // ****************************************************************************
 // HANDLES
 // ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(TECLM1d_Model, Standard_Transient)
-IMPLEMENT_STANDARD_RTTIEXT(TECLM1d_Model, Standard_Transient)
+IMPLEMENT_STANDARD_HANDLE(UMM_Elastic, UMM_Model)
+IMPLEMENT_STANDARD_RTTIEXT(UMM_Elastic, UMM_Model)
 

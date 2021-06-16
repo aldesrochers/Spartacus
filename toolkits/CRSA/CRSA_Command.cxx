@@ -19,9 +19,11 @@
 //
 // ============================================================================
 
-
 // Spartacus
-#include <CRSA_SpanGeometry.hxx>
+#include <CRSA_Command.hxx>
+
+// OpenCascade
+#include <StdFail_NotDone.hxx>
 
 
 // ============================================================================
@@ -29,34 +31,8 @@
     \brief Constructor
 */
 // ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry()
-    : myLength(0.),
-      mySlope(0.)
-{
-
-}
-
-// ============================================================================
-/*!
-    \brief Constructor
-*/
-// ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength)
-    : myLength(theLength),
-      mySlope(0.)
-{
-
-}
-
-// ============================================================================
-/*!
-    \brief Constructor
-*/
-// ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength,
-                                     const Standard_Real theSlope)
-    : myLength(theLength),
-      mySlope(theSlope)
+CRSA_Command::CRSA_Command()
+    : myIsDone(Standard_False)
 {
 
 }
@@ -66,47 +42,48 @@ CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength,
     \brief Destructor
 */
 // ============================================================================
-CRSA_SpanGeometry::~CRSA_SpanGeometry()
+CRSA_Command::~CRSA_Command()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Length()
+    \brief Check()
 */
 // ============================================================================
-Standard_Real CRSA_SpanGeometry::Length() const
+void CRSA_Command::Check() const
 {
-    return myLength;
+    if(!myIsDone)
+        throw StdFail_NotDone("CRSA_Command:: Command not done.");
 }
 
 // ============================================================================
 /*!
-    \brief Slope()
+    \brief Done()
 */
 // ============================================================================
-Standard_Real CRSA_SpanGeometry::Slope() const
+void CRSA_Command::Done()
 {
-    return mySlope;
+    myIsDone = Standard_True;
 }
 
 // ============================================================================
 /*!
-    \brief SetLength()
+    \brief IsDone()
 */
 // ============================================================================
-void CRSA_SpanGeometry::SetLength(const Standard_Real theLength)
+Standard_Boolean CRSA_Command::IsDone() const
 {
-    myLength = theLength;
+    return myIsDone;
 }
 
 // ============================================================================
 /*!
-    \brief SetSlope()
+    \brief NotDone()
 */
 // ============================================================================
-void CRSA_SpanGeometry::SetSlope(const Standard_Real theSlope)
+void CRSA_Command::NotDone()
 {
-    mySlope = theSlope;
+    myIsDone = Standard_False;
 }

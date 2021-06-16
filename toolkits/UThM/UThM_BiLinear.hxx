@@ -20,48 +20,54 @@
 // ============================================================================
 
 
-#ifndef __CRSA_SpanGeometry_hxx__
-#define __CRSA_SpanGeometry_hxx__
+#ifndef __UThM_BiLinear_hxx__
+#define __UThM_BiLinear_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
+#include <Standard_DefineHandle.hxx>
+#include <UThM_Model.hxx>
+
+// Forward declarations
+class UThM_BiLinear;
+
+// Handles
+DEFINE_STANDARD_HANDLE(UThM_BiLinear, UThM_Model);
 
 
 // ============================================================================
 /*!
-    \brief CRSA_SpanGeometry
+    \brief UThM_BiLinear
 */
 // ============================================================================
-class CRSA_SpanGeometry
+class UThM_BiLinear : public UThM_Model
 {
 
 public:
-
-    DEFINE_STANDARD_ALLOC;
-
-public:
     // constructors
-    CRSA_SpanGeometry();
-    CRSA_SpanGeometry(const Standard_Real theLength);
-    CRSA_SpanGeometry(const Standard_Real theLength,
-                      const Standard_Real theSlope);
+    UThM_BiLinear(const Standard_Real Alpha0,
+                  const Standard_Real T0,
+                  const Standard_Real Alpha1,
+                  const Standard_Real DT);
     // destructors
-    ~CRSA_SpanGeometry();
+    ~UThM_BiLinear();
 
 public:
 
-    Standard_Real       Length() const;
-    Standard_Real       Slope() const;
+    virtual Standard_Boolean    UpdateInternalState() Standard_OVERRIDE;
 
-    void                SetLength(const Standard_Real theLength);
-    void                SetSlope(const Standard_Real theSlope);
+protected:
 
-private:
+    // Parameters
+    Standard_Real       myAlpha0;
+    Standard_Real       myAlpha1;
+    Standard_Real       myT0;
+    Standard_Real       myDT;
 
-    Standard_Real   myLength;
-    Standard_Real   mySlope;
+public:
+
+    DEFINE_STANDARD_RTTIEXT(UThM_BiLinear, UThM_Model);
 
 };
 
-#endif  // __CRSA_SpanGeometry_hxx__
+#endif  // __UThM_BiLinear_hxx__

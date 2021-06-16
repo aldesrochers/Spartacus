@@ -20,52 +20,52 @@
 // ============================================================================
 
 
-#ifndef __TECLM1d_Model_hxx__
-#define __TECLM1d_Model_hxx__
+#ifndef __matp_Elastic_hxx__
+#define __matp_Elastic_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
-#include <Standard_DefineHandle.hxx>
-#include <Standard_Transient.hxx>
-
-// Forward declarations
-class TECLM1d_Model;
-
-// Handles
-DEFINE_STANDARD_HANDLE(TECLM1d_Model, Standard_Transient);
+#include <Standard_DefineAlloc.hxx>
 
 
 // ============================================================================
 /*!
-    \brief TECLM1d_Model
-    Base class implementation of a 1d thermal expansion law.
-    The thermal expansion law use an initial temperature as reference and
-    compute a trial train based on the provided trial temperature.
+    \brief matp_Elastic
+
+    Class implementation of parameters for material model "Creep01" which is
+    based on the approximate creep model proposed by the CIGRE/Electra
+    "Permanent elongation of conductors. Predictor equation and evaluation
+    methods"
 */
 // ============================================================================
-class TECLM1d_Model : public Standard_Transient
+class matp_Elastic
 {
 
 public:
+
+    DEFINE_STANDARD_ALLOC;
+
+public:
     // constructors
-    TECLM1d_Model();
+    matp_Elastic();
+    matp_Elastic(const Standard_Real E);
+    matp_Elastic(const Standard_Real E, const Standard_Real Nu);
     // destructors
-    ~TECLM1d_Model();
+    ~matp_Elastic();
 
 public:
 
-    virtual Standard_Boolean    CommitState() = 0;
-    virtual Standard_Real       GetInitialTemperature() = 0;
-    virtual Standard_Real       GetTrialStrain() = 0;
-    virtual Standard_Real       GetTrialTemperature() = 0;
-    virtual Standard_Boolean    RevertToCommitState() = 0;
-    virtual Standard_Boolean    RevertToInitialState() = 0;
-    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) = 0;
+    Standard_Real       E() const;
+    Standard_Real       Nu() const;
 
-public:
+    void        SetE(const Standard_Real E);
+    void        SetNu(const Standard_Real Nu);
 
-    DEFINE_STANDARD_RTTIEXT(TECLM1d_Model, Standard_Transient);
+private:
+
+    Standard_Real       myE;
+    Standard_Real       myNu;
 
 };
 
-#endif  // __TECLM1d_Model_hxx__
+#endif  // __matp_Elastic_hxx__

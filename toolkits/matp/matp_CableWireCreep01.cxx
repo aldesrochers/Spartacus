@@ -19,9 +19,8 @@
 //
 // ============================================================================
 
-
-// TECLM1d
-#include <TECLM1d_Linear.hxx>
+// cable
+#include <matp_CableWireCreep01.hxx>
 
 
 // ============================================================================
@@ -29,24 +28,24 @@
     \brief Constructor
 */
 // ============================================================================
-TECLM1d_Linear::TECLM1d_Linear(const Standard_Real Alpha)
-    : myAlpha(Alpha),
-      myInitialTemperature(0.)
+matp_CableWireCreep01::matp_CableWireCreep01()
+    : myAlpha(0.), myK(0.), myMu(0.), myPhi(0.)
 {
-    RevertToInitialState();
+
 }
 
 // ============================================================================
 /*!
- *  \brief Constructor
+    \brief Constructor
 */
 // ============================================================================
-TECLM1d_Linear::TECLM1d_Linear(const Standard_Real Alpha,
-                               const Standard_Real InitialTemperature)
-    : myAlpha(Alpha),
-      myInitialTemperature(InitialTemperature)
+matp_CableWireCreep01::matp_CableWireCreep01(const Standard_Real K,
+                                             const Standard_Real Phi,
+                                             const Standard_Real Alpha,
+                                             const Standard_Real Mu)
+    : myAlpha(Alpha), myK(K), myMu(Mu), myPhi(Phi)
 {
-    RevertToInitialState();
+
 }
 
 // ============================================================================
@@ -54,95 +53,88 @@ TECLM1d_Linear::TECLM1d_Linear(const Standard_Real Alpha,
     \brief Destructor
 */
 // ============================================================================
-TECLM1d_Linear::~TECLM1d_Linear()
+matp_CableWireCreep01::~matp_CableWireCreep01()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief CommitState()
+    \brief Alpha()
 */
 // ============================================================================
-Standard_Boolean TECLM1d_Linear::CommitState()
+Standard_Real matp_CableWireCreep01::Alpha() const
 {
-    myCommitStrain = myTrialStrain;
-    myCommitTemperature = myTrialTemperature;
-    return Standard_True;
+    return myAlpha;
 }
 
 // ============================================================================
 /*!
- *  \brief GetInitialTemperature()
+    \brief K()
 */
 // ============================================================================
-Standard_Real TECLM1d_Linear::GetInitialTemperature()
+Standard_Real matp_CableWireCreep01::K() const
 {
-    return myInitialTemperature;
+    return myK;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialStrain()
+    \brief Mu()
 */
 // ============================================================================
-Standard_Real TECLM1d_Linear::GetTrialStrain()
+Standard_Real matp_CableWireCreep01::Mu() const
 {
-    return myTrialStrain;
+    return myMu;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialTemperature()
+    \brief Phi()
 */
 // ============================================================================
-Standard_Real TECLM1d_Linear::GetTrialTemperature()
+Standard_Real matp_CableWireCreep01::Phi() const
 {
-    return myTrialTemperature;
+    return myPhi;
 }
 
 // ============================================================================
 /*!
- *  \brief RevertToCommitState()
+    \brief SetAlpha()
 */
 // ============================================================================
-Standard_Boolean TECLM1d_Linear::RevertToCommitState()
+void matp_CableWireCreep01::SetAlpha(const Standard_Real Alpha)
 {
-    myTrialStrain = myCommitStrain;
-    myTrialTemperature = myCommitTemperature;
-    return Standard_True;
+    myAlpha = Alpha;
 }
 
 // ============================================================================
 /*!
- *  \brief RevertToInitialState()
+    \brief SetK()
 */
 // ============================================================================
-Standard_Boolean TECLM1d_Linear::RevertToInitialState()
+void matp_CableWireCreep01::SetK(const Standard_Real K)
 {
-    myCommitStrain = 0.;
-    myCommitTemperature = 0.;
-    myTrialStrain = 0.;
-    myTrialTemperature = 0.;
-    return Standard_True;
+    myK = K;
 }
 
 // ============================================================================
 /*!
- *  \brief SetTrialTemperature()
+    \brief SetMu()
 */
 // ============================================================================
-Standard_Boolean TECLM1d_Linear::SetTrialTemperature(const Standard_Real theTemperature)
+void matp_CableWireCreep01::SetMu(const Standard_Real Mu)
 {
-    myTrialTemperature = theTemperature;
-    myTrialStrain = myAlpha * (myTrialTemperature - myInitialTemperature);
-    return Standard_True;
+    myMu = Mu;
 }
 
-
-// ****************************************************************************
-// HANDLES
-// ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(TECLM1d_Linear, TECLM1d_Model)
-IMPLEMENT_STANDARD_RTTIEXT(TECLM1d_Linear, TECLM1d_Model)
+// ============================================================================
+/*!
+    \brief SetPhi()
+*/
+// ============================================================================
+void matp_CableWireCreep01::SetPhi(const Standard_Real Phi)
+{
+    myPhi = Phi;
+}
 

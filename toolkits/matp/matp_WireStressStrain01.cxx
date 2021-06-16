@@ -19,9 +19,8 @@
 //
 // ============================================================================
 
-
-// MCLM1d
-#include <UMM_Model.hxx>
+// cable
+#include <matp_WireStressStrain01.hxx>
 
 
 // ============================================================================
@@ -29,7 +28,35 @@
     \brief Constructor
 */
 // ============================================================================
-UMM_Model::UMM_Model()
+matp_WireStressStrain01::matp_WireStressStrain01()
+    : myEi(0.), myEf(0.),
+      myA0(0.), myA1(0.), myA2(0.), myA3(0.), myA4(0.), myA5(0.), myA6(0.),
+      myEpsMax(0.),
+      myR(0.)
+{
+
+}
+
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+matp_WireStressStrain01::matp_WireStressStrain01(const Standard_Real Ei,
+                                                 const Standard_Real Ef,
+                                                 const Standard_Real A0,
+                                                 const Standard_Real A1,
+                                                 const Standard_Real A2,
+                                                 const Standard_Real A3,
+                                                 const Standard_Real A4,
+                                                 const Standard_Real A5,
+                                                 const Standard_Real A6,
+                                                 const Standard_Real EpsMax,
+                                                 const Standard_Real R)
+    : myEi(Ei), myEf(Ef),
+      myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(A5), myA6(A6),
+      myEpsMax(EpsMax),
+      myR(R)
 {
 
 }
@@ -39,283 +66,217 @@ UMM_Model::UMM_Model()
     \brief Destructor
 */
 // ============================================================================
-UMM_Model::~UMM_Model()
+matp_WireStressStrain01::~matp_WireStressStrain01()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief CommitState()
+    \brief A0()
 */
 // ============================================================================
-Standard_Boolean UMM_Model::CommitState()
+Standard_Real matp_WireStressStrain01::A0() const
 {
-    myCommitCreepStrain = myTrialCreepStrain;
-    myCommitStiffness = myTrialStiffness;
-    myCommitStrain = myTrialStrain;
-    myCommitStress = myTrialStress;
-    myCommitStressStrain = myTrialStressStrain;
-    myCommitTemperature = myTrialTemperature;
-    myCommitThermalStrain = myTrialThermalStrain;
-    myCommitTime = myTrialTime;
-    return Standard_True;
+    return myA0;
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitCreepStrain()
+    \brief A1()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetCommitCreepStrain()
+Standard_Real matp_WireStressStrain01::A1() const
 {
-    return myCommitCreepStrain;
+    return myA1;
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitStiffness()
+    \brief A2()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetCommitStiffness()
+Standard_Real matp_WireStressStrain01::A2() const
 {
-    return myCommitStiffness;
+    return myA2;
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitStrain()
+    \brief A3()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetCommitStrain()
+Standard_Real matp_WireStressStrain01::A3() const
 {
-    return myCommitStrain;
+    return myA3;
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitStress()
+    \brief A4()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetCommitStress()
+Standard_Real matp_WireStressStrain01::A4() const
 {
-    return myCommitStress;
+    return myA4;
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitStressStrain()
+    \brief A5()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetCommitStressStrain()
+Standard_Real matp_WireStressStrain01::A5() const
 {
-    return myCommitStressStrain;
+    return myA5;
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitTemperature()
+    \brief A6()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetCommitTemperature()
+Standard_Real matp_WireStressStrain01::A6() const
 {
-    return myCommitTemperature;
+    return myA6;
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitThermalStrain()
+    \brief Ef()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetCommitThermalStrain()
+Standard_Real matp_WireStressStrain01::Ef() const
 {
-    return myCommitThermalStrain;
+    return myEf;
 }
 
 // ============================================================================
 /*!
-    \brief GetCommitTime()
+    \brief Ei()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetCommitTime()
+Standard_Real matp_WireStressStrain01::Ei() const
 {
-    return myCommitTime;
+    return myEi;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialCreepStrain()
+    \brief EpsMax()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetTrialCreepStrain()
+Standard_Real matp_WireStressStrain01::EpsMax() const
 {
-    return myTrialCreepStrain;
+    return myEpsMax;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialStiffness()
+    \brief R()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetTrialStiffness()
+Standard_Real matp_WireStressStrain01::R() const
 {
-    return myTrialStiffness;
+    return myR;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialStrain()
+    \brief SetA0()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetTrialStrain()
+void matp_WireStressStrain01::SetA0(const Standard_Real A0)
 {
-    return myTrialStrain;
+    myA0 = A0;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialStress()
+    \brief SetA1()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetTrialStress()
+void matp_WireStressStrain01::SetA1(const Standard_Real A1)
 {
-    return myTrialStress;
+    myA1 = A1;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialStressStrain()
+    \brief SetA2()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetTrialStressStrain()
+void matp_WireStressStrain01::SetA2(const Standard_Real A2)
 {
-    return myTrialStressStrain;
+    myA2 = A2;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialTemperature()
+    \brief SetA3()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetTrialTemperature()
+void matp_WireStressStrain01::SetA3(const Standard_Real A3)
 {
-    return myTrialTemperature;
+    myA3 = A3;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialThermalStrain()
+    \brief SetA4()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetTrialThermalStrain()
+void matp_WireStressStrain01::SetA4(const Standard_Real A4)
 {
-    return myTrialThermalStrain;
+    myA4 = A4;
 }
 
 // ============================================================================
 /*!
-    \brief GetTrialTime()
+    \brief SetA5()
 */
 // ============================================================================
-Standard_Real UMM_Model::GetTrialTime()
+void matp_WireStressStrain01::SetA5(const Standard_Real A5)
 {
-    return myTrialTime;
+    myA5 = A5;
 }
 
 // ============================================================================
 /*!
-    \brief MustBeUpdated()
+    \brief SetA6()
 */
 // ============================================================================
-Standard_Boolean UMM_Model::MustBeUpdated()
+void matp_WireStressStrain01::SetA6(const Standard_Real A6)
 {
-    return myMustBeUpdated;
+    myA6 = A6;
 }
 
 // ============================================================================
 /*!
-    \brief RevertToCommitState()
+    \brief SetEi()
 */
 // ============================================================================
-Standard_Boolean UMM_Model::RevertToCommitState()
+void matp_WireStressStrain01::SetEf(const Standard_Real Ef)
 {
-    myTrialCreepStrain = myCommitCreepStrain;
-    myTrialStiffness = myCommitStiffness;
-    myTrialStrain = myCommitStrain;
-    myTrialStress = myCommitStress;
-    myTrialStressStrain = myCommitStressStrain;
-    myTrialTemperature = myCommitTemperature;
-    myTrialThermalStrain = myCommitThermalStrain;
-    myTrialTime = myCommitTime;
-    return Standard_True;
+    myEf = Ef;
 }
 
 // ============================================================================
 /*!
-    \brief RevertToInitialState()
+    \brief SetEf()
 */
 // ============================================================================
-Standard_Boolean UMM_Model::RevertToInitialState()
+void matp_WireStressStrain01::SetEi(const Standard_Real Ei)
 {
-    myCommitCreepStrain = 0.;
-    myCommitStiffness = 0.;
-    myCommitStrain = 0.;
-    myCommitStress = 0.;
-    myCommitStressStrain = 0.;
-    myCommitTemperature = 0.;
-    myCommitThermalStrain = 0.;
-    myCommitTime = 0.;
-    myTrialCreepStrain = 0.;
-    myTrialStiffness = 0.;
-    myTrialStrain = 0.;
-    myTrialStress = 0.;
-    myTrialStressStrain = 0.;
-    myTrialTemperature = 0.;
-    myTrialThermalStrain = 0.;
-    myTrialTime = 0.;
-    return Standard_True;
+    myEi = Ei;
 }
 
 // ============================================================================
 /*!
-    \brief SetTrialStrain()
+    \brief SetR()
 */
 // ============================================================================
-Standard_Boolean UMM_Model::SetTrialStrain(const Standard_Real theStrain)
+void matp_WireStressStrain01::SetR(const Standard_Real R)
 {
-    myTrialStrain = theStrain;
-    myMustBeUpdated = Standard_True;
-    return Standard_True;
+    myR = R;
 }
-
-// ============================================================================
-/*!
-    \brief SetTrialTemperature()
-*/
-// ============================================================================
-Standard_Boolean UMM_Model::SetTrialTemperature(const Standard_Real theTemperature)
-{
-    myTrialTemperature = theTemperature;
-    myMustBeUpdated = Standard_True;
-    return Standard_True;
-}
-
-// ============================================================================
-/*!
-    \brief SetTrialTime()
-*/
-// ============================================================================
-Standard_Boolean UMM_Model::SetTrialTime(const Standard_Real theTime)
-{
-    myTrialTime = theTime;
-    myMustBeUpdated = Standard_True;
-    return Standard_True;
-}
-
-
-// ****************************************************************************
-// HANDLES
-// ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(UMM_Model, Standard_Transient)
-IMPLEMENT_STANDARD_RTTIEXT(UMM_Model, Standard_Transient)
-

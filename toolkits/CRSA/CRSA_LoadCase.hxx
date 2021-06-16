@@ -25,24 +25,21 @@
 
 // OpenCascade
 #include <Standard.hxx>
-#include <Standard_DefineHandle.hxx>
-#include <Standard_Transient.hxx>
+#include <Standard_DefineAlloc.hxx>
 
-// Forward declarations
-class CRSA_LoadCase;
-
-// Handles
-DEFINE_STANDARD_HANDLE(CRSA_LoadCase, Standard_Transient);
 
 
 // ============================================================================
 /*!
     \brief CRSA_LoadCase
-    Class implementation of a cable load case.
 */
 // ============================================================================
-class CRSA_LoadCase : public Standard_Transient
+class CRSA_LoadCase
 {
+
+public:
+
+    DEFINE_STANDARD_ALLOC;
 
 public:
     // constructors
@@ -57,25 +54,17 @@ public:
                   const Standard_Real theTemperature,
                   const Standard_Real theIceLoad,
                   const Standard_Real theWindLoad);
-    CRSA_LoadCase(const Standard_Real theDeadLoad,
-                  const Standard_Real theTemperature,
-                  const Standard_Real theIceLoad,
-                  const Standard_Real theWindLoad,
-                  const Standard_Real theDuration);
     // destructors
     ~CRSA_LoadCase();
 
 public:
 
-    Standard_Real       GetDeadLoad();
-    Standard_Real       GetDuration();
-    Standard_Real       GetIceLoad();
-    Standard_Real       GetTemperature();
-    Standard_Real       GetTotalLoad();
-    Standard_Real       GetWindLoad();
+    Standard_Real       DeadLoad();
+    Standard_Real       IceLoad();
+    Standard_Real       Temperature();
+    Standard_Real       WindLoad();
 
     void                SetDeadLoad(const Standard_Real theDeadLoad);
-    void                SetDuration(const Standard_Real theDuration);
     void                SetIceLoad(const Standard_Real theIceLoad);
     void                SetTemperature(const Standard_Real theTemperature);
     void                SetWindLoad(const Standard_Real theWindLoad);
@@ -83,14 +72,9 @@ public:
 private:
 
     Standard_Real       myDeadLoad;
-    Standard_Real       myDuration;
     Standard_Real       myIceLoad;
     Standard_Real       myTemperature;
     Standard_Real       myWindLoad;
-
-public:
-
-    DEFINE_STANDARD_RTTIEXT(CRSA_LoadCase, Standard_Transient);
 
 };
 

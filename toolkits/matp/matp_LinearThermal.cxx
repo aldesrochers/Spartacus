@@ -19,9 +19,8 @@
 //
 // ============================================================================
 
-
-// RS
-#include <CRSA_LoadCase.hxx>
+// cable
+#include <matp_CableWireCreep01.hxx>
 
 
 // ============================================================================
@@ -29,73 +28,22 @@
     \brief Constructor
 */
 // ============================================================================
-CRSA_LoadCase::CRSA_LoadCase()
-    : myDeadLoad(0.),
-      myIceLoad(0.),
-      myTemperature(0.),
-      myWindLoad(0.)
+matp_CableWireCreep01::matp_CableWireCreep01()
+    : myAlpha(0.), myK(0.), myMu(0.), myPhi(0.)
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief Constructor
+    \brief Constructor
 */
 // ============================================================================
-CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad)
-    : myDeadLoad(theDeadLoad),
-      myIceLoad(0.),
-      myTemperature(0.),
-      myWindLoad(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad,
-                             const Standard_Real theTemperature)
-    : myDeadLoad(theDeadLoad),
-      myIceLoad(0.),
-      myTemperature(theTemperature),
-      myWindLoad(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad,
-                             const Standard_Real theTemperature,
-                             const Standard_Real theIceLoad)
-    : myDeadLoad(theDeadLoad),
-      myIceLoad(theIceLoad),
-      myTemperature(theTemperature),
-      myWindLoad(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad,
-                             const Standard_Real theTemperature,
-                             const Standard_Real theIceLoad,
-                             const Standard_Real theWindLoad)
-    : myDeadLoad(theDeadLoad),
-      myIceLoad(theIceLoad),
-      myTemperature(theTemperature),
-      myWindLoad(theWindLoad)
+matp_CableWireCreep01::matp_CableWireCreep01(const Standard_Real K,
+                                             const Standard_Real Phi,
+                                             const Standard_Real Alpha,
+                                             const Standard_Real Mu)
+    : myAlpha(Alpha), myK(K), myMu(Mu), myPhi(Phi)
 {
 
 }
@@ -105,91 +53,88 @@ CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad,
     \brief Destructor
 */
 // ============================================================================
-CRSA_LoadCase::~CRSA_LoadCase()
+matp_CableWireCreep01::~matp_CableWireCreep01()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief DeadLoad()
+    \brief Alpha()
 */
 // ============================================================================
-Standard_Real CRSA_LoadCase::DeadLoad()
+Standard_Real matp_CableWireCreep01::Alpha() const
 {
-    return myDeadLoad;
+    return myAlpha;
 }
 
 // ============================================================================
 /*!
- *  \brief IceLoad()
+    \brief K()
 */
 // ============================================================================
-Standard_Real CRSA_LoadCase::IceLoad()
+Standard_Real matp_CableWireCreep01::K() const
 {
-    return myIceLoad;
+    return myK;
 }
 
 // ============================================================================
 /*!
- *  \brief Temperature()
+    \brief Mu()
 */
 // ============================================================================
-Standard_Real CRSA_LoadCase::Temperature()
+Standard_Real matp_CableWireCreep01::Mu() const
 {
-    return myTemperature;
+    return myMu;
 }
 
 // ============================================================================
 /*!
- *  \brief WindLoad()
+    \brief Phi()
 */
 // ============================================================================
-Standard_Real CRSA_LoadCase::WindLoad()
+Standard_Real matp_CableWireCreep01::Phi() const
 {
-    return myWindLoad;
+    return myPhi;
 }
 
 // ============================================================================
 /*!
- *  \brief SetDeadLoad()
+    \brief SetAlpha()
 */
 // ============================================================================
-void CRSA_LoadCase::SetDeadLoad(const Standard_Real theDeadLoad)
+void matp_CableWireCreep01::SetAlpha(const Standard_Real Alpha)
 {
-    myDeadLoad = theDeadLoad;
+    myAlpha = Alpha;
 }
 
 // ============================================================================
 /*!
- *  \brief SetIceLoad()
+    \brief SetK()
 */
 // ============================================================================
-void CRSA_LoadCase::SetIceLoad(const Standard_Real theIceLoad)
+void matp_CableWireCreep01::SetK(const Standard_Real K)
 {
-    myIceLoad = theIceLoad;
+    myK = K;
 }
 
 // ============================================================================
 /*!
- *  \brief SetTemperature()
+    \brief SetMu()
 */
 // ============================================================================
-void CRSA_LoadCase::SetTemperature(const Standard_Real theTemperature)
+void matp_CableWireCreep01::SetMu(const Standard_Real Mu)
 {
-    myTemperature = theTemperature;
+    myMu = Mu;
 }
 
 // ============================================================================
 /*!
- *  \brief SetWindLoad()
+    \brief SetPhi()
 */
 // ============================================================================
-void CRSA_LoadCase::SetWindLoad(const Standard_Real theWindLoad)
+void matp_CableWireCreep01::SetPhi(const Standard_Real Phi)
 {
-    myWindLoad = theWindLoad;
+    myPhi = Phi;
 }
-
-
-
 

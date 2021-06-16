@@ -19,9 +19,8 @@
 //
 // ============================================================================
 
-
-// Spartacus
-#include <CRSA_SpanGeometry.hxx>
+// cable
+#include <matp_Elastic.hxx>
 
 
 // ============================================================================
@@ -29,9 +28,8 @@
     \brief Constructor
 */
 // ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry()
-    : myLength(0.),
-      mySlope(0.)
+matp_Elastic::matp_Elastic()
+    : myE(0.), myNu(0.)
 {
 
 }
@@ -41,9 +39,8 @@ CRSA_SpanGeometry::CRSA_SpanGeometry()
     \brief Constructor
 */
 // ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength)
-    : myLength(theLength),
-      mySlope(0.)
+matp_Elastic::matp_Elastic(const Standard_Real E)
+    : myE(E), myNu(0.)
 {
 
 }
@@ -53,10 +50,9 @@ CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength)
     \brief Constructor
 */
 // ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength,
-                                     const Standard_Real theSlope)
-    : myLength(theLength),
-      mySlope(theSlope)
+matp_Elastic::matp_Elastic(const Standard_Real E,
+                           const Standard_Real Nu)
+    : myE(E), myNu(Nu)
 {
 
 }
@@ -66,47 +62,48 @@ CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength,
     \brief Destructor
 */
 // ============================================================================
-CRSA_SpanGeometry::~CRSA_SpanGeometry()
+matp_Elastic::~matp_Elastic()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Length()
+    \brief E()
 */
 // ============================================================================
-Standard_Real CRSA_SpanGeometry::Length() const
+Standard_Real matp_Elastic::E() const
 {
-    return myLength;
+    return myE;
 }
 
 // ============================================================================
 /*!
-    \brief Slope()
+    \brief Nu()
 */
 // ============================================================================
-Standard_Real CRSA_SpanGeometry::Slope() const
+Standard_Real matp_Elastic::Nu() const
 {
-    return mySlope;
+    return myNu;
 }
 
 // ============================================================================
 /*!
-    \brief SetLength()
+    \brief SetE()
 */
 // ============================================================================
-void CRSA_SpanGeometry::SetLength(const Standard_Real theLength)
+void matp_Elastic::SetE(const Standard_Real E)
 {
-    myLength = theLength;
+    myE = E;
 }
 
 // ============================================================================
 /*!
-    \brief SetSlope()
+    \brief SetNu()
 */
 // ============================================================================
-void CRSA_SpanGeometry::SetSlope(const Standard_Real theSlope)
+void matp_Elastic::SetNu(const Standard_Real Nu)
 {
-    mySlope = theSlope;
+    myNu = Nu;
 }
+

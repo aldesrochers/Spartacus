@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __UMM_Model_hxx__
-#define __UMM_Model_hxx__
+#ifndef __UCrM_Model_hxx__
+#define __UCrM_Model_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
@@ -29,49 +29,41 @@
 #include <Standard_Transient.hxx>
 
 // Forward declarations
-class UMM_Model;
+class UCrM_Model;
 
 // Handles
-DEFINE_STANDARD_HANDLE(UMM_Model, Standard_Transient);
+DEFINE_STANDARD_HANDLE(UCrM_Model, Standard_Transient);
 
 
 // ============================================================================
 /*!
-    \brief UMM_Model
+    \brief UCrM_Model
 */
 // ============================================================================
-class UMM_Model : public Standard_Transient
+class UCrM_Model : public Standard_Transient
 {
 
 public:
     // constructors
-    UMM_Model();
+    UCrM_Model();
     // destructors
-    ~UMM_Model();
+    ~UCrM_Model();
 
 public:
 
     virtual Standard_Boolean    CommitState();
-    virtual Standard_Real       GetCommitCreepStrain();
-    virtual Standard_Real       GetCommitStiffness();
     virtual Standard_Real       GetCommitStrain();
     virtual Standard_Real       GetCommitStress();
-    virtual Standard_Real       GetCommitStressStrain();
     virtual Standard_Real       GetCommitTemperature();
-    virtual Standard_Real       GetCommitThermalStrain();
     virtual Standard_Real       GetCommitTime();
-    virtual Standard_Real       GetTrialCreepStrain();
-    virtual Standard_Real       GetTrialStiffness();
     virtual Standard_Real       GetTrialStrain();
     virtual Standard_Real       GetTrialStress();
-    virtual Standard_Real       GetTrialStressStrain();
     virtual Standard_Real       GetTrialTemperature();
-    virtual Standard_Real       GetTrialThermalStrain();
     virtual Standard_Real       GetTrialTime();
     virtual Standard_Boolean    MustBeUpdated();
     virtual Standard_Boolean    RevertToCommitState();
     virtual Standard_Boolean    RevertToInitialState();
-    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain);
+    virtual Standard_Boolean    SetTrialStress(const Standard_Real theStress);
     virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature);
     virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime);
     virtual Standard_Boolean    UpdateInternalState() = 0;
@@ -81,28 +73,20 @@ protected:
     // Internal state
     Standard_Real               myMustBeUpdated;
 
-    // History
-    Standard_Real               myCommitCreepStrain;
-    Standard_Real               myCommitTemperature;
-    Standard_Real               myCommitThermalStrain;
-    Standard_Real               myCommitStiffness;
+    // History   
     Standard_Real               myCommitStrain;
     Standard_Real               myCommitStress;
-    Standard_Real               myCommitStressStrain;
+    Standard_Real               myCommitTemperature;
     Standard_Real               myCommitTime;
-    Standard_Real               myTrialCreepStrain;
-    Standard_Real               myTrialTemperature;
-    Standard_Real               myTrialThermalStrain;
-    Standard_Real               myTrialStiffness;
     Standard_Real               myTrialStrain;
     Standard_Real               myTrialStress;
-    Standard_Real               myTrialStressStrain;
+    Standard_Real               myTrialTemperature;
     Standard_Real               myTrialTime;
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(UMM_Model, Standard_Transient);
+    DEFINE_STANDARD_RTTIEXT(UCrM_Model, Standard_Transient);
 
 };
 
-#endif  // __UMM_Model_hxx__
+#endif  // __UCrM_Model_hxx__

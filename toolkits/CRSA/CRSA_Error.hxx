@@ -31,11 +31,12 @@
 // ============================================================================
 enum CRSA_Error
 {
-    CRSA_AnalysisDone,
-    CRSA_AnalysisNotDone,
-    CRSA_SolutionNotFound,
-    CRSA_UndefinedGeometry,
-    CRSA_UndefinedSectionModel
+    CRSA_InvalidSectionModel,
+    CRSA_InvalidSpanLength,
+    CRSA_NoError,
+    CRSA_NoSaggingHistory,
+    CRSA_SaggingHistoryError,
+    CRSA_SolutionNotFound
 };
 
 #endif  // __CRSA_Error_hxx__

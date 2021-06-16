@@ -20,22 +20,18 @@
 // ============================================================================
 
 
-// CCLM1d
-#include <CCLM1d_CableWire01.hxx>
+// MCLM1d
+#include <USSM_Model.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief Constructor
+    \brief Constructor
 */
 // ============================================================================
-CCLM1d_CableWire01::CCLM1d_CableWire01(const Standard_Real K,
-                                       const Standard_Real Phi,
-                                       const Standard_Real Alpha,
-                                       const Standard_Real Mu)
-    : myK(K), myPhi(Phi), myAlpha(Alpha), myMu(Mu)
+USSM_Model::USSM_Model()
 {
-    RevertToInitialState();
+
 }
 
 // ============================================================================
@@ -43,156 +39,132 @@ CCLM1d_CableWire01::CCLM1d_CableWire01(const Standard_Real K,
     \brief Destructor
 */
 // ============================================================================
-CCLM1d_CableWire01::~CCLM1d_CableWire01()
+USSM_Model::~USSM_Model()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief CommitState()
+    \brief CommitState()
 */
 // ============================================================================
-Standard_Boolean CCLM1d_CableWire01::CommitState()
+Standard_Boolean USSM_Model::CommitState()
 {
+    myCommitStiffness = myTrialStiffness;
     myCommitStrain = myTrialStrain;
     myCommitStress = myTrialStress;
-    myCommitTemperature = myTrialTemperature;
-    myCommitTime = myTrialTime;
     return Standard_True;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialStrain()
+    \brief GetCommitStiffness()
 */
 // ============================================================================
-Standard_Real CCLM1d_CableWire01::GetTrialStrain()
+Standard_Real USSM_Model::GetCommitStiffness()
+{
+    return myCommitStiffness;
+}
+
+// ============================================================================
+/*!
+    \brief GetCommitStrain()
+*/
+// ============================================================================
+Standard_Real USSM_Model::GetCommitStrain()
+{
+    return myCommitStrain;
+}
+
+// ============================================================================
+/*!
+    \brief GetCommitStress()
+*/
+// ============================================================================
+Standard_Real USSM_Model::GetCommitStress()
+{
+    return myCommitStress;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStiffness()
+*/
+// ============================================================================
+Standard_Real USSM_Model::GetTrialStiffness()
+{
+    return myTrialStiffness;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStrain()
+*/
+// ============================================================================
+Standard_Real USSM_Model::GetTrialStrain()
 {
     return myTrialStrain;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialStress()
+    \brief GetTrialStress()
 */
 // ============================================================================
-Standard_Real CCLM1d_CableWire01::GetTrialStress()
+Standard_Real USSM_Model::GetTrialStress()
 {
     return myTrialStress;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialTemperature()
+    \brief MustBeUpdated()
 */
 // ============================================================================
-Standard_Real CCLM1d_CableWire01::GetTrialTemperature()
+Standard_Boolean USSM_Model::MustBeUpdated()
 {
-    return myTrialTemperature;
+    return myMustBeUpdated;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialTime()
+    \brief RevertToCommitState()
 */
 // ============================================================================
-Standard_Real CCLM1d_CableWire01::GetTrialTime()
+Standard_Boolean USSM_Model::RevertToCommitState()
 {
-    return myTrialTime;
-}
-
-// ============================================================================
-/*!
- *  \brief RevertToCommitState()
-*/
-// ============================================================================
-Standard_Boolean CCLM1d_CableWire01::RevertToCommitState()
-{
+    myTrialStiffness = myCommitStiffness;
     myTrialStrain = myCommitStrain;
     myTrialStress = myCommitStress;
-    myTrialTemperature = myCommitTemperature;
-    myTrialTime = myCommitTime;
     return Standard_True;
 }
 
 // ============================================================================
 /*!
- *  \brief RevertToInitialState()
+    \brief RevertToInitialState()
 */
 // ============================================================================
-Standard_Boolean CCLM1d_CableWire01::RevertToInitialState()
+Standard_Boolean USSM_Model::RevertToInitialState()
 {
+    myCommitStiffness = 0.;
     myCommitStrain = 0.;
     myCommitStress = 0.;
-    myCommitTemperature = 0.;
-    myCommitTime = 0.;
+    myTrialStiffness = 0.;
     myTrialStrain = 0.;
     myTrialStress = 0.;
-    myTrialTemperature = 0.;
-    myTrialTime = 0.;
     return Standard_True;
 }
 
 // ============================================================================
 /*!
- *  \brief SetTrialStress()
+    \brief SetTrialStrain()
 */
 // ============================================================================
-Standard_Boolean CCLM1d_CableWire01::SetTrialStress(const Standard_Real theStress)
+Standard_Boolean USSM_Model::SetTrialStrain(const Standard_Real theStrain)
 {
-    myTrialStress = theStress;
-    return UpdateInternalState();
-}
-
-// ============================================================================
-/*!
- *  \brief SetTrialTemperature()
-*/
-// ============================================================================
-Standard_Boolean CCLM1d_CableWire01::SetTrialTemperature(const Standard_Real theTemperature)
-{
-    myTrialTemperature = theTemperature;
-    return UpdateInternalState();
-}
-
-// ============================================================================
-/*!
- *  \brief SetTrialTime()
-*/
-// ============================================================================
-Standard_Boolean CCLM1d_CableWire01::SetTrialTime(const Standard_Real theTime)
-{
-    myTrialTime = theTime;
-    return UpdateInternalState();
-}
-
-#include <iostream>
-using namespace std;
-
-// ============================================================================
-/*!
- *  \brief UpdateInternalState()
-*/
-// ============================================================================
-Standard_Boolean CCLM1d_CableWire01::UpdateInternalState()
-{
-    // Convert stresses from Pa to kg/mm2
-    Standard_Real Sig0 = myCommitStress / (1E6 * 9.80665);
-    Standard_Real Sig1 = myTrialStress / (1E6 * 9.80665);
-    // Convert strains from m/m to mm/km
-    Standard_Real Eps0 = myCommitStrain * 1E6;
-    Standard_Real Eps1 = myTrialStrain * 1E6;
-    // Update internal state
-    Standard_Real A = Pow(myCommitStrain/myK, myMu);
-    Standard_Real FT0 = Exp(myPhi/myMu*myCommitTemperature)
-            * Pow(Sig0, myAlpha/myMu);
-    Standard_Real FT1 = Exp(myPhi/myMu*myTrialTemperature)
-            * Pow(Sig1, myAlpha/myMu);
-    Standard_Real dA = (myTrialTime - myCommitTime) * (FT1 + FT0)/2.;
-    Standard_Real Eps = myK * Pow(A + dA, myMu);
-    // Update internal strain in (m/m)
-    myTrialStrain = Eps / 1E6;
+    myTrialStrain = theStrain;
+    myMustBeUpdated = Standard_True;
     return Standard_True;
 }
 
@@ -200,6 +172,6 @@ Standard_Boolean CCLM1d_CableWire01::UpdateInternalState()
 // ****************************************************************************
 // HANDLES
 // ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(CCLM1d_CableWire01, CCLM1d_Model)
-IMPLEMENT_STANDARD_RTTIEXT(CCLM1d_CableWire01, CCLM1d_Model)
+IMPLEMENT_STANDARD_HANDLE(USSM_Model, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(USSM_Model, Standard_Transient)
 

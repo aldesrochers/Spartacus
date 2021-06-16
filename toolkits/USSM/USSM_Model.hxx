@@ -20,58 +20,67 @@
 // ============================================================================
 
 
-#ifndef __CRSA_SaggingCondition_hxx__
-#define __CRSA_SaggingCondition_hxx__
+#ifndef __USSM_Model_hxx__
+#define __USSM_Model_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
 #include <Standard_DefineHandle.hxx>
 #include <Standard_Transient.hxx>
 
-// Spartacus
-#include <CRSA_LoadCase.hxx>
-
 // Forward declarations
-class CRSA_SaggingCondition;
+class USSM_Model;
 
 // Handles
-DEFINE_STANDARD_HANDLE(CRSA_SaggingCondition, Standard_Transient);
+DEFINE_STANDARD_HANDLE(USSM_Model, Standard_Transient);
 
 
 // ============================================================================
 /*!
- *  \brief CRSA_SaggingCondition
- *  Class implementation of a cable sagging condition.
+    \brief USSM_Model
 */
 // ============================================================================
-class CRSA_SaggingCondition : public Standard_Transient
+class USSM_Model : public Standard_Transient
 {
 
 public:
     // constructors
-    CRSA_SaggingCondition();
-    CRSA_SaggingCondition(Handle(CRSA_LoadCase) theLoadCase,
-                          const Standard_Real theHorizontalTension);
+    USSM_Model();
     // destructors
-    ~CRSA_SaggingCondition();
+    ~USSM_Model();
 
 public:
 
-    Standard_Real           GetHorizontalTension();
-    Handle(CRSA_LoadCase)   GetLoadCase();
+    virtual Standard_Boolean    CommitState();
+    virtual Standard_Real       GetCommitStiffness();
+    virtual Standard_Real       GetCommitStrain();
+    virtual Standard_Real       GetCommitStress();
+    virtual Standard_Real       GetTrialStiffness();
+    virtual Standard_Real       GetTrialStrain();
+    virtual Standard_Real       GetTrialStress();
+    virtual Standard_Boolean    MustBeUpdated();
+    virtual Standard_Boolean    RevertToCommitState();
+    virtual Standard_Boolean    RevertToInitialState();
+    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain);
+    virtual Standard_Boolean    UpdateInternalState() = 0;
 
-    void                    SetHorizontalTension(const Standard_Real theHorizontalTension);
-    void                    SetLoadCase(Handle(CRSA_LoadCase) theLoadCase);
+protected:
 
-private:
+    // Internal state
+    Standard_Real               myMustBeUpdated;
 
-    Standard_Real           myHorizontalTension;
-    Handle(CRSA_LoadCase)   myLoadCase;
+    // History
+    Standard_Real               myCommitStiffness;
+    Standard_Real               myCommitStrain;
+    Standard_Real               myCommitStress;;
+    Standard_Real               myTrialStiffness;
+    Standard_Real               myTrialStrain;
+    Standard_Real               myTrialStress;
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(CRSA_SaggingCondition, Standard_Transient);
+    DEFINE_STANDARD_RTTIEXT(USSM_Model, Standard_Transient);
 
 };
 
-#endif  // __CRSA_SaggingCondition_hxx__
+#endif  // __USSM_Model_hxx__

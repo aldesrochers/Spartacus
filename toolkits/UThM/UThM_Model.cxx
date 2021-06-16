@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-// RS
-#include <CRSA_LoadCase.hxx>
+// MCLM1d
+#include <UThM_Model.hxx>
 
 
 // ============================================================================
@@ -29,73 +29,7 @@
     \brief Constructor
 */
 // ============================================================================
-CRSA_LoadCase::CRSA_LoadCase()
-    : myDeadLoad(0.),
-      myIceLoad(0.),
-      myTemperature(0.),
-      myWindLoad(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad)
-    : myDeadLoad(theDeadLoad),
-      myIceLoad(0.),
-      myTemperature(0.),
-      myWindLoad(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad,
-                             const Standard_Real theTemperature)
-    : myDeadLoad(theDeadLoad),
-      myIceLoad(0.),
-      myTemperature(theTemperature),
-      myWindLoad(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad,
-                             const Standard_Real theTemperature,
-                             const Standard_Real theIceLoad)
-    : myDeadLoad(theDeadLoad),
-      myIceLoad(theIceLoad),
-      myTemperature(theTemperature),
-      myWindLoad(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad,
-                             const Standard_Real theTemperature,
-                             const Standard_Real theIceLoad,
-                             const Standard_Real theWindLoad)
-    : myDeadLoad(theDeadLoad),
-      myIceLoad(theIceLoad),
-      myTemperature(theTemperature),
-      myWindLoad(theWindLoad)
+UThM_Model::UThM_Model()
 {
 
 }
@@ -105,91 +39,115 @@ CRSA_LoadCase::CRSA_LoadCase(const Standard_Real theDeadLoad,
     \brief Destructor
 */
 // ============================================================================
-CRSA_LoadCase::~CRSA_LoadCase()
+UThM_Model::~UThM_Model()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief DeadLoad()
+    \brief CommitState()
 */
 // ============================================================================
-Standard_Real CRSA_LoadCase::DeadLoad()
+Standard_Boolean UThM_Model::CommitState()
 {
-    return myDeadLoad;
+    myCommitStrain = myTrialStrain;
+    myCommitTemperature = myTrialTemperature;
+    return Standard_True;
 }
 
 // ============================================================================
 /*!
- *  \brief IceLoad()
+    \brief GetCommitStrain()
 */
 // ============================================================================
-Standard_Real CRSA_LoadCase::IceLoad()
+Standard_Real UThM_Model::GetCommitStrain()
 {
-    return myIceLoad;
+    return myCommitStrain;
 }
 
 // ============================================================================
 /*!
- *  \brief Temperature()
+    \brief GetCommitTemperature()
 */
 // ============================================================================
-Standard_Real CRSA_LoadCase::Temperature()
+Standard_Real UThM_Model::GetCommitTemperature()
 {
-    return myTemperature;
+    return myCommitTemperature;
 }
 
 // ============================================================================
 /*!
- *  \brief WindLoad()
+    \brief GetTrialStrain()
 */
 // ============================================================================
-Standard_Real CRSA_LoadCase::WindLoad()
+Standard_Real UThM_Model::GetTrialStrain()
 {
-    return myWindLoad;
+    return myTrialStrain;
 }
 
 // ============================================================================
 /*!
- *  \brief SetDeadLoad()
+    \brief GetTrialTemperature()
 */
 // ============================================================================
-void CRSA_LoadCase::SetDeadLoad(const Standard_Real theDeadLoad)
+Standard_Real UThM_Model::GetTrialTemperature()
 {
-    myDeadLoad = theDeadLoad;
+    return myTrialTemperature;
 }
 
 // ============================================================================
 /*!
- *  \brief SetIceLoad()
+    \brief MustBeUpdated()
 */
 // ============================================================================
-void CRSA_LoadCase::SetIceLoad(const Standard_Real theIceLoad)
+Standard_Boolean UThM_Model::MustBeUpdated()
 {
-    myIceLoad = theIceLoad;
+    return myMustBeUpdated;
 }
 
 // ============================================================================
 /*!
- *  \brief SetTemperature()
+    \brief RevertToCommitState()
 */
 // ============================================================================
-void CRSA_LoadCase::SetTemperature(const Standard_Real theTemperature)
+Standard_Boolean UThM_Model::RevertToCommitState()
 {
-    myTemperature = theTemperature;
+    myTrialStrain = myCommitStrain;
+    myTrialTemperature = myCommitTemperature;
+    return Standard_True;
 }
 
 // ============================================================================
 /*!
- *  \brief SetWindLoad()
+    \brief RevertToInitialState()
 */
 // ============================================================================
-void CRSA_LoadCase::SetWindLoad(const Standard_Real theWindLoad)
+Standard_Boolean UThM_Model::RevertToInitialState()
 {
-    myWindLoad = theWindLoad;
+    myCommitStrain = 0.;
+    myCommitTemperature = 0.;
+    myTrialStrain = 0.;
+    myTrialTemperature = 0.;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief SetTrialTemperature()
+*/
+// ============================================================================
+Standard_Boolean UThM_Model::SetTrialTemperature(const Standard_Real theTemperature)
+{
+    myTrialTemperature = theTemperature;
+    myMustBeUpdated = Standard_True;
+    return Standard_True;
 }
 
 
-
+// ****************************************************************************
+// HANDLES
+// ****************************************************************************
+IMPLEMENT_STANDARD_HANDLE(UThM_Model, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(UThM_Model, Standard_Transient)
 

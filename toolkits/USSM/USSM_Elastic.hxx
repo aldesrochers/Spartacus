@@ -20,48 +20,45 @@
 // ============================================================================
 
 
-#ifndef __CRSA_SpanGeometry_hxx__
-#define __CRSA_SpanGeometry_hxx__
+#ifndef __USSM_Elastic_hxx__
+#define __USSM_Elastic_hxx__
 
-// OpenCascade
-#include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
+// Spartacus
+#include <USSM_Model.hxx>
+
+// Forward declarations
+class USSM_Elastic;
+
+// Handles
+DEFINE_STANDARD_HANDLE(USSM_Elastic, USSM_Model);
 
 
 // ============================================================================
 /*!
-    \brief CRSA_SpanGeometry
+    \brief USSM_Elastic
 */
 // ============================================================================
-class CRSA_SpanGeometry
+class USSM_Elastic : public USSM_Model
 {
 
 public:
-
-    DEFINE_STANDARD_ALLOC;
-
-public:
     // constructors
-    CRSA_SpanGeometry();
-    CRSA_SpanGeometry(const Standard_Real theLength);
-    CRSA_SpanGeometry(const Standard_Real theLength,
-                      const Standard_Real theSlope);
+    USSM_Elastic(const Standard_Real E);
     // destructors
-    ~CRSA_SpanGeometry();
+    ~USSM_Elastic();
 
 public:
 
-    Standard_Real       Length() const;
-    Standard_Real       Slope() const;
+    virtual Standard_Boolean    UpdateInternalState() = 0;
 
-    void                SetLength(const Standard_Real theLength);
-    void                SetSlope(const Standard_Real theSlope);
+protected:
 
-private:
+    Standard_Real       myE;
 
-    Standard_Real   myLength;
-    Standard_Real   mySlope;
+public:
+
+    DEFINE_STANDARD_RTTIEXT(USSM_Elastic, USSM_Model);
 
 };
 
-#endif  // __CRSA_SpanGeometry_hxx__
+#endif  // __USSM_Elastic_hxx__

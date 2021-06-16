@@ -20,34 +20,17 @@
 // ============================================================================
 
 
-// CCLM1d
-#include <CCLM1d_Model.hxx>
+#ifndef __CRSA_SequenceOfLoadCase_hxx__
+#define __CRSA_SequenceOfLoadCase_hxx__
 
+// OpenCascade
+#include <Standard.hxx>
+#include <NCollection_Sequence.hxx>
 
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-CCLM1d_Model::CCLM1d_Model()
-{
+// Spartacus
+#include <CRSA_LoadCase.hxx>
 
-}
+// Typedef
+typedef NCollection_Sequence<CRSA_LoadCase> CRSA_SequenceOfLoadCase;
 
-// ============================================================================
-/*!
-    \brief Destructor
-*/
-// ============================================================================
-CCLM1d_Model::~CCLM1d_Model()
-{
-
-}
-
-
-// ****************************************************************************
-// HANDLES
-// ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(CCLM1d_Model, Standard_Transient)
-IMPLEMENT_STANDARD_RTTIEXT(CCLM1d_Model, Standard_Transient)
-
+#endif  // __CRSA_SequenceOfLoadCase_hxx__

@@ -20,35 +20,49 @@
 // ============================================================================
 
 
-// MCLM1d
-#include <MCLM1d_Model.hxx>
+#ifndef __UMM_Elastic_hxx__
+#define __UMM_Elastic_hxx__
+
+// Spartacus
+#include <UMM_Model.hxx>
+
+// Forward declarations
+class UMM_Elastic;
+
+// Handles
+DEFINE_STANDARD_HANDLE(UMM_Elastic, UMM_Model);
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+    \brief UMM_Elastic
 */
 // ============================================================================
-MCLM1d_Model::MCLM1d_Model()
+class UMM_Elastic : public UMM_Model
 {
 
-}
+public:
+    // constructors
+    UMM_Elastic(const Standard_Real E);
+    UMM_Elastic(const Standard_Real E,
+                const Standard_Real Alpha);
+    // destructors
+    ~UMM_Elastic();
 
-// ============================================================================
-/*!
-    \brief Destructor
-*/
-// ============================================================================
-MCLM1d_Model::~MCLM1d_Model()
-{
+public:
 
-}
+    virtual Standard_Boolean    UpdateInternalState() Standard_OVERRIDE;
 
+private:
 
+    // Parameters
+    Standard_Real               myAlpha;
+    Standard_Real               myE;
 
-// ****************************************************************************
-// HANDLES
-// ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(MCLM1d_Model, Standard_Transient)
-IMPLEMENT_STANDARD_RTTIEXT(MCLM1d_Model, Standard_Transient)
+public:
 
+    DEFINE_STANDARD_RTTIEXT(UMM_Elastic, UMM_Model);
+
+};
+
+#endif  // __UMM_Elastic_hxx__

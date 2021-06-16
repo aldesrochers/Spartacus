@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __CRSA_SpanGeometry_hxx__
-#define __CRSA_SpanGeometry_hxx__
+#ifndef __CRSA_Command_hxx__
+#define __CRSA_Command_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
@@ -30,10 +30,10 @@
 
 // ============================================================================
 /*!
-    \brief CRSA_SpanGeometry
+    \brief CRSA_Command
 */
 // ============================================================================
-class CRSA_SpanGeometry
+class CRSA_Command
 {
 
 public:
@@ -42,26 +42,24 @@ public:
 
 public:
     // constructors
-    CRSA_SpanGeometry();
-    CRSA_SpanGeometry(const Standard_Real theLength);
-    CRSA_SpanGeometry(const Standard_Real theLength,
-                      const Standard_Real theSlope);
+    CRSA_Command();
     // destructors
-    ~CRSA_SpanGeometry();
+    ~CRSA_Command();
 
 public:
 
-    Standard_Real       Length() const;
-    Standard_Real       Slope() const;
+    void                        Check() const;
+    virtual Standard_Boolean    IsDone() const;
 
-    void                SetLength(const Standard_Real theLength);
-    void                SetSlope(const Standard_Real theSlope);
+protected:
+
+    void                        Done();
+    void                        NotDone();
 
 private:
 
-    Standard_Real   myLength;
-    Standard_Real   mySlope;
+    Standard_Boolean            myIsDone;
 
 };
 
-#endif  // __CRSA_SpanGeometry_hxx__
+#endif  // __CRSA_Command_hxx__

@@ -20,58 +20,49 @@
 // ============================================================================
 
 
-#ifndef __MCLM1d_Model_hxx__
-#define __MCLM1d_Model_hxx__
-
-// OpenCascade
-#include <Standard.hxx>
-#include <Standard_DefineHandle.hxx>
-#include <Standard_Transient.hxx>
+#ifndef __UThM_Linear_hxx__
+#define __UThM_Linear_hxx__
 
 // Spartacus
-#include <CCLM1d_Model.hxx>
-#include <SSCLM1d_Model.hxx>
-#include <TECLM1d_Model.hxx>
+#include <UThM_Model.hxx>
 
 // Forward declarations
-class MCLM1d_Model;
+class UThM_Linear;
 
 // Handles
-DEFINE_STANDARD_HANDLE(MCLM1d_Model, Standard_Transient);
+DEFINE_STANDARD_HANDLE(UThM_Linear, UThM_Model);
 
 
 // ============================================================================
 /*!
-    \brief MCLM1d_Model
+    \brief UThM_Linear
 */
 // ============================================================================
-class MCLM1d_Model : public Standard_Transient
+class UThM_Linear : public UThM_Model
 {
 
 public:
     // constructors
-    MCLM1d_Model();
+    UThM_Linear(const Standard_Real Alpha);
+    UThM_Linear(const Standard_Real Alpha,
+                const Standard_Real T0);
     // destructors
-    ~MCLM1d_Model();
+    ~UThM_Linear();
 
 public:
 
-    virtual Standard_Boolean    CommitState() = 0;
-    virtual Standard_Real       GetTrialStiffness() = 0;
-    virtual Standard_Real       GetTrialStrain() = 0;
-    virtual Standard_Real       GetTrialStress() = 0;
-    virtual Standard_Real       GetTrialTemperature() = 0;
-    virtual Standard_Real       GetTrialTime() = 0;
-    virtual Standard_Boolean    RevertToCommitState() = 0;
-    virtual Standard_Boolean    RevertToInitialState() = 0;
-    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) = 0;
-    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) = 0;
-    virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime) = 0;
+    virtual Standard_Boolean    UpdateInternalState() Standard_OVERRIDE;
+
+protected:
+
+    // Parameters
+    Standard_Real           myAlpha;
+    Standard_Real           myT0;
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(MCLM1d_Model, Standard_Transient);
+    DEFINE_STANDARD_RTTIEXT(UThM_Linear, UThM_Model);
 
 };
 
-#endif  // __MCLM1d_Model_hxx__
+#endif  // __UThM_Linear_hxx__

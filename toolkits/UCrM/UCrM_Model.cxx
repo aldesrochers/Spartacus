@@ -21,7 +21,7 @@
 
 
 // MCLM1d
-#include <MCLM1d_Generic.hxx>
+#include <UCrM_Model.hxx>
 
 
 // ============================================================================
@@ -29,7 +29,7 @@
     \brief Constructor
 */
 // ============================================================================
-MCLM1d_Generic::MCLM1d_Generic()
+UCrM_Model::UCrM_Model()
 {
 
 }
@@ -39,27 +39,20 @@ MCLM1d_Generic::MCLM1d_Generic()
     \brief Destructor
 */
 // ============================================================================
-MCLM1d_Generic::~MCLM1d_Generic()
+UCrM_Model::~UCrM_Model()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief CommitState()
+    \brief CommitState()
 */
 // ============================================================================
-Standard_Boolean MCLM1d_Generic::CommitState()
+Standard_Boolean UCrM_Model::CommitState()
 {
-    // commit sub-models
-    if(!myCreepModel.IsNull())
-        myCreepModel->CommitState();
-    if(!myStressStrainModel.IsNull())
-        myStressStrainModel->CommitState();
-    if(!myThermalModel.IsNull())
-        myThermalModel->CommitState();
-    // commit internal state
     myCommitStrain = myTrialStrain;
+    myCommitStress = myTrialStress;
     myCommitTemperature = myTrialTemperature;
     myCommitTime = myTrialTime;
     return Standard_True;
@@ -67,74 +60,103 @@ Standard_Boolean MCLM1d_Generic::CommitState()
 
 // ============================================================================
 /*!
- *  \brief GetTrialStiffness()
+    \brief GetCommitStrain()
 */
 // ============================================================================
-Standard_Real MCLM1d_Generic::GetTrialStiffness()
+Standard_Real UCrM_Model::GetCommitStrain()
 {
-    if(!myStressStrainModel.IsNull())
-        return myStressStrainModel->GetTrialStiffness();
-    return 0.;
+    return myCommitStrain;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialStrain()
+    \brief GetCommitStress()
 */
 // ============================================================================
-Standard_Real MCLM1d_Generic::GetTrialStrain()
+Standard_Real UCrM_Model::GetCommitStress()
+{
+    return myCommitStress;
+}
+
+// ============================================================================
+/*!
+    \brief GetCommitTemperature()
+*/
+// ============================================================================
+Standard_Real UCrM_Model::GetCommitTemperature()
+{
+    return myCommitTemperature;
+}
+
+// ============================================================================
+/*!
+    \brief GetCommitTime()
+*/
+// ============================================================================
+Standard_Real UCrM_Model::GetCommitTime()
+{
+    return myCommitTime;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStrain()
+*/
+// ============================================================================
+Standard_Real UCrM_Model::GetTrialStrain()
 {
     return myTrialStrain;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialStress()
+    \brief GetTrialStress()
 */
 // ============================================================================
-Standard_Real MCLM1d_Generic::GetTrialStress()
+Standard_Real UCrM_Model::GetTrialStress()
 {
-    if(!myStressStrainModel.IsNull())
-        return myStressStrainModel->GetTrialStress();
-    return 0.;
+    return myTrialStress;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialTemperature()
+    \brief GetTrialTemperature()
 */
 // ============================================================================
-Standard_Real MCLM1d_Generic::GetTrialTemperature()
+Standard_Real UCrM_Model::GetTrialTemperature()
 {
     return myTrialTemperature;
 }
 
 // ============================================================================
 /*!
- *  \brief GetTrialTime()
+    \brief GetTrialTime()
 */
 // ============================================================================
-Standard_Real MCLM1d_Generic::GetTrialTime()
+Standard_Real UCrM_Model::GetTrialTime()
 {
     return myTrialTime;
 }
 
 // ============================================================================
 /*!
- *  \brief RevertToCommitState()
+    \brief MustBeUpdated()
 */
 // ============================================================================
-Standard_Boolean MCLM1d_Generic::RevertToCommitState()
+Standard_Boolean UCrM_Model::MustBeUpdated()
 {
-    // revert sub-models
-    if(!myCreepModel.IsNull())
-        myCreepModel->RevertToCommitState();
-    if(!myStressStrainModel.IsNull())
-        myStressStrainModel->RevertToCommitState();
-    if(!myThermalModel.IsNull())
-        myThermalModel->RevertToCommitState();
-    // revert internal variables
+    return myMustBeUpdated;
+}
+
+// ============================================================================
+/*!
+    \brief RevertToCommitState()
+*/
+// ============================================================================
+Standard_Boolean UCrM_Model::RevertToCommitState()
+{
     myTrialStrain = myCommitStrain;
+    myTrialStress = myCommitStress;
     myTrialTemperature = myCommitTemperature;
     myTrialTime = myCommitTime;
     return Standard_True;
@@ -142,23 +164,17 @@ Standard_Boolean MCLM1d_Generic::RevertToCommitState()
 
 // ============================================================================
 /*!
- *  \brief RevertToInitialState()
+    \brief RevertToInitialState()
 */
 // ============================================================================
-Standard_Boolean MCLM1d_Generic::RevertToInitialState()
+Standard_Boolean UCrM_Model::RevertToInitialState()
 {
-    // revert sub-models
-    if(!myCreepModel.IsNull())
-        myCreepModel->RevertToInitialState();
-    if(!myStressStrainModel.IsNull())
-        myStressStrainModel->RevertToInitialState();
-    if(!myThermalModel.IsNull())
-        myThermalModel->RevertToInitialState();
-    // revert internal variables
     myCommitStrain = 0.;
+    myCommitStress = 0.;
     myCommitTemperature = 0.;
     myCommitTime = 0.;
     myTrialStrain = 0.;
+    myTrialStress = 0.;
     myTrialTemperature = 0.;
     myTrialTime = 0.;
     return Standard_True;
@@ -166,53 +182,44 @@ Standard_Boolean MCLM1d_Generic::RevertToInitialState()
 
 // ============================================================================
 /*!
- *  \brief SetTrialStrain()
+    \brief SetTrialStress()
 */
 // ============================================================================
-Standard_Boolean MCLM1d_Generic::SetTrialStrain(const Standard_Real theStrain)
+Standard_Boolean UCrM_Model::SetTrialStress(const Standard_Real theStress)
 {
-    myTrialStrain = theStrain;
-    return UpdateInternalState();
+    myTrialStress = theStress;
+    myMustBeUpdated = Standard_True;
+    return Standard_True;
 }
 
 // ============================================================================
 /*!
- *  \brief SetTrialTemperature()
+    \brief SetTrialTemperature()
 */
 // ============================================================================
-Standard_Boolean MCLM1d_Generic::SetTrialTemperature(const Standard_Real theTemperature)
+Standard_Boolean UCrM_Model::SetTrialTemperature(const Standard_Real theTemperature)
 {
     myTrialTemperature = theTemperature;
-    return UpdateInternalState();
+    myMustBeUpdated = Standard_True;
+    return Standard_True;
 }
 
 // ============================================================================
 /*!
- *  \brief SetTrialTime()
+    \brief SetTrialTime()
 */
 // ============================================================================
-Standard_Boolean MCLM1d_Generic::SetTrialTime(const Standard_Real theTime)
+Standard_Boolean UCrM_Model::SetTrialTime(const Standard_Real theTime)
 {
     myTrialTime = theTime;
-    return UpdateInternalState();
-}
-
-// ============================================================================
-/*!
- *  \brief UpdateInternalState()
- *  The model must solve internally for creep, mechanical and thermal
- *  displacements based on the current trial strain.
-*/
-// ============================================================================
-Standard_Boolean MCLM1d_Generic::UpdateInternalState()
-{
-
+    myMustBeUpdated = Standard_True;
+    return Standard_True;
 }
 
 
 // ****************************************************************************
 // HANDLES
 // ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(MCLM1d_Generic, MCLM1d_Model)
-IMPLEMENT_STANDARD_RTTIEXT(MCLM1d_Generic, MCLM1d_Model)
+IMPLEMENT_STANDARD_HANDLE(UCrM_Model, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(UCrM_Model, Standard_Transient)
 

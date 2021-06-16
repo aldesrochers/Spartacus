@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-// Spartacus
-#include <CRSA_SpanGeometry.hxx>
+// MCLM1d
+#include <UThM_Linear.hxx>
 
 
 // ============================================================================
@@ -29,9 +29,9 @@
     \brief Constructor
 */
 // ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry()
-    : myLength(0.),
-      mySlope(0.)
+UThM_Linear::UThM_Linear(const Standard_Real Alpha)
+    : myAlpha(Alpha),
+      myT0(0.)
 {
 
 }
@@ -41,22 +41,10 @@ CRSA_SpanGeometry::CRSA_SpanGeometry()
     \brief Constructor
 */
 // ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength)
-    : myLength(theLength),
-      mySlope(0.)
-{
-
-}
-
-// ============================================================================
-/*!
-    \brief Constructor
-*/
-// ============================================================================
-CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength,
-                                     const Standard_Real theSlope)
-    : myLength(theLength),
-      mySlope(theSlope)
+UThM_Linear::UThM_Linear(const Standard_Real Alpha,
+                         const Standard_Real T0)
+    : myAlpha(Alpha),
+      myT0(T0)
 {
 
 }
@@ -66,47 +54,28 @@ CRSA_SpanGeometry::CRSA_SpanGeometry(const Standard_Real theLength,
     \brief Destructor
 */
 // ============================================================================
-CRSA_SpanGeometry::~CRSA_SpanGeometry()
+UThM_Linear::~UThM_Linear()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Length()
+    \brief UpdateInternalState()
 */
 // ============================================================================
-Standard_Real CRSA_SpanGeometry::Length() const
+Standard_Boolean UThM_Linear::UpdateInternalState()
 {
-    return myLength;
+    // update trial thermal deformation
+    myTrialStrain = myAlpha * (myTrialTemperature - myT0);
+    // set must be update flag
+    myMustBeUpdated = Standard_False;
+    return Standard_True;
 }
 
-// ============================================================================
-/*!
-    \brief Slope()
-*/
-// ============================================================================
-Standard_Real CRSA_SpanGeometry::Slope() const
-{
-    return mySlope;
-}
+// ****************************************************************************
+// HANDLES
+// ****************************************************************************
+IMPLEMENT_STANDARD_HANDLE(UThM_Linear, UThM_Model)
+IMPLEMENT_STANDARD_RTTIEXT(UThM_Linear, UThM_Model)
 
-// ============================================================================
-/*!
-    \brief SetLength()
-*/
-// ============================================================================
-void CRSA_SpanGeometry::SetLength(const Standard_Real theLength)
-{
-    myLength = theLength;
-}
-
-// ============================================================================
-/*!
-    \brief SetSlope()
-*/
-// ============================================================================
-void CRSA_SpanGeometry::SetSlope(const Standard_Real theSlope)
-{
-    mySlope = theSlope;
-}

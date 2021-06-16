@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __CRSA_SpanGeometry_hxx__
-#define __CRSA_SpanGeometry_hxx__
+#ifndef __matp_CableWireCreep01_hxx__
+#define __matp_CableWireCreep01_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
@@ -30,10 +30,15 @@
 
 // ============================================================================
 /*!
-    \brief CRSA_SpanGeometry
+    \brief matp_CableWireCreep01
+
+    Class implementation of parameters for material model "Creep01" which is
+    based on the approximate creep model proposed by the CIGRE/Electra
+    "Permanent elongation of conductors. Predictor equation and evaluation
+    methods"
 */
 // ============================================================================
-class CRSA_SpanGeometry
+class matp_CableWireCreep01
 {
 
 public:
@@ -42,26 +47,33 @@ public:
 
 public:
     // constructors
-    CRSA_SpanGeometry();
-    CRSA_SpanGeometry(const Standard_Real theLength);
-    CRSA_SpanGeometry(const Standard_Real theLength,
-                      const Standard_Real theSlope);
+    matp_CableWireCreep01();
+    matp_CableWireCreep01(const Standard_Real K,
+                          const Standard_Real Phi,
+                          const Standard_Real Alpha,
+                          const Standard_Real Mu);
     // destructors
-    ~CRSA_SpanGeometry();
+    ~matp_CableWireCreep01();
 
 public:
 
-    Standard_Real       Length() const;
-    Standard_Real       Slope() const;
+    Standard_Real       Alpha() const;
+    Standard_Real       K() const;
+    Standard_Real       Mu() const;
+    Standard_Real       Phi() const;
 
-    void                SetLength(const Standard_Real theLength);
-    void                SetSlope(const Standard_Real theSlope);
+    void        SetAlpha(const Standard_Real Alpha);
+    void        SetK(const Standard_Real K);
+    void        SetMu(const Standard_Real Mu);
+    void        SetPhi(const Standard_Real Phi);
 
 private:
 
-    Standard_Real   myLength;
-    Standard_Real   mySlope;
+    Standard_Real       myAlpha;
+    Standard_Real       myK;
+    Standard_Real       myMu;
+    Standard_Real       myPhi;
 
 };
 
-#endif  // __CRSA_SpanGeometry_hxx__
+#endif  // __matp_CableWireCreep01_hxx__

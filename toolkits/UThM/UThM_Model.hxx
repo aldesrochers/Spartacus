@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __CCLM1d_Model_hxx__
-#define __CCLM1d_Model_hxx__
+#ifndef __UThM_Model_hxx__
+#define __UThM_Model_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
@@ -29,43 +29,54 @@
 #include <Standard_Transient.hxx>
 
 // Forward declarations
-class CCLM1d_Model;
+class UThM_Model;
 
 // Handles
-DEFINE_STANDARD_HANDLE(CCLM1d_Model, Standard_Transient);
+DEFINE_STANDARD_HANDLE(UThM_Model, Standard_Transient);
 
 
 // ============================================================================
 /*!
-    \brief CCLM1d_Model
+    \brief UThM_Model
 */
 // ============================================================================
-class CCLM1d_Model : public Standard_Transient
+class UThM_Model : public Standard_Transient
 {
 
 public:
     // constructors
-    CCLM1d_Model();
+    UThM_Model();
     // destructors
-    ~CCLM1d_Model();
+    ~UThM_Model();
 
 public:
 
-    virtual Standard_Boolean    CommitState() = 0;
-    virtual Standard_Real       GetTrialStrain() = 0;
-    virtual Standard_Real       GetTrialStress() = 0;
-    virtual Standard_Real       GetTrialTemperature() = 0;
-    virtual Standard_Real       GetTrialTime() = 0;
-    virtual Standard_Boolean    RevertToCommitState() = 0;
-    virtual Standard_Boolean    RevertToInitialState() = 0;
-    virtual Standard_Boolean    SetTrialStress(const Standard_Real theStress) = 0;
-    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) = 0;
-    virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime) = 0;
+    virtual Standard_Boolean    CommitState();
+    virtual Standard_Real       GetCommitStrain();
+    virtual Standard_Real       GetCommitTemperature();
+    virtual Standard_Real       GetTrialStrain();
+    virtual Standard_Real       GetTrialTemperature();
+    virtual Standard_Boolean    MustBeUpdated();
+    virtual Standard_Boolean    RevertToCommitState();
+    virtual Standard_Boolean    RevertToInitialState();
+    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature);
+    virtual Standard_Boolean    UpdateInternalState() = 0;
+
+protected:
+
+    // Internal state
+    Standard_Real               myMustBeUpdated;
+
+    // History
+    Standard_Real               myCommitStrain;
+    Standard_Real               myCommitTemperature;
+    Standard_Real               myTrialStrain;
+    Standard_Real               myTrialTemperature;
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(CCLM1d_Model, Standard_Transient);
+    DEFINE_STANDARD_RTTIEXT(UThM_Model, Standard_Transient);
 
 };
 
-#endif  // __CCLM1d_Model_hxx__
+#endif  // __UThM_Model_hxx__
