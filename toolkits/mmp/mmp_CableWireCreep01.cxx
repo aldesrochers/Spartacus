@@ -20,7 +20,7 @@
 // ============================================================================
 
 // cable
-#include <matp_CableWireCreep01.hxx>
+#include <mmp_CableWireCreep01.hxx>
 
 
 // ============================================================================
@@ -28,7 +28,7 @@
     \brief Constructor
 */
 // ============================================================================
-matp_CableWireCreep01::matp_CableWireCreep01()
+mmp_CableWireCreep01::mmp_CableWireCreep01()
     : myAlpha(0.), myK(0.), myMu(0.), myPhi(0.)
 {
 
@@ -39,7 +39,7 @@ matp_CableWireCreep01::matp_CableWireCreep01()
     \brief Constructor
 */
 // ============================================================================
-matp_CableWireCreep01::matp_CableWireCreep01(const Standard_Real K,
+mmp_CableWireCreep01::mmp_CableWireCreep01(const Standard_Real K,
                                              const Standard_Real Phi,
                                              const Standard_Real Alpha,
                                              const Standard_Real Mu)
@@ -53,7 +53,7 @@ matp_CableWireCreep01::matp_CableWireCreep01(const Standard_Real K,
     \brief Destructor
 */
 // ============================================================================
-matp_CableWireCreep01::~matp_CableWireCreep01()
+mmp_CableWireCreep01::~mmp_CableWireCreep01()
 {
 
 }
@@ -63,7 +63,7 @@ matp_CableWireCreep01::~matp_CableWireCreep01()
     \brief Alpha()
 */
 // ============================================================================
-Standard_Real matp_CableWireCreep01::Alpha() const
+Standard_Real mmp_CableWireCreep01::Alpha() const
 {
     return myAlpha;
 }
@@ -73,7 +73,7 @@ Standard_Real matp_CableWireCreep01::Alpha() const
     \brief K()
 */
 // ============================================================================
-Standard_Real matp_CableWireCreep01::K() const
+Standard_Real mmp_CableWireCreep01::K() const
 {
     return myK;
 }
@@ -83,7 +83,7 @@ Standard_Real matp_CableWireCreep01::K() const
     \brief Mu()
 */
 // ============================================================================
-Standard_Real matp_CableWireCreep01::Mu() const
+Standard_Real mmp_CableWireCreep01::Mu() const
 {
     return myMu;
 }
@@ -93,7 +93,7 @@ Standard_Real matp_CableWireCreep01::Mu() const
     \brief Phi()
 */
 // ============================================================================
-Standard_Real matp_CableWireCreep01::Phi() const
+Standard_Real mmp_CableWireCreep01::Phi() const
 {
     return myPhi;
 }
@@ -103,7 +103,7 @@ Standard_Real matp_CableWireCreep01::Phi() const
     \brief SetAlpha()
 */
 // ============================================================================
-void matp_CableWireCreep01::SetAlpha(const Standard_Real Alpha)
+void mmp_CableWireCreep01::SetAlpha(const Standard_Real Alpha)
 {
     myAlpha = Alpha;
 }
@@ -113,7 +113,7 @@ void matp_CableWireCreep01::SetAlpha(const Standard_Real Alpha)
     \brief SetK()
 */
 // ============================================================================
-void matp_CableWireCreep01::SetK(const Standard_Real K)
+void mmp_CableWireCreep01::SetK(const Standard_Real K)
 {
     myK = K;
 }
@@ -123,7 +123,7 @@ void matp_CableWireCreep01::SetK(const Standard_Real K)
     \brief SetMu()
 */
 // ============================================================================
-void matp_CableWireCreep01::SetMu(const Standard_Real Mu)
+void mmp_CableWireCreep01::SetMu(const Standard_Real Mu)
 {
     myMu = Mu;
 }
@@ -133,7 +133,7 @@ void matp_CableWireCreep01::SetMu(const Standard_Real Mu)
     \brief SetPhi()
 */
 // ============================================================================
-void matp_CableWireCreep01::SetPhi(const Standard_Real Phi)
+void mmp_CableWireCreep01::SetPhi(const Standard_Real Phi)
 {
     myPhi = Phi;
 }

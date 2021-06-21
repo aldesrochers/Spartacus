@@ -76,6 +76,16 @@ Standard_Boolean USSM_CableWire01::CommitState()
 
 // ============================================================================
 /*!
+ *  \brief GetInitialStiffness()
+*/
+// ============================================================================
+Standard_Real USSM_CableWire01::GetInitialStiffness()
+{
+    return PolynomialStiffness(0.);
+}
+
+// ============================================================================
+/*!
     \brief MenegottoStiffness()
 */
 // ============================================================================
@@ -195,10 +205,9 @@ Standard_Boolean USSM_CableWire01::UpdateInternalState()
         myCurrentMaxStress = myCommitStress;
         myIsInitialLoading = Standard_False;
     }
-
     // compute stress/stiffness
-    if(myTrialStrain > myCommitStrain) {
-        if(myTrialStrain > myCurrentMaxStrain && myIsInitialLoading == Standard_True) {
+    if(myTrialStrain >= myCommitStrain) {
+        if(myTrialStrain >= myCurrentMaxStrain && myIsInitialLoading == Standard_True) {
             myTrialStress = 1. * MonotonicStress(Abs(myTrialStrain));
             myTrialStiffness = 1. * MonotonicStiffness(Abs(myTrialStrain));
         } else {
@@ -210,10 +219,11 @@ Standard_Boolean USSM_CableWire01::UpdateInternalState()
             Standard_Real F = MenegottoStress(Eps);
             myTrialStress = F * (Sig0 - myCurrentMinStress)
                     + myCurrentMinStress;
-            myTrialStiffness = MenegottoStiffness(Eps);
+            myTrialStiffness = MenegottoStiffness(Eps)
+                    * (Sig0 - myCurrentMinStress)/(Eps0 - myCurrentMinStrain);
         }
     } else {
-        if(myTrialStrain < myCurrentMinStrain && myIsInitialLoading == Standard_True) {
+        if(myTrialStrain <= myCurrentMinStrain && myIsInitialLoading == Standard_True) {
             myTrialStress = -1. * MonotonicStress(Abs(myTrialStrain));
             myTrialStiffness = 1. * MonotonicStiffness(Abs(myTrialStrain));
         } else {
@@ -225,7 +235,8 @@ Standard_Boolean USSM_CableWire01::UpdateInternalState()
             Standard_Real F = MenegottoStress(Eps);
             myTrialStress = F * (Sig0 - myCurrentMaxStress)
                     + myCurrentMaxStress;
-            myTrialStiffness = MenegottoStiffness(Eps);
+            myTrialStiffness = MenegottoStiffness(Eps)
+                    * (Sig0 - myCurrentMaxStress)/(Eps0 - myCurrentMaxStrain);
         }
     }
 

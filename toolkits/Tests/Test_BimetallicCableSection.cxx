@@ -22,19 +22,15 @@
 #include <iostream>
 using namespace std;
 
-// Spartacus
-#include <CRSA_FindEmptyLength.hxx>
-#include <XSM_Elastic.hxx>
-#include <UMM_Elastic.hxx>
-#include <UThM_BiLinear.hxx>
-#include <USSM_CableWire02.hxx>
 #include <TColStd_SequenceOfReal.hxx>
-#include <mmp_CableCreep01.hxx>
+
+// Spartacus
+#include <XSM_BimetallicCable01.hxx>
+#include <UCrM_CableCreep01.hxx>
 #include <USSM_CableWire01.hxx>
 #include <UThM_Linear.hxx>
-#include <UCrM_CableCreep01.hxx>
-#include <XSM_BimetallicCable01.hxx>
-#include <FLib_Catenary.hxx>
+
+#include <mmp_CableCreep01.hxx>
 
 
 // ============================================================================
@@ -44,15 +40,16 @@ using namespace std;
 // ============================================================================
 int main(int argc, char** argv)
 {
+
     mmp_CableCreep01 creepParameters;
     creepParameters.SetSig0(0.);
     creepParameters.SetSig1(6.019E7);
     creepParameters.SetSig2(9.631E7);
     creepParameters.SetSig3(1.685E8);
     creepParameters.SetA0(0.);
-    creepParameters.SetA1(0.00004451);
-    creepParameters.SetA2(0.00007196);
-    creepParameters.SetA3(0.00039655);
+    creepParameters.SetA1(0.004451);
+    creepParameters.SetA2(0.007196);
+    creepParameters.SetA3(0.039655);
     creepParameters.SetB0(0.20222);
     creepParameters.SetB1(0.22186);
     creepParameters.SetB2(0.23364);
@@ -65,8 +62,8 @@ int main(int argc, char** argv)
     Handle(USSM_CableWire01) aStressStrainModel2 =
             new USSM_CableWire01(3.804E10, 5.939E10, 0.0065, 0., 1., 9.898E1, -5.948E4, 5.306E6, 0., 10.);
 
-    Handle(UThM_Linear) aThermalModel1 = new UThM_Linear(1.15E-5, 21.);
-    Handle(UThM_Linear) aThermalModel2 = new UThM_Linear(2.3E-5, 21.);
+    Handle(UThM_Linear) aThermalModel1 = new UThM_Linear(0.0000, 20.);
+    Handle(UThM_Linear) aThermalModel2 = new UThM_Linear(0.0000, 20.);
 
     Handle(UCrM_CableCreep01) aCreepModel = new UCrM_CableCreep01(creepParameters);
 
@@ -78,55 +75,40 @@ int main(int argc, char** argv)
                                                                      aThermalModel2,
                                                                      aCreepModel);
 
-    CRSA_SpanGeometry aGeometry(219.422);
-
-    CRSA_LoadCase aLoadCase1(23.23, -30);
-    CRSA_LoadCase aLoadCase2(127.8, -10.);
 
 
-    CRSA_FindEmptyLength anAnalysis(aGeometry, aModel);
-    anAnalysis.AddSaggingHistory(0., aLoadCase1, 44956.);
-    anAnalysis.AddSaggingHistory(0., aLoadCase2, 134706.);
 
-    Standard_Real S0 = anAnalysis.EmptyLength();
-    aModel->RevertToInitialState();
-
-    cout << aModel->GetTrialStrain() << " " << aModel->GetTrialForce() << endl;
-
-
-    Standard_Real H1 = 105300;
-    Standard_Real S1 = FLib_Catenary::S(H1, 127.8, 219.422, 0.);
-    Standard_Real TM1 = FLib_Catenary::TM(H1, 127.8, 219.422, 0.);
-    Standard_Real Eps1 = S1/S0 - 1.;
-    aModel->SetTrialStrain(Eps1);
-    aModel->SetTrialTime(0.);
-    aModel->SetTrialTemperature(-10.);
-    aModel->UpdateInternalState();
-    cout << aModel->GetTrialStrain() << " " << aModel->GetTrialForce() << endl;
-    aModel->CommitState();
-
-    Standard_Real H2 = 26525;
-    Standard_Real S2 = FLib_Catenary::S(H2, 23.23, 219.422, 0.);
-    Standard_Real TM2 = FLib_Catenary::TM(H2, 23.23, 219.422, 0.);
-    Standard_Real Eps2 = S2/S0 - 1.;
-    aModel->SetTrialStrain(Eps2);
-    aModel->SetTrialTime(0.);
+    // Initialize creep model
+    aModel->SetTrialStrain(0.005);
     aModel->SetTrialTemperature(20.);
+    aModel->SetTrialTime(1000.);
     aModel->UpdateInternalState();
-    cout << aModel->GetTrialStrain() << " " << aModel->GetTrialForce() << endl;
+    //cout << aModel->GetTrialForce() << endl;
     aModel->CommitState();
 
-    Standard_Real H3 = 24850;
-    Standard_Real S3 = FLib_Catenary::S(H3, 23.23, 219.422, 0.);
-    Standard_Real TM3 = FLib_Catenary::TM(H3, 23.23, 219.422, 0.);
-    Standard_Real Eps3 = S3/S0 - 1.;
-    aModel->SetTrialStrain(Eps3);
-    aModel->SetTrialTime(87660.);
-    aModel->SetTrialTemperature(20.);
-    aModel->UpdateInternalState();
-    cout << aModel->GetTrialStrain() << " " << aModel->GetTrialForce() << endl;
-    aModel->CommitState();
 
+
+    TColStd_SequenceOfReal aList;
+    aList.Append(0.002);
+    aList.Append(0.003);
+    aList.Append(0.004);
+    aList.Append(0.005);
+    aList.Append(0.006);
+    aList.Append(0.004);
+
+
+    //TColStd_SequenceOfReal::Iterator anIt(aList);
+    //Standard_Integer N = 0;
+    //for(; anIt.More(); anIt.Next()) {
+    //    aModel->SetTrialStrain(anIt.Value());
+    //    aModel->SetTrialTemperature(20.);
+    //    aModel->SetTrialTime(100.);
+    //    aModel->UpdateInternalState();
+    //    cout << aModel->GetTrialForce() << endl;
+    //    aModel->CommitState();
+    //
+    //    N += 1;
+    //}
 
 }
 

@@ -20,7 +20,7 @@
 // ============================================================================
 
 // cable
-#include <matp_WireStressStrain01.hxx>
+#include <mmp_CableCreep01.hxx>
 
 
 // ============================================================================
@@ -28,35 +28,7 @@
     \brief Constructor
 */
 // ============================================================================
-matp_WireStressStrain01::matp_WireStressStrain01()
-    : myEi(0.), myEf(0.),
-      myA0(0.), myA1(0.), myA2(0.), myA3(0.), myA4(0.), myA5(0.), myA6(0.),
-      myEpsMax(0.),
-      myR(0.)
-{
-
-}
-
-// ============================================================================
-/*!
-    \brief Constructor
-*/
-// ============================================================================
-matp_WireStressStrain01::matp_WireStressStrain01(const Standard_Real Ei,
-                                                 const Standard_Real Ef,
-                                                 const Standard_Real A0,
-                                                 const Standard_Real A1,
-                                                 const Standard_Real A2,
-                                                 const Standard_Real A3,
-                                                 const Standard_Real A4,
-                                                 const Standard_Real A5,
-                                                 const Standard_Real A6,
-                                                 const Standard_Real EpsMax,
-                                                 const Standard_Real R)
-    : myEi(Ei), myEf(Ef),
-      myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(A5), myA6(A6),
-      myEpsMax(EpsMax),
-      myR(R)
+mmp_CableCreep01::mmp_CableCreep01()
 {
 
 }
@@ -66,217 +38,287 @@ matp_WireStressStrain01::matp_WireStressStrain01(const Standard_Real Ei,
     \brief Destructor
 */
 // ============================================================================
-matp_WireStressStrain01::~matp_WireStressStrain01()
+mmp_CableCreep01::~mmp_CableCreep01()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief A0()
+ *  \brief A0()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::A0() const
+Standard_Real mmp_CableCreep01::A0() const
 {
     return myA0;
 }
 
 // ============================================================================
 /*!
-    \brief A1()
+ *  \brief A1()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::A1() const
+Standard_Real mmp_CableCreep01::A1() const
 {
     return myA1;
 }
 
 // ============================================================================
 /*!
-    \brief A2()
+ *  \brief A2()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::A2() const
+Standard_Real mmp_CableCreep01::A2() const
 {
     return myA2;
 }
 
 // ============================================================================
 /*!
-    \brief A3()
+ *  \brief A3()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::A3() const
+Standard_Real mmp_CableCreep01::A3() const
 {
     return myA3;
 }
 
 // ============================================================================
 /*!
-    \brief A4()
+ *  \brief B0()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::A4() const
+Standard_Real mmp_CableCreep01::B0() const
 {
-    return myA4;
+    return myB0;
 }
 
 // ============================================================================
 /*!
-    \brief A5()
+ *  \brief B1()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::A5() const
+Standard_Real mmp_CableCreep01::B1() const
 {
-    return myA5;
+    return myB1;
 }
 
 // ============================================================================
 /*!
-    \brief A6()
+ *  \brief B2()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::A6() const
+Standard_Real mmp_CableCreep01::B2() const
 {
-    return myA6;
+    return myB2;
 }
 
 // ============================================================================
 /*!
-    \brief Ef()
+ *  \brief B3()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::Ef() const
+Standard_Real mmp_CableCreep01::B3() const
 {
-    return myEf;
+    return myB3;
 }
 
 // ============================================================================
 /*!
-    \brief Ei()
+ *  \brief Phi()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::Ei() const
+Standard_Real mmp_CableCreep01::Phi() const
 {
-    return myEi;
+    return myPhi;
 }
 
 // ============================================================================
 /*!
-    \brief EpsMax()
+ *  \brief Sig0()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::EpsMax() const
+Standard_Real mmp_CableCreep01::Sig0() const
 {
-    return myEpsMax;
+    return mySig0;
 }
 
 // ============================================================================
 /*!
-    \brief R()
+ *  \brief Sig1()
 */
 // ============================================================================
-Standard_Real matp_WireStressStrain01::R() const
+Standard_Real mmp_CableCreep01::Sig1() const
 {
-    return myR;
+    return mySig1;
 }
 
 // ============================================================================
 /*!
-    \brief SetA0()
+ *  \brief Sig2()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetA0(const Standard_Real A0)
+Standard_Real mmp_CableCreep01::Sig2() const
+{
+    return mySig2;
+}
+
+// ============================================================================
+/*!
+ *  \brief Sig3()
+*/
+// ============================================================================
+Standard_Real mmp_CableCreep01::Sig3() const
+{
+    return mySig3;
+}
+
+// ============================================================================
+/*!
+ *  \brief T0()
+*/
+// ============================================================================
+Standard_Real mmp_CableCreep01::T0() const
+{
+    return myT0;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetA0()
+*/
+// ============================================================================
+void mmp_CableCreep01::SetA0(const Standard_Real A0)
 {
     myA0 = A0;
 }
 
 // ============================================================================
 /*!
-    \brief SetA1()
+ *  \brief SetA1()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetA1(const Standard_Real A1)
+void mmp_CableCreep01::SetA1(const Standard_Real A1)
 {
     myA1 = A1;
 }
 
 // ============================================================================
 /*!
-    \brief SetA2()
+ *  \brief SetA0()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetA2(const Standard_Real A2)
+void mmp_CableCreep01::SetA2(const Standard_Real A2)
 {
     myA2 = A2;
 }
 
 // ============================================================================
 /*!
-    \brief SetA3()
+ *  \brief SetA3()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetA3(const Standard_Real A3)
+void mmp_CableCreep01::SetA3(const Standard_Real A3)
 {
     myA3 = A3;
 }
 
 // ============================================================================
 /*!
-    \brief SetA4()
+ *  \brief SetB0()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetA4(const Standard_Real A4)
+void mmp_CableCreep01::SetB0(const Standard_Real B0)
 {
-    myA4 = A4;
+    myB0 = B0;
 }
 
 // ============================================================================
 /*!
-    \brief SetA5()
+ *  \brief SetB1()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetA5(const Standard_Real A5)
+void mmp_CableCreep01::SetB1(const Standard_Real B1)
 {
-    myA5 = A5;
+    myB1 = B1;
 }
 
 // ============================================================================
 /*!
-    \brief SetA6()
+ *  \brief SetB2()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetA6(const Standard_Real A6)
+void mmp_CableCreep01::SetB2(const Standard_Real B2)
 {
-    myA6 = A6;
+    myB2 = B2;
 }
 
 // ============================================================================
 /*!
-    \brief SetEi()
+ *  \brief SetB3()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetEf(const Standard_Real Ef)
+void mmp_CableCreep01::SetB3(const Standard_Real B3)
 {
-    myEf = Ef;
+    myB3 = B3;
 }
 
 // ============================================================================
 /*!
-    \brief SetEf()
+ *  \brief SetPhi()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetEi(const Standard_Real Ei)
+void mmp_CableCreep01::SetPhi(const Standard_Real Phi)
 {
-    myEi = Ei;
+    myPhi = Phi;
 }
 
 // ============================================================================
 /*!
-    \brief SetR()
+ *  \brief SetSig0()
 */
 // ============================================================================
-void matp_WireStressStrain01::SetR(const Standard_Real R)
+void mmp_CableCreep01::SetSig0(const Standard_Real Sig0)
 {
-    myR = R;
+    mySig0 = Sig0;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetSig1()
+*/
+// ============================================================================
+void mmp_CableCreep01::SetSig1(const Standard_Real Sig1)
+{
+    mySig1 = Sig1;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetSig2()
+*/
+// ============================================================================
+void mmp_CableCreep01::SetSig2(const Standard_Real Sig2)
+{
+    mySig2 = Sig2;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetSig3()
+*/
+// ============================================================================
+void mmp_CableCreep01::SetSig3(const Standard_Real Sig3)
+{
+    mySig3 = Sig3;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetT0()
+*/
+// ============================================================================
+void mmp_CableCreep01::SetT0(const Standard_Real T0)
+{
+    myT0 = T0;
 }

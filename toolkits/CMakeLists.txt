@@ -28,8 +28,9 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/CRSA
     ${CMAKE_CURRENT_SOURCE_DIR}/FE
     ${CMAKE_CURRENT_SOURCE_DIR}/FLib
-    ${CMAKE_CURRENT_SOURCE_DIR}/matp
+    ${CMAKE_CURRENT_SOURCE_DIR}/mmp
     ${CMAKE_CURRENT_SOURCE_DIR}/UCrM
+    ${CMAKE_CURRENT_SOURCE_DIR}/UCrMP
     ${CMAKE_CURRENT_SOURCE_DIR}/UThM
     ${CMAKE_CURRENT_SOURCE_DIR}/UMM
     ${CMAKE_CURRENT_SOURCE_DIR}/USSM
@@ -44,6 +45,7 @@ set(StkFEData_LinkedLibraries
     ${OpenCASCADE_FoundationClasses_LIBRARIES}
 )
 
+#[[
 set(StkFEData_Headers
     CRSA/CRSA_Command.hxx
     CRSA/CRSA_Error.hxx
@@ -54,9 +56,11 @@ set(StkFEData_Headers
     FE/FE_Domain.hxx
     FE/FE_Node.hxx
     FLib/FLib_Catenary.hxx
-    matp/matp_CableWireCreep01.hxx
-    matp/matp_Elastic.hxx
-    matp/matp_WireStressStrain01.hxx
+    mmp/mmp_CableCreep01.hxx
+    mmp/mmp_CableWireCreep01.hxx
+    mmp/mmp_Elastic.hxx
+    mmp/mmp_CableWireStressStrain01.hxx
+    UCrM/UCrM_CableCreep01.hxx
     UCrM/UCrM_CableWire01.hxx
     UCrM/UCrM_Model.hxx
     UThM/UThM_BiLinear.hxx
@@ -69,6 +73,7 @@ set(StkFEData_Headers
     USSM/USSM_CableWire02.hxx
     USSM/USSM_Elastic.hxx
     USSM/USSM_Model.hxx
+    XSM/XSM_BimetallicCable01.hxx
     XSM/XSM_Elastic.hxx
     XSM/XSM_Model.hxx
 )
@@ -81,9 +86,11 @@ set(StkFEData_Sources
     FE/FE_Domain.cxx
     FE/FE_Node.cxx
     FLib/FLib_Catenary.cxx
-    matp/matp_CableWireCreep01.cxx
-    matp/matp_Elastic.cxx
-    matp/matp_WireStressStrain01.cxx
+    mmp/mmp_CableCreep01.cxx
+    mmp/mmp_CableWireCreep01.cxx
+    mmp/mmp_Elastic.cxx
+    mmp/mmp_CableWireStressStrain01.cxx
+    UCrM/UCrM_CableCreep01.cxx
     UCrM/UCrM_CableWire01.cxx
     UCrM/UCrM_Model.cxx
     UThM/UThM_BiLinear.cxx
@@ -96,10 +103,26 @@ set(StkFEData_Sources
     USSM/USSM_CableWire02.cxx
     USSM/USSM_Elastic.cxx
     USSM/USSM_Model.cxx
+    XSM/XSM_BimetallicCable01.cxx
     XSM/XSM_Elastic.cxx
     XSM/XSM_Model.cxx
 )
+#]]
 
-#add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})
-add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_SaggingAnalysis.cxx)
+
+set(StkFEData_Headers
+    UCrM/UCrM_Model.hxx
+    UCrMP/UCrMP_CableWire01.hxx
+)
+
+set(StkFEData_Sources
+    UCrM/UCrM_Model.cxx
+    UCrMP/UCrMP_CableWire01.cxx
+)
+
+add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})
+#add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_CableCreep01.cxx)
+#add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_CableWire01.cxx)
+#add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_BimetallicCableSection.cxx)
+#add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_SaggingAnalysis.cxx)
 target_link_libraries(StkFEData ${StkFEData_LinkedLibraries})

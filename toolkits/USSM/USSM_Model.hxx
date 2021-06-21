@@ -55,6 +55,7 @@ public:
     virtual Standard_Real       GetCommitStiffness();
     virtual Standard_Real       GetCommitStrain();
     virtual Standard_Real       GetCommitStress();
+    virtual Standard_Real       GetInitialStiffness() = 0;
     virtual Standard_Real       GetTrialStiffness();
     virtual Standard_Real       GetTrialStrain();
     virtual Standard_Real       GetTrialStress();

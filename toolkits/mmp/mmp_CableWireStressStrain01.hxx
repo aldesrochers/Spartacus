@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __matp_WireStressStrain01_hxx__
-#define __matp_WireStressStrain01_hxx__
+#ifndef __mmp_CableWireStressStrain01_hxx__
+#define __mmp_CableWireStressStrain01_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
@@ -30,13 +30,13 @@
 
 // ============================================================================
 /*!
-    \brief matp_WireStressStrain01
+    \brief mmp_CableWireStressStrain01
     Class implementation of the parameters of a cable wire stress-strain
     model. The 01 model is composed of a generic polynomial loading curve
     and a menegotto-pinto unloading/reloading curve.
 */
 // ============================================================================
-class matp_WireStressStrain01
+class mmp_CableWireStressStrain01
 {
 
 public:
@@ -45,20 +45,20 @@ public:
 
 public:
     // constructors
-    matp_WireStressStrain01();
-    matp_WireStressStrain01(const Standard_Real Ei,
-                            const Standard_Real Ef,
-                            const Standard_Real A0,
-                            const Standard_Real A1,
-                            const Standard_Real A2,
-                            const Standard_Real A3,
-                            const Standard_Real A4,
-                            const Standard_Real A5,
-                            const Standard_Real A6,
-                            const Standard_Real EpsMax,
-                            const Standard_Real R);
+    mmp_CableWireStressStrain01();
+    mmp_CableWireStressStrain01(const Standard_Real Ei,
+                                const Standard_Real Ef,
+                                const Standard_Real A0,
+                                const Standard_Real A1,
+                                const Standard_Real A2,
+                                const Standard_Real A3,
+                                const Standard_Real A4,
+                                const Standard_Real A5,
+                                const Standard_Real A6,
+                                const Standard_Real EpsMax,
+                                const Standard_Real R);
     // destructors
-    ~matp_WireStressStrain01();
+    ~mmp_CableWireStressStrain01();
 
 public:
 
@@ -109,4 +109,4 @@ private:
 
 };
 
-#endif  // __matp_WireStressStrain01_hxx__
+#endif  // __mmp_CableWireStressStrain01_hxx__

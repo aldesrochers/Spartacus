@@ -67,6 +67,7 @@ public:
 public:
 
     virtual Standard_Boolean    CommitState();
+    virtual Standard_Real       GetInitialStiffness() Standard_OVERRIDE;
     virtual Standard_Boolean    RevertToInitialState();
     virtual Standard_Boolean    UpdateInternalState();
 

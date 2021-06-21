@@ -22,9 +22,11 @@
 #include <iostream>
 using namespace std;
 
+// Spartacus
+#include <USSM_CableWire01.hxx>
+
+// OpenCascade
 #include <TColStd_SequenceOfReal.hxx>
-#include <mmp_CableCreep01.hxx>
-#include <UCrM_CableCreep01.hxx>
 
 
 
@@ -36,55 +38,44 @@ using namespace std;
 // ============================================================================
 int main(int argc, char** argv)
 {
-    mmp_CableCreep01 Params;
 
-    Params.SetSig0(0.);
-    Params.SetSig1(6.019E7);
-    Params.SetSig2(9.631E7);
-    Params.SetSig3(1.685E8);
-
-    Params.SetA0(0.);
-    Params.SetA1(0.00004451);
-    Params.SetA2(0.00007196);
-    Params.SetA3(0.00039655);
-
-    Params.SetB0(0.20222);
-    Params.SetB1(0.22186);
-    Params.SetB2(0.23364);
-    Params.SetB3(0.16245);
-
-    Params.SetT0(20.);
-    Params.SetPhi(0.0);
-
-    Handle(UCrM_CableCreep01) aModel = new UCrM_CableCreep01(Params);
-
-    Standard_Real Sig1 = 168.5E6;
-    Standard_Real Temp = 20.;
+    Handle(USSM_CableWire01) aModel =
+            new USSM_CableWire01(1.641E11, 1.882E11, 0.0065, 0., 1., 1.217E1, -4.817E1, -5.939E5, 0., 10.);
 
 
     TColStd_SequenceOfReal aList;
-    aList.Append(0.);
-    aList.Append(100.);
-    aList.Append(500.);
-    aList.Append(1000.);
-    aList.Append(2000.);
-    aList.Append(3000.);
-    aList.Append(4000.);
-    aList.Append(5000.);
-    aList.Append(6000.);
-    aList.Append(7000.);
-    aList.Append(8000.);
-    aList.Append(9000.);
-    aList.Append(10000.);
+    aList.Append(0.0);
+    aList.Append(0.001);
+    aList.Append(0.002);
+    aList.Append(0.003);
+    aList.Append(0.004);
+    aList.Append(0.005);
+    aList.Append(0.006);
+    aList.Append(0.005);
+    aList.Append(0.004);
+    aList.Append(0.003);
+    aList.Append(0.002);
+    aList.Append(0.001);
+    aList.Append(0.0);
+    aList.Append(-0.001);
+    aList.Append(-0.002);
+    aList.Append(-0.003);
+    aList.Append(-0.004);
+    aList.Append(-0.005);
+    aList.Append(-0.006);
+    aList.Append(-0.007);
+    aList.Append(-0.008);
+    aList.Append(-0.009);
+    aList.Append(-0.010);
+
+
 
 
     TColStd_SequenceOfReal::Iterator anIt(aList);
     for(; anIt.More(); anIt.Next()) {
-        aModel->SetTrialStress(Sig1);
-        aModel->SetTrialTemperature(Temp);
-        aModel->SetTrialTime(anIt.Value());
+        aModel->SetTrialStrain(anIt.Value());
         aModel->UpdateInternalState();
-        cout << aModel->GetTrialStrain() << endl;
+        cout << aModel->GetTrialStress()<< endl;
         aModel->CommitState();
 
 

@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __matp_Elastic_hxx__
-#define __matp_Elastic_hxx__
+#ifndef __mmp_Elastic_hxx__
+#define __mmp_Elastic_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
@@ -30,7 +30,7 @@
 
 // ============================================================================
 /*!
-    \brief matp_Elastic
+    \brief mmp_Elastic
 
     Class implementation of parameters for material model "Creep01" which is
     based on the approximate creep model proposed by the CIGRE/Electra
@@ -38,7 +38,7 @@
     methods"
 */
 // ============================================================================
-class matp_Elastic
+class mmp_Elastic
 {
 
 public:
@@ -47,11 +47,11 @@ public:
 
 public:
     // constructors
-    matp_Elastic();
-    matp_Elastic(const Standard_Real E);
-    matp_Elastic(const Standard_Real E, const Standard_Real Nu);
+    mmp_Elastic();
+    mmp_Elastic(const Standard_Real E);
+    mmp_Elastic(const Standard_Real E, const Standard_Real Nu);
     // destructors
-    ~matp_Elastic();
+    ~mmp_Elastic();
 
 public:
 
@@ -68,4 +68,4 @@ private:
 
 };
 
-#endif  // __matp_Elastic_hxx__
+#endif  // __mmp_Elastic_hxx__

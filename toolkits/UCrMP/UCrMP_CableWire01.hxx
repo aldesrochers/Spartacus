@@ -20,25 +20,23 @@
 // ============================================================================
 
 
-#ifndef __matp_CableWireCreep01_hxx__
-#define __matp_CableWireCreep01_hxx__
+#ifndef __UCrMP_CableWire01_hxx__
+#define __UCrMP_CableWire01_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
 #include <Standard_DefineAlloc.hxx>
+#include <Standard_Real.hxx>
 
 
 // ============================================================================
 /*!
-    \brief matp_CableWireCreep01
-
-    Class implementation of parameters for material model "Creep01" which is
-    based on the approximate creep model proposed by the CIGRE/Electra
-    "Permanent elongation of conductors. Predictor equation and evaluation
-    methods"
+ *  \brief UCrMP_CableWire01
+ *  Class implementation of uniaxial law parameters of creep model
+ *  CableWire01.
 */
 // ============================================================================
-class matp_CableWireCreep01
+class UCrMP_CableWire01
 {
 
 public:
@@ -47,33 +45,38 @@ public:
 
 public:
     // constructors
-    matp_CableWireCreep01();
-    matp_CableWireCreep01(const Standard_Real K,
-                          const Standard_Real Phi,
-                          const Standard_Real Alpha,
-                          const Standard_Real Mu);
+    UCrMP_CableWire01();
     // destructors
-    ~matp_CableWireCreep01();
+    ~UCrMP_CableWire01();
 
 public:
 
-    Standard_Real       Alpha() const;
-    Standard_Real       K() const;
-    Standard_Real       Mu() const;
-    Standard_Real       Phi() const;
+    Standard_Real           A1() const;
+    Standard_Real           A2() const;
+    Standard_Real           A3() const;
+    Standard_Real           B1() const;
+    Standard_Real           B2() const;
+    Standard_Real           B3() const;
+    Standard_Real           C() const;
 
-    void        SetAlpha(const Standard_Real Alpha);
-    void        SetK(const Standard_Real K);
-    void        SetMu(const Standard_Real Mu);
-    void        SetPhi(const Standard_Real Phi);
+    void                    SetA1(const Standard_Real A1);
+    void                    SetA2(const Standard_Real A2);
+    void                    SetA3(const Standard_Real A3);
+    void                    SetB1(const Standard_Real B1);
+    void                    SetB2(const Standard_Real B2);
+    void                    SetB3(const Standard_Real B3);
+    void                    SetC(const Standard_Real C);
 
 private:
 
-    Standard_Real       myAlpha;
-    Standard_Real       myK;
-    Standard_Real       myMu;
-    Standard_Real       myPhi;
+    Standard_Real           myA1;
+    Standard_Real           myA2;
+    Standard_Real           myA3;
+    Standard_Real           myB1;
+    Standard_Real           myB2;
+    Standard_Real           myB3;
+    Standard_Real           myC;
 
 };
 
-#endif  // __matp_CableWireCreep01_hxx__
+#endif  // __UCrMP_CableWire01_hxx__

@@ -204,7 +204,7 @@ Standard_Boolean USSM_CableWire02::UpdateInternalState()
     }
 
     // compute stress/stiffness
-    if(myTrialStrain > myCommitStrain) {
+    if(myTrialStrain >= myCommitStrain) {
         if(myTrialStrain > myCurrentMaxStrain && myIsInitialLoading == Standard_True) {
             myTrialStress = 1. * MonotonicStress(Abs(myTrialStrain));
             myTrialStiffness = 1. * MonotonicStiffness(Abs(myTrialStrain));

@@ -53,17 +53,24 @@ public:
 public:
 
     virtual Standard_Boolean    CommitState() = 0;
+    virtual Standard_Real       GetCommitForce() = 0;
+    virtual Standard_Real       GetCommitStiffness() = 0;
+    virtual Standard_Real       GetCommitStrain() = 0;
+    virtual Standard_Real       GetCommitTemperature() = 0;
+    virtual Standard_Real       GetCommitTime() = 0;
     virtual Standard_Real       GetInitialStiffness() = 0;
     virtual Standard_Real       GetTrialForce() = 0;
     virtual Standard_Real       GetTrialStiffness() = 0;
     virtual Standard_Real       GetTrialStrain() = 0;
     virtual Standard_Real       GetTrialTemperature() = 0;
     virtual Standard_Real       GetTrialTime() = 0;
+    virtual Standard_Boolean    MustBeUpdated() = 0;
     virtual Standard_Boolean    RevertToCommitState() = 0;
     virtual Standard_Boolean    RevertToInitialState() = 0;
     virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) = 0;
     virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) = 0;
     virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime) = 0;
+    virtual Standard_Boolean    UpdateInternalState() = 0;
 
 public:
 

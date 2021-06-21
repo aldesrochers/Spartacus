@@ -38,7 +38,7 @@ CRSA_FindEmptyLength::CRSA_FindEmptyLength(const CRSA_SpanGeometry& theSpanGeome
                                            Handle(XSM_Model) theSectionModel)
     : mySectionModel(theSectionModel),
       mySpanGeometry(theSpanGeometry),
-      myNbIterations(100),
+      myNbIterations(1000),
       myPrecision(1E-6),
       myError(CRSA_NoError)
 {
@@ -116,7 +116,7 @@ void CRSA_FindEmptyLength::SetPrecision(const Standard_Real thePrecision)
 
 // ============================================================================
 /*!
-    \brief Solve()
+    \brief Solve()        cout << R << endl;
     Compute the cable empty length based on the provided sagging load history.
     Once completed, update the internal myEmptyLength variable.
 */
@@ -156,6 +156,7 @@ Standard_Boolean CRSA_FindEmptyLength::Solve()
     Standard_Real S0 = 0.;
     Standard_Real PreviousTime = 0.;
 
+
     for(int i=1; i<=mySequenceOfTimes.Length(); i++) {
 
         // retrieve history parameters
@@ -182,18 +183,24 @@ Standard_Boolean CRSA_FindEmptyLength::Solve()
 
         // compute cable deformation (Eps)
         // use a standard newton/raphson algorithm
-        Standard_Real Eps = 0.;
+        Standard_Real Eps = 0.0;
         mySectionModel->SetTrialTime(Time);
         mySectionModel->SetTrialTemperature(Temp);
         mySectionModel->SetTrialStrain(Eps);
+        mySectionModel->UpdateInternalState();
+
         Standard_Real Function = TMe - mySectionModel->GetTrialForce();
-        Standard_Real Derivative = mySectionModel->GetTrialStiffness();
+        Standard_Real Derivative = -1.0 * mySectionModel->GetTrialStiffness();
+
         Standard_Integer N = 0;
         while(Abs(Function) > myPrecision) {
             Eps = Eps - Function / Derivative;
+            mySectionModel->SetTrialTime(Time);
+            mySectionModel->SetTrialTemperature(Temp);
             mySectionModel->SetTrialStrain(Eps);
-            Function = mySectionModel->GetTrialForce();
-            Derivative = mySectionModel->GetTrialStiffness();
+            mySectionModel->UpdateInternalState();
+            Function = TMe - mySectionModel->GetTrialForce();
+            Derivative = -1.0 * mySectionModel->GetTrialStiffness();
             if(N >= myNbIterations) {
                 myError = CRSA_SolutionNotFound;
                 return Standard_False;
@@ -210,7 +217,7 @@ Standard_Boolean CRSA_FindEmptyLength::Solve()
         PreviousTime = Time;
 
         // commit section internal state
-        mySectionModel->CommitState();
+        mySectionModel->RevertToInitialState();
     }
 
     // set done flag, set internal result

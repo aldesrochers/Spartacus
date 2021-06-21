@@ -51,37 +51,28 @@ public:
 
 public:
 
-    virtual Standard_Boolean    CommitState();
-    virtual Standard_Real       GetCommitStrain();
-    virtual Standard_Real       GetCommitStress();
-    virtual Standard_Real       GetCommitTemperature();
-    virtual Standard_Real       GetCommitTime();
-    virtual Standard_Real       GetTrialStrain();
-    virtual Standard_Real       GetTrialStress();
-    virtual Standard_Real       GetTrialTemperature();
-    virtual Standard_Real       GetTrialTime();
-    virtual Standard_Boolean    MustBeUpdated();
-    virtual Standard_Boolean    RevertToCommitState();
-    virtual Standard_Boolean    RevertToInitialState();
-    virtual Standard_Boolean    SetTrialStress(const Standard_Real theStress);
-    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature);
-    virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime);
+    virtual Standard_Boolean    CommitState() = 0;
+    virtual Standard_Real       GetCommitStrain() = 0;
+    virtual Standard_Real       GetCommitStress() = 0;
+    virtual Standard_Real       GetCommitStressGrowthRate() = 0;
+    virtual Standard_Real       GetCommitTemperature() = 0;
+    virtual Standard_Real       GetCommitTemperatureGrowthRate() = 0;
+    virtual Standard_Real       GetCommitTime() = 0;
+    virtual Standard_Real       GetCommitTimeGrowthRate() = 0;
+    virtual Standard_Real       GetTrialStrain() = 0;
+    virtual Standard_Real       GetTrialStress() = 0;
+    virtual Standard_Real       GetTrialStressGrowthRate() = 0;
+    virtual Standard_Real       GetTrialTemperature() = 0;
+    virtual Standard_Real       GetTrialTemperatureGrowthRate() = 0;
+    virtual Standard_Real       GetTrialTime() = 0;
+    virtual Standard_Real       GetTrialTimeGrowthRate() = 0;
+    virtual Standard_Boolean    MustBeUpdated() = 0;
+    virtual Standard_Boolean    RevertToCommitState() = 0;
+    virtual Standard_Boolean    RevertToInitialState() = 0;
+    virtual Standard_Boolean    SetTrialStress(const Standard_Real theStress) = 0;
+    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) = 0;
+    virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime) = 0;
     virtual Standard_Boolean    UpdateInternalState() = 0;
-
-protected:
-
-    // Internal state
-    Standard_Real               myMustBeUpdated;
-
-    // History   
-    Standard_Real               myCommitStrain;
-    Standard_Real               myCommitStress;
-    Standard_Real               myCommitTemperature;
-    Standard_Real               myCommitTime;
-    Standard_Real               myTrialStrain;
-    Standard_Real               myTrialStress;
-    Standard_Real               myTrialTemperature;
-    Standard_Real               myTrialTime;
 
 public:
 

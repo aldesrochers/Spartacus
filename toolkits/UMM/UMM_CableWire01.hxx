@@ -25,8 +25,8 @@
 
 // Spartacus
 #include <UMM_Model.hxx>
-#include <matp_WireStressStrain01.hxx>
-#include <matp_CableWireCreep01.hxx>
+#include <mmp_CableWireStressStrain01.hxx>
+#include <mmp_CableWireCreep01.hxx>
 
 // Forward declarations
 class UMM_CableWire01;
@@ -45,8 +45,8 @@ class UMM_CableWire01 : public UMM_Model
 
 public:
     // constructors
-    UMM_CableWire01(const matp_WireStressStrain01& StressStrainParameters,
-                    const matp_CableWireCreep01& CreepParameters,
+    UMM_CableWire01(const mmp_CableWireStressStrain01& StressStrainParameters,
+                    const mmp_CableWireCreep01& CreepParameters,
                     const Standard_Real Alpha);
     // destructors
     ~UMM_CableWire01();
@@ -64,8 +64,8 @@ private:
 
     // Parameters
     Standard_Real               myAlpha;
-    matp_CableWireCreep01       myCreepParameters;
-    matp_WireStressStrain01     myStressStrainParameters;
+    mmp_CableWireCreep01       myCreepParameters;
+    mmp_CableWireStressStrain01     myStressStrainParameters;
 
     // History
     Standard_Real               myCurrentMaxStrain;

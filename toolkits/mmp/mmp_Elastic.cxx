@@ -20,7 +20,7 @@
 // ============================================================================
 
 // cable
-#include <matp_Elastic.hxx>
+#include <mmp_Elastic.hxx>
 
 
 // ============================================================================
@@ -28,7 +28,7 @@
     \brief Constructor
 */
 // ============================================================================
-matp_Elastic::matp_Elastic()
+mmp_Elastic::mmp_Elastic()
     : myE(0.), myNu(0.)
 {
 
@@ -39,7 +39,7 @@ matp_Elastic::matp_Elastic()
     \brief Constructor
 */
 // ============================================================================
-matp_Elastic::matp_Elastic(const Standard_Real E)
+mmp_Elastic::mmp_Elastic(const Standard_Real E)
     : myE(E), myNu(0.)
 {
 
@@ -50,7 +50,7 @@ matp_Elastic::matp_Elastic(const Standard_Real E)
     \brief Constructor
 */
 // ============================================================================
-matp_Elastic::matp_Elastic(const Standard_Real E,
+mmp_Elastic::mmp_Elastic(const Standard_Real E,
                            const Standard_Real Nu)
     : myE(E), myNu(Nu)
 {
@@ -62,7 +62,7 @@ matp_Elastic::matp_Elastic(const Standard_Real E,
     \brief Destructor
 */
 // ============================================================================
-matp_Elastic::~matp_Elastic()
+mmp_Elastic::~mmp_Elastic()
 {
 
 }
@@ -72,7 +72,7 @@ matp_Elastic::~matp_Elastic()
     \brief E()
 */
 // ============================================================================
-Standard_Real matp_Elastic::E() const
+Standard_Real mmp_Elastic::E() const
 {
     return myE;
 }
@@ -82,7 +82,7 @@ Standard_Real matp_Elastic::E() const
     \brief Nu()
 */
 // ============================================================================
-Standard_Real matp_Elastic::Nu() const
+Standard_Real mmp_Elastic::Nu() const
 {
     return myNu;
 }
@@ -92,7 +92,7 @@ Standard_Real matp_Elastic::Nu() const
     \brief SetE()
 */
 // ============================================================================
-void matp_Elastic::SetE(const Standard_Real E)
+void mmp_Elastic::SetE(const Standard_Real E)
 {
     myE = E;
 }
@@ -102,7 +102,7 @@ void matp_Elastic::SetE(const Standard_Real E)
     \brief SetNu()
 */
 // ============================================================================
-void matp_Elastic::SetNu(const Standard_Real Nu)
+void mmp_Elastic::SetNu(const Standard_Real Nu)
 {
     myNu = Nu;
 }

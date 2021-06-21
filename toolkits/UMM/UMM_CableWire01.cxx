@@ -29,8 +29,8 @@
     \brief Constructor
 */
 // ============================================================================
-UMM_CableWire01::UMM_CableWire01(const matp_WireStressStrain01& StressStrainParameters,
-                                 const matp_CableWireCreep01& CreepParameters,
+UMM_CableWire01::UMM_CableWire01(const mmp_CableWireStressStrain01& StressStrainParameters,
+                                 const mmp_CableWireCreep01& CreepParameters,
                                  const Standard_Real Alpha)
     : myAlpha(Alpha),
       myCreepParameters(CreepParameters),
