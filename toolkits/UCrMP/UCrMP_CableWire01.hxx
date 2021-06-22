@@ -46,20 +46,23 @@ public:
 public:
     // constructors
     UCrMP_CableWire01();
-    UCrMP_CableWire01(const Standard_Real A1,
+    UCrMP_CableWire01(const Standard_Real E,
+                      const Standard_Real A1,
                       const Standard_Real A2,
                       const Standard_Real A3,
                       const Standard_Real B1,
                       const Standard_Real B2,
                       const Standard_Real B3);
-    UCrMP_CableWire01(const Standard_Real A1,
+    UCrMP_CableWire01(const Standard_Real E,
+                      const Standard_Real A1,
                       const Standard_Real A2,
                       const Standard_Real A3,
                       const Standard_Real B1,
                       const Standard_Real B2,
                       const Standard_Real B3,
                       const Standard_Real C);
-    UCrMP_CableWire01(const Standard_Real A1,
+    UCrMP_CableWire01(const Standard_Real E,
+                      const Standard_Real A1,
                       const Standard_Real A2,
                       const Standard_Real A3,
                       const Standard_Real B1,
@@ -79,6 +82,7 @@ public:
     Standard_Real           B2() const;
     Standard_Real           B3() const;
     Standard_Real           C() const;
+    Standard_Real           E() const;
     Standard_Real           T0() const;
 
     void                    SetA1(const Standard_Real A1);
@@ -88,6 +92,7 @@ public:
     void                    SetB2(const Standard_Real B2);
     void                    SetB3(const Standard_Real B3);
     void                    SetC(const Standard_Real C);
+    void                    SetE(const Standard_Real E);
     void                    SetT0(const Standard_Real T0);
 
 private:
@@ -99,6 +104,7 @@ private:
     Standard_Real           myB2;
     Standard_Real           myB3;
     Standard_Real           myC;
+    Standard_Real           myE;
     Standard_Real           myT0;
 
 };

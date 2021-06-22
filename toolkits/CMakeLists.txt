@@ -124,8 +124,8 @@ set(StkFEData_Sources
     UCrMP/UCrMP_CableWire02.cxx
 )
 
-add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})
-#add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_CableCreep01.cxx)
+#add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})
+add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_UCrM_CableWire01.cxx)
 #add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_CableWire01.cxx)
 #add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_BimetallicCableSection.cxx)
 #add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_SaggingAnalysis.cxx)

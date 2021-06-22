@@ -19,9 +19,14 @@
 //
 // ============================================================================
 
+#include <iostream>
+using namespace std;
 
-// MCLM1d
+// Spartacus
 #include <UCrM_CableWire01.hxx>
+
+// OpenCascade
+#include <Precision.hxx>
 
 
 // ============================================================================
@@ -32,7 +37,7 @@
 UCrM_CableWire01::UCrM_CableWire01(const UCrMP_CableWire01& theParameters)
     : myParameters(theParameters)
 {
-
+    UCrM_CableWire01::RevertToInitialState();
 }
 
 // ============================================================================
@@ -53,6 +58,7 @@ UCrM_CableWire01::~UCrM_CableWire01()
 Standard_Boolean UCrM_CableWire01::CommitState()
 {
     myCommitStrain = myTrialStrain;
+    myCommitTime = myTrialTime;
     return Standard_True;
 }
 
@@ -134,6 +140,7 @@ Standard_Real UCrM_CableWire01::GetTrialTimeGrowthRate()
 Standard_Boolean UCrM_CableWire01::RevertToCommitState()
 {
     myTrialStrain = myCommitStrain;
+    myTrialTime = myCommitTime;
     return Standard_True;
 }
 
@@ -145,7 +152,9 @@ Standard_Boolean UCrM_CableWire01::RevertToCommitState()
 Standard_Boolean UCrM_CableWire01::RevertToInitialState()
 {
     myCommitStrain = 0.;
+    myCommitTime = 0.;
     myTrialStrain = 0.;
+    myTrialTime = 0.;
     return Standard_True;
 }
 
@@ -189,11 +198,14 @@ Standard_Boolean UCrM_CableWire01::SetTrialTime(const Standard_Real theTime)
 // ============================================================================
 Standard_Boolean UCrM_CableWire01::UpdateInternalState()
 {
+    // compute Eps
+    Standard_Real Eps = myTrialStress / myParameters.E();
+
     // compute functions
     Standard_Real f1 = myParameters.A1()
-            * Pow(myParameters.A2()*myTrialStress, myParameters.A3());
-    Standard_Real f2 = myParameters.B1()*Pow(myTrialStress, 2.)
-            + myParameters.B2() * myTrialStress + myParameters.B3();
+            * Pow(myParameters.A2()*Eps, myParameters.A3());
+    Standard_Real f2 = myParameters.B1()*Pow(Eps, 2.)
+            + myParameters.B2() * Eps + myParameters.B3();
     Standard_Real f3 = Exp(myParameters.C()
                            * (myTrialTemperature - myParameters.T0()));
 
@@ -205,11 +217,11 @@ Standard_Boolean UCrM_CableWire01::UpdateInternalState()
     myTrialStrain = f1*f3*Pow(tEq, f2);
 
     // update growth rates
-    if(!UpdateTrialStressGrowthRate(tEq))
+    if(!UpdateTrialStressGrowthRate(tEq, Eps))
         return Standard_False;
-    if(!UpdateTrialTemperatureGrowthRate(tEq))
+    if(!UpdateTrialTemperatureGrowthRate(tEq, Eps))
         return Standard_False;
-    if(!UpdateTrialTimeGrowthRate(tEq))
+    if(!UpdateTrialTimeGrowthRate(tEq, Eps))
         return Standard_False;
 
     return Standard_True;
@@ -220,18 +232,21 @@ Standard_Boolean UCrM_CableWire01::UpdateInternalState()
     \brief UpdateTrialStressGrowthRate()
 */
 // ============================================================================
-Standard_Boolean UCrM_CableWire01::UpdateTrialStressGrowthRate(const Standard_Real tEq)
+Standard_Boolean UCrM_CableWire01::UpdateTrialStressGrowthRate(const Standard_Real tEq,
+                                                               const Standard_Real Eps)
 {
+    if(tEq <= 0.)
+        return -1./Precision::Infinite();
     Standard_Real e1 = myParameters.A1()
-            * Pow(myParameters.A2()*myTrialStress, myParameters.A3());
+            * Pow(myParameters.A2()*Eps, myParameters.A3());
     Standard_Real e2 = Pow(tEq, myParameters.B1()
-                           * Pow(myTrialStress, 2.) + myParameters.B1()
-                           * myTrialStress + myParameters.B2());
+                           * Pow(Eps, 2.) + myParameters.B1()
+                           * Eps + myParameters.B2());
     Standard_Real e3 = Exp(myParameters.C()
                            * (myTrialTemperature - myParameters.T0()));
-    Standard_Real e4 = 2.*myParameters.B1()*Log(tEq)*Pow(myTrialStress, 2.)
-            + myParameters.B2()*Log(tEq)*myTrialStress + myParameters.A3();
-    myTrialStressGrowthRate = e1 * e2 * e3 * e4 / myTrialStress;
+    Standard_Real e4 = 2.*myParameters.B1()*Log(tEq)*Pow(Eps, 2.)
+            + myParameters.B2()*Log(tEq)*Eps + myParameters.A3();
+    myTrialStressGrowthRate = e1 * e2 * e3 * e4 / Eps;
     return Standard_True;
 }
 
@@ -240,13 +255,14 @@ Standard_Boolean UCrM_CableWire01::UpdateTrialStressGrowthRate(const Standard_Re
     \brief UpdateTrialTemperatureGrowthRate()
 */
 // ============================================================================
-Standard_Boolean UCrM_CableWire01::UpdateTrialTemperatureGrowthRate(const Standard_Real tEq)
+Standard_Boolean UCrM_CableWire01::UpdateTrialTemperatureGrowthRate(const Standard_Real tEq,
+                                                                    const Standard_Real Eps)
 {
     Standard_Real e1 = myParameters.A1()
-            * Pow(myParameters.A2()*myTrialStress, myParameters.A3());
+            * Pow(myParameters.A2()*Eps, myParameters.A3());
     Standard_Real e2 = Pow(tEq, myParameters.B1()
-                           * Pow(myTrialStress, 2.) + myParameters.B1()
-                           * myTrialStress + myParameters.B2());
+                           * Pow(Eps, 2.) + myParameters.B1()
+                           * Eps + myParameters.B2());
     myTrialTemperatureGrowthRate = myParameters.C() * e1 * e2
             * Exp(myParameters.C() * (myTrialTemperature - myParameters.T0()));
     return Standard_True;
@@ -257,13 +273,14 @@ Standard_Boolean UCrM_CableWire01::UpdateTrialTemperatureGrowthRate(const Standa
     \brief UpdateTrialTimeGrowthRate()
 */
 // ============================================================================
-Standard_Boolean UCrM_CableWire01::UpdateTrialTimeGrowthRate(const Standard_Real tEq)
+Standard_Boolean UCrM_CableWire01::UpdateTrialTimeGrowthRate(const Standard_Real tEq,
+                                                             const Standard_Real Eps)
 {
     Standard_Real e1 = myParameters.A1()
-            * Pow(myParameters.A2()*myTrialStress, myParameters.A3());
+            * Pow(myParameters.A2()*Eps, myParameters.A3());
     Standard_Real e2 = Exp(myParameters.C()*(myTrialTemperature-myParameters.T0()));
-    Standard_Real e3 = myParameters.B1()*Pow(myTrialStress,2.)
-            + myParameters.B2()*myTrialStress + myParameters.B3();
+    Standard_Real e3 = myParameters.B1()*Pow(Eps,2.)
+            + myParameters.B2()*Eps + myParameters.B3();
     myTrialTimeGrowthRate = e1 * e2 * e3 * Pow(tEq, e3 - 1.);
     return Standard_True;
 }

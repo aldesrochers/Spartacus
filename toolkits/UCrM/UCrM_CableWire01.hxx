@@ -37,22 +37,6 @@ DEFINE_STANDARD_HANDLE(UCrM_CableWire01, UCrM_Model);
 // ============================================================================
 /*!
     \brief UCrM_CableWire01
-
-    This is an implementation of the uniaxial material creep model
-    proposed by the CIGRE/Electra "Permanent elongation of conductors.
-    Predictor equation and evaluation methods".
-
-    The creep equation is K*exp(phi*T)*(sig^alpha)*(t^mu), where K, phi, alpha,
-    mu are calibrated coefficients and T, t, and sig are respectively the
-    temperature, the time and the mean stress.
-
-    The equation is unit dependent, so T is in Celcius, t in hours and sig
-    in Pa.
-
-    The equation is only valid for a single wire loaded axially.
-
-    The cummulated creep strain is calculated according to eq. A3-7 of the
-    CIGRE/Electra brochure.
 */
 // ============================================================================
 class UCrM_CableWire01 : public UCrM_Model
@@ -83,9 +67,12 @@ public:
 private:
 
     Standard_Boolean            UpdateInternalState();
-    Standard_Boolean            UpdateTrialStressGrowthRate(const Standard_Real tEq);
-    Standard_Boolean            UpdateTrialTemperatureGrowthRate(const Standard_Real tEq);
-    Standard_Boolean            UpdateTrialTimeGrowthRate(const Standard_Real tEq);
+    Standard_Boolean            UpdateTrialStressGrowthRate(const Standard_Real tEq,
+                                                            const Standard_Real Eps);
+    Standard_Boolean            UpdateTrialTemperatureGrowthRate(const Standard_Real tEq,
+                                                                 const Standard_Real Eps);
+    Standard_Boolean            UpdateTrialTimeGrowthRate(const Standard_Real tEq,
+                                                          const Standard_Real Eps);
 
 private:
 
@@ -94,8 +81,6 @@ private:
 
     // History
     Standard_Real               myCommitStrain;
-    Standard_Real               myCommitStress;
-    Standard_Real               myCommitTemperature;
     Standard_Real               myCommitTime;
     Standard_Real               myTrialStrain;
     Standard_Real               myTrialStress;
