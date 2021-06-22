@@ -52,13 +52,6 @@ public:
 public:
 
     virtual Standard_Boolean    CommitState() = 0;
-    virtual Standard_Real       GetCommitStrain() = 0;
-    virtual Standard_Real       GetCommitStress() = 0;
-    virtual Standard_Real       GetCommitStressGrowthRate() = 0;
-    virtual Standard_Real       GetCommitTemperature() = 0;
-    virtual Standard_Real       GetCommitTemperatureGrowthRate() = 0;
-    virtual Standard_Real       GetCommitTime() = 0;
-    virtual Standard_Real       GetCommitTimeGrowthRate() = 0;
     virtual Standard_Real       GetTrialStrain() = 0;
     virtual Standard_Real       GetTrialStress() = 0;
     virtual Standard_Real       GetTrialStressGrowthRate() = 0;
@@ -66,13 +59,11 @@ public:
     virtual Standard_Real       GetTrialTemperatureGrowthRate() = 0;
     virtual Standard_Real       GetTrialTime() = 0;
     virtual Standard_Real       GetTrialTimeGrowthRate() = 0;
-    virtual Standard_Boolean    MustBeUpdated() = 0;
     virtual Standard_Boolean    RevertToCommitState() = 0;
     virtual Standard_Boolean    RevertToInitialState() = 0;
     virtual Standard_Boolean    SetTrialStress(const Standard_Real theStress) = 0;
     virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) = 0;
     virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime) = 0;
-    virtual Standard_Boolean    UpdateInternalState() = 0;
 
 public:
 

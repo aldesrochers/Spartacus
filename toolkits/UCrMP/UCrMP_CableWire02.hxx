@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __UCrMP_CableWire01_hxx__
-#define __UCrMP_CableWire01_hxx__
+#ifndef __UCrMP_CableWire02_hxx__
+#define __UCrMP_CableWire02_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
@@ -31,12 +31,12 @@
 
 // ============================================================================
 /*!
- *  \brief UCrMP_CableWire01
+ *  \brief UCrMP_CableWire02
  *  Class implementation of uniaxial law parameters of creep model
- *  CableWire01.
+ *  CableWire02.
 */
 // ============================================================================
-class UCrMP_CableWire01
+class UCrMP_CableWire02
 {
 
 public:
@@ -45,62 +45,56 @@ public:
 
 public:
     // constructors
-    UCrMP_CableWire01();
-    UCrMP_CableWire01(const Standard_Real A1,
-                      const Standard_Real A2,
-                      const Standard_Real A3,
-                      const Standard_Real B1,
-                      const Standard_Real B2,
-                      const Standard_Real B3);
-    UCrMP_CableWire01(const Standard_Real A1,
-                      const Standard_Real A2,
-                      const Standard_Real A3,
-                      const Standard_Real B1,
-                      const Standard_Real B2,
-                      const Standard_Real B3,
-                      const Standard_Real C);
-    UCrMP_CableWire01(const Standard_Real A1,
-                      const Standard_Real A2,
-                      const Standard_Real A3,
-                      const Standard_Real B1,
-                      const Standard_Real B2,
-                      const Standard_Real B3,
-                      const Standard_Real C,
-                      const Standard_Real T0);
+    UCrMP_CableWire02();
     // destructors
-    ~UCrMP_CableWire01();
+    ~UCrMP_CableWire02();
 
 public:
 
+    Standard_Real           A0() const;
     Standard_Real           A1() const;
     Standard_Real           A2() const;
     Standard_Real           A3() const;
+    Standard_Real           B0() const;
     Standard_Real           B1() const;
     Standard_Real           B2() const;
     Standard_Real           B3() const;
     Standard_Real           C() const;
-    Standard_Real           T0() const;
+    Standard_Real           Sig0() const;
+    Standard_Real           Sig1() const;
+    Standard_Real           Sig2() const;
+    Standard_Real           Sig3() const;
 
+    void                    SetA0(const Standard_Real A0);
     void                    SetA1(const Standard_Real A1);
     void                    SetA2(const Standard_Real A2);
     void                    SetA3(const Standard_Real A3);
+    void                    SetB0(const Standard_Real B0);
     void                    SetB1(const Standard_Real B1);
     void                    SetB2(const Standard_Real B2);
     void                    SetB3(const Standard_Real B3);
     void                    SetC(const Standard_Real C);
-    void                    SetT0(const Standard_Real T0);
+    void                    SetSig0(const Standard_Real Sig0);
+    void                    SetSig1(const Standard_Real Sig1);
+    void                    SetSig2(const Standard_Real Sig2);
+    void                    SetSig3(const Standard_Real Sig3);
 
 private:
 
+    Standard_Real           myA0;
     Standard_Real           myA1;
     Standard_Real           myA2;
     Standard_Real           myA3;
+    Standard_Real           myB0;
     Standard_Real           myB1;
     Standard_Real           myB2;
     Standard_Real           myB3;
     Standard_Real           myC;
-    Standard_Real           myT0;
+    Standard_Real           mySig0;
+    Standard_Real           mySig1;
+    Standard_Real           mySig2;
+    Standard_Real           mySig3;
 
 };
 
-#endif  // __UCrMP_CableWire01_hxx__
+#endif  // __UCrMP_CableWire02_hxx__

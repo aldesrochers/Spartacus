@@ -111,13 +111,17 @@ set(StkFEData_Sources
 
 
 set(StkFEData_Headers
+    UCrM/UCrM_CableWire01.hxx
     UCrM/UCrM_Model.hxx
     UCrMP/UCrMP_CableWire01.hxx
+    UCrMP/UCrMP_CableWire02.hxx
 )
 
 set(StkFEData_Sources
+    UCrM/UCrM_CableWire01.cxx
     UCrM/UCrM_Model.cxx
     UCrMP/UCrMP_CableWire01.cxx
+    UCrMP/UCrMP_CableWire02.cxx
 )
 
 add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})

@@ -25,7 +25,7 @@
 
 // Spartacus
 #include <UCrM_Model.hxx>
-#include <mmp_CableWireCreep01.hxx>
+#include <UCrMP_CableWire01.hxx>
 
 // Forward declarations
 class UCrM_CableWire01;
@@ -60,27 +60,50 @@ class UCrM_CableWire01 : public UCrM_Model
 
 public:
     // constructors
-    UCrM_CableWire01(const Standard_Real K,
-                     const Standard_Real Phi,
-                     const Standard_Real Alpha);
-    UCrM_CableWire01(const Standard_Real K,
-                     const Standard_Real Phi,
-                     const Standard_Real Alpha,
-                     const Standard_Real Mu);
+    UCrM_CableWire01(const UCrMP_CableWire01& theParameters);
     // destructors
     ~UCrM_CableWire01();
 
 public:
 
-    virtual Standard_Boolean    UpdateInternalState() Standard_OVERRIDE;
+    virtual Standard_Boolean    CommitState() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStrain() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStress() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStressGrowthRate() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialTemperature() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialTemperatureGrowthRate() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialTime() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialTimeGrowthRate() Standard_OVERRIDE;
+    virtual Standard_Boolean    RevertToCommitState() Standard_OVERRIDE;
+    virtual Standard_Boolean    RevertToInitialState() Standard_OVERRIDE;
+    virtual Standard_Boolean    SetTrialStress(const Standard_Real theStress) Standard_OVERRIDE;
+    virtual Standard_Boolean    SetTrialTemperature(const Standard_Real theTemperature) Standard_OVERRIDE;
+    virtual Standard_Boolean    SetTrialTime(const Standard_Real theTime) Standard_OVERRIDE;
 
-protected:
+private:
+
+    Standard_Boolean            UpdateInternalState();
+    Standard_Boolean            UpdateTrialStressGrowthRate(const Standard_Real tEq);
+    Standard_Boolean            UpdateTrialTemperatureGrowthRate(const Standard_Real tEq);
+    Standard_Boolean            UpdateTrialTimeGrowthRate(const Standard_Real tEq);
+
+private:
 
     // Parameters
-    Standard_Real           myAlpha;
-    Standard_Real           myK;
-    Standard_Real           myPhi;
-    Standard_Real           myMu;
+    UCrMP_CableWire01           myParameters;
+
+    // History
+    Standard_Real               myCommitStrain;
+    Standard_Real               myCommitStress;
+    Standard_Real               myCommitTemperature;
+    Standard_Real               myCommitTime;
+    Standard_Real               myTrialStrain;
+    Standard_Real               myTrialStress;
+    Standard_Real               myTrialStressGrowthRate;
+    Standard_Real               myTrialTemperature;
+    Standard_Real               myTrialTemperatureGrowthRate;
+    Standard_Real               myTrialTime;
+    Standard_Real               myTrialTimeGrowthRate;
 
 public:
 

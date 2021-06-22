@@ -21,7 +21,7 @@
 
 
 // Spartacus
-#include <UCrMP_CableWire01.hxx>
+#include <UCrMP_CableWire02.hxx>
 
 
 // ============================================================================
@@ -29,71 +29,10 @@
  *  \brief Constructor
 */
 // ============================================================================
-UCrMP_CableWire01::UCrMP_CableWire01()
+UCrMP_CableWire02::UCrMP_CableWire02()
     : myA1(0.), myA2(0.), myA3(0.),
       myB1(0.), myB2(0.), myB3(0.),
-      myC(0.),
-      myT0(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-UCrMP_CableWire01::UCrMP_CableWire01(const Standard_Real A1,
-                                     const Standard_Real A2,
-                                     const Standard_Real A3,
-                                     const Standard_Real B1,
-                                     const Standard_Real B2,
-                                     const Standard_Real B3)
-    : myA1(A1), myA2(A2), myA3(A3),
-      myB1(B1), myB2(B2), myB3(B3),
-      myC(0.),
-      myT0(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-UCrMP_CableWire01::UCrMP_CableWire01(const Standard_Real A1,
-                                     const Standard_Real A2,
-                                     const Standard_Real A3,
-                                     const Standard_Real B1,
-                                     const Standard_Real B2,
-                                     const Standard_Real B3,
-                                     const Standard_Real C)
-    : myA1(A1), myA2(A2), myA3(A3),
-      myB1(B1), myB2(B2), myB3(B3),
-      myC(C),
-      myT0(0.)
-{
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-UCrMP_CableWire01::UCrMP_CableWire01(const Standard_Real A1,
-                                     const Standard_Real A2,
-                                     const Standard_Real A3,
-                                     const Standard_Real B1,
-                                     const Standard_Real B2,
-                                     const Standard_Real B3,
-                                     const Standard_Real C,
-                                     const Standard_Real T0)
-    : myA1(A1), myA2(A2), myA3(A3),
-      myB1(B1), myB2(B2), myB3(B3),
-      myC(C),
-      myT0(T0)
+      myC(0.)
 {
 
 }
@@ -103,9 +42,19 @@ UCrMP_CableWire01::UCrMP_CableWire01(const Standard_Real A1,
  *  \brief Destructor
 */
 // ============================================================================
-UCrMP_CableWire01::~UCrMP_CableWire01()
+UCrMP_CableWire02::~UCrMP_CableWire02()
 {
 
+}
+
+// ============================================================================
+/*!
+    \brief A0()
+*/
+// ============================================================================
+Standard_Real UCrMP_CableWire02::A0() const
+{
+    return myA0;
 }
 
 // ============================================================================
@@ -113,7 +62,7 @@ UCrMP_CableWire01::~UCrMP_CableWire01()
  *  \brief A1()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire01::A1() const
+Standard_Real UCrMP_CableWire02::A1() const
 {
     return myA1;
 }
@@ -123,7 +72,7 @@ Standard_Real UCrMP_CableWire01::A1() const
  *  \brief A2()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire01::A2() const
+Standard_Real UCrMP_CableWire02::A2() const
 {
     return myA2;
 }
@@ -133,9 +82,19 @@ Standard_Real UCrMP_CableWire01::A2() const
  *  \brief A3()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire01::A3() const
+Standard_Real UCrMP_CableWire02::A3() const
 {
     return myA3;
+}
+
+// ============================================================================
+/*!
+ *  \brief B0()
+*/
+// ============================================================================
+Standard_Real UCrMP_CableWire02::B0() const
+{
+    return myB0;
 }
 
 // ============================================================================
@@ -143,7 +102,7 @@ Standard_Real UCrMP_CableWire01::A3() const
  *  \brief B1()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire01::B1() const
+Standard_Real UCrMP_CableWire02::B1() const
 {
     return myB1;
 }
@@ -153,7 +112,7 @@ Standard_Real UCrMP_CableWire01::B1() const
  *  \brief B2()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire01::B2() const
+Standard_Real UCrMP_CableWire02::B2() const
 {
     return myB2;
 }
@@ -163,7 +122,7 @@ Standard_Real UCrMP_CableWire01::B2() const
  *  \brief B3()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire01::B3() const
+Standard_Real UCrMP_CableWire02::B3() const
 {
     return myB3;
 }
@@ -173,19 +132,59 @@ Standard_Real UCrMP_CableWire01::B3() const
  *  \brief C()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire01::C() const
+Standard_Real UCrMP_CableWire02::C() const
 {
     return myC;
 }
 
 // ============================================================================
 /*!
-    \brief T0()
+    \brief Sig0()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire01::T0() const
+Standard_Real UCrMP_CableWire02::Sig0() const
 {
-    return myT0;
+    return mySig0;
+}
+
+// ============================================================================
+/*!
+    \brief Sig1()
+*/
+// ============================================================================
+Standard_Real UCrMP_CableWire02::Sig1() const
+{
+    return mySig1;
+}
+
+// ============================================================================
+/*!
+    \brief Sig2()
+*/
+// ============================================================================
+Standard_Real UCrMP_CableWire02::Sig2() const
+{
+    return mySig2;
+}
+
+// ============================================================================
+/*!
+    \brief Sig3()
+*/
+// ============================================================================
+Standard_Real UCrMP_CableWire02::Sig3() const
+{
+    return mySig3;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetA0()
+*/
+// ============================================================================
+void UCrMP_CableWire02::SetA0(const Standard_Real A0)
+{
+    myA0 = A0;
 }
 
 // ============================================================================
@@ -193,7 +192,7 @@ Standard_Real UCrMP_CableWire01::T0() const
  *  \brief SetA1()
 */
 // ============================================================================
-void UCrMP_CableWire01::SetA1(const Standard_Real A1)
+void UCrMP_CableWire02::SetA1(const Standard_Real A1)
 {
     myA1 = A1;
 }
@@ -203,20 +202,29 @@ void UCrMP_CableWire01::SetA1(const Standard_Real A1)
  *  \brief SetA2()
 */
 // ============================================================================
-void UCrMP_CableWire01::SetA2(const Standard_Real A2)
+void UCrMP_CableWire02::SetA2(const Standard_Real A2)
 {
     myA2 = A2;
 }
-
 
 // ============================================================================
 /*!
  *  \brief SetA3()
 */
 // ============================================================================
-void UCrMP_CableWire01::SetA3(const Standard_Real A3)
+void UCrMP_CableWire02::SetA3(const Standard_Real A3)
 {
     myA3 = A3;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetB0()
+*/
+// ============================================================================
+void UCrMP_CableWire02::SetB0(const Standard_Real B0)
+{
+    myB0 = B0;
 }
 
 // ============================================================================
@@ -224,7 +232,7 @@ void UCrMP_CableWire01::SetA3(const Standard_Real A3)
  *  \brief SetB1()
 */
 // ============================================================================
-void UCrMP_CableWire01::SetB1(const Standard_Real B1)
+void UCrMP_CableWire02::SetB1(const Standard_Real B1)
 {
     myB1 = B1;
 }
@@ -234,7 +242,7 @@ void UCrMP_CableWire01::SetB1(const Standard_Real B1)
  *  \brief SetB2()
 */
 // ============================================================================
-void UCrMP_CableWire01::SetB2(const Standard_Real B2)
+void UCrMP_CableWire02::SetB2(const Standard_Real B2)
 {
     myB2 = B2;
 }
@@ -245,7 +253,7 @@ void UCrMP_CableWire01::SetB2(const Standard_Real B2)
  *  \brief SetB3()
 */
 // ============================================================================
-void UCrMP_CableWire01::SetB3(const Standard_Real B3)
+void UCrMP_CableWire02::SetB3(const Standard_Real B3)
 {
     myB3 = B3;
 }
@@ -255,17 +263,47 @@ void UCrMP_CableWire01::SetB3(const Standard_Real B3)
  *  \brief SetC()
 */
 // ============================================================================
-void UCrMP_CableWire01::SetC(const Standard_Real C)
+void UCrMP_CableWire02::SetC(const Standard_Real C)
 {
     myC = C;
 }
 
 // ============================================================================
 /*!
-    \brief SetT0()
+    \brief SetSig0()
 */
 // ============================================================================
-void UCrMP_CableWire01::SetT0(const Standard_Real T0)
+void UCrMP_CableWire02::SetSig0(const Standard_Real Sig0)
 {
-    myT0 = T0;
+    mySig0 = Sig0;
+}
+
+// ============================================================================
+/*!
+    \brief SetSig1()
+*/
+// ============================================================================
+void UCrMP_CableWire02::SetSig1(const Standard_Real Sig1)
+{
+    mySig1 = Sig1;
+}
+
+// ============================================================================
+/*!
+    \brief SetSig2()
+*/
+// ============================================================================
+void UCrMP_CableWire02::SetSig2(const Standard_Real Sig2)
+{
+    mySig2 = Sig2;
+}
+
+// ============================================================================
+/*!
+    \brief SetSig3()
+*/
+// ============================================================================
+void UCrMP_CableWire02::SetSig3(const Standard_Real Sig3)
+{
+    mySig3 = Sig3;
 }

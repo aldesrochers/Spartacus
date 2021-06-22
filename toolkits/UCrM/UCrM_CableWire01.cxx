@@ -29,24 +29,8 @@
     \brief Constructor
 */
 // ============================================================================
-UCrM_CableWire01::UCrM_CableWire01(const Standard_Real K,
-                                   const Standard_Real Phi,
-                                   const Standard_Real Alpha)
-    : myAlpha(Alpha), myK(K), myMu(0.), myPhi(Phi)
-{
-
-}
-
-// ============================================================================
-/*!
-    \brief Constructor
-*/
-// ============================================================================
-UCrM_CableWire01::UCrM_CableWire01(const Standard_Real K,
-                                   const Standard_Real Phi,
-                                   const Standard_Real Alpha,
-                                   const Standard_Real Mu)
-    : myAlpha(Alpha), myK(K), myMu(Mu), myPhi(Phi)
+UCrM_CableWire01::UCrM_CableWire01(const UCrMP_CableWire01& theParameters)
+    : myParameters(theParameters)
 {
 
 }
@@ -63,26 +47,224 @@ UCrM_CableWire01::~UCrM_CableWire01()
 
 // ============================================================================
 /*!
+    \brief CommitState()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::CommitState()
+{
+    myCommitStrain = myTrialStrain;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStrain()
+*/
+// ============================================================================
+Standard_Real UCrM_CableWire01::GetTrialStrain()
+{
+    return myTrialStrain;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStress()
+*/
+// ============================================================================
+Standard_Real UCrM_CableWire01::GetTrialStress()
+{
+    return myTrialStress;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStressGrowthRate()
+*/
+// ============================================================================
+Standard_Real UCrM_CableWire01::GetTrialStressGrowthRate()
+{
+    return myTrialStressGrowthRate;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialTemperature()
+*/
+// ============================================================================
+Standard_Real UCrM_CableWire01::GetTrialTemperature()
+{
+    return myTrialTemperature;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialTemperatureGrowthRate()
+*/
+// ============================================================================
+Standard_Real UCrM_CableWire01::GetTrialTemperatureGrowthRate()
+{
+        return myTrialTemperatureGrowthRate;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialTime()
+*/
+// ============================================================================
+Standard_Real UCrM_CableWire01::GetTrialTime()
+{
+    return myTrialTime;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialTimeGrowthRate()
+*/
+// ============================================================================
+Standard_Real UCrM_CableWire01::GetTrialTimeGrowthRate()
+{
+    return myTrialStressGrowthRate;
+}
+
+// ============================================================================
+/*!
+    \brief RevertToCommitState()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::RevertToCommitState()
+{
+    myTrialStrain = myCommitStrain;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief RevertToInitialState()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::RevertToInitialState()
+{
+    myCommitStrain = 0.;
+    myTrialStrain = 0.;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief SetTrialStress()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::SetTrialStress(const Standard_Real theStress)
+{
+    myTrialStress = theStress;
+    return UpdateInternalState();
+}
+
+// ============================================================================
+/*!
+    \brief SetTrialTemperature()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::SetTrialTemperature(const Standard_Real theTemperature)
+{
+    myTrialTemperature = theTemperature;
+    return UpdateInternalState();
+}
+
+// ============================================================================
+/*!
+    \brief SetTrialTime()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::SetTrialTime(const Standard_Real theTime)
+{
+    myTrialTime = theTime;
+    return UpdateInternalState();
+}
+
+// ============================================================================
+/*!
     \brief UpdateInternalState()
 */
 // ============================================================================
 Standard_Boolean UCrM_CableWire01::UpdateInternalState()
 {
-    // Convert stresses from Pa to kg/mm2
-    Standard_Real Sig0 = myCommitStress / (1E6 * 9.80665);
-    Standard_Real Sig1 = myTrialStress / (1E6 * 9.80665);
-    // Convert strains from m/m to mm/km
-    Standard_Real Eps0 = myCommitStrain * 1E6;
-    // Update internal state
-    Standard_Real A = Pow(Eps0/myK, myMu);
-    Standard_Real FT0 = Exp(myPhi/myMu*myCommitTemperature)
-            * Pow(Sig0, myAlpha/myMu);
-    Standard_Real FT1 = Exp(myPhi/myMu*myTrialTemperature)
-            * Pow(Sig1, myAlpha/myMu);
-    Standard_Real dA = (myTrialTime - myCommitTime) * (FT1 + FT0)/2.;
-    Standard_Real Eps = myK * Pow(A + dA, myMu);
-    // Update internal strain in (m/m)
-    myTrialStrain = Eps / 1E6;
+    // compute functions
+    Standard_Real f1 = myParameters.A1()
+            * Pow(myParameters.A2()*myTrialStress, myParameters.A3());
+    Standard_Real f2 = myParameters.B1()*Pow(myTrialStress, 2.)
+            + myParameters.B2() * myTrialStress + myParameters.B3();
+    Standard_Real f3 = Exp(myParameters.C()
+                           * (myTrialTemperature - myParameters.T0()));
+
+    // compute equivalent time
+    Standard_Real tEq = Pow(myCommitStrain/(f1*f3), 1./f2)
+            + (myTrialTime - myCommitTime);
+
+    // update current strain
+    myTrialStrain = f1*f3*Pow(tEq, f2);
+
+    // update growth rates
+    if(!UpdateTrialStressGrowthRate(tEq))
+        return Standard_False;
+    if(!UpdateTrialTemperatureGrowthRate(tEq))
+        return Standard_False;
+    if(!UpdateTrialTimeGrowthRate(tEq))
+        return Standard_False;
+
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief UpdateTrialStressGrowthRate()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::UpdateTrialStressGrowthRate(const Standard_Real tEq)
+{
+    Standard_Real e1 = myParameters.A1()
+            * Pow(myParameters.A2()*myTrialStress, myParameters.A3());
+    Standard_Real e2 = Pow(tEq, myParameters.B1()
+                           * Pow(myTrialStress, 2.) + myParameters.B1()
+                           * myTrialStress + myParameters.B2());
+    Standard_Real e3 = Exp(myParameters.C()
+                           * (myTrialTemperature - myParameters.T0()));
+    Standard_Real e4 = 2.*myParameters.B1()*Log(tEq)*Pow(myTrialStress, 2.)
+            + myParameters.B2()*Log(tEq)*myTrialStress + myParameters.A3();
+    myTrialStressGrowthRate = e1 * e2 * e3 * e4 / myTrialStress;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief UpdateTrialTemperatureGrowthRate()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::UpdateTrialTemperatureGrowthRate(const Standard_Real tEq)
+{
+    Standard_Real e1 = myParameters.A1()
+            * Pow(myParameters.A2()*myTrialStress, myParameters.A3());
+    Standard_Real e2 = Pow(tEq, myParameters.B1()
+                           * Pow(myTrialStress, 2.) + myParameters.B1()
+                           * myTrialStress + myParameters.B2());
+    myTrialTemperatureGrowthRate = myParameters.C() * e1 * e2
+            * Exp(myParameters.C() * (myTrialTemperature - myParameters.T0()));
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief UpdateTrialTimeGrowthRate()
+*/
+// ============================================================================
+Standard_Boolean UCrM_CableWire01::UpdateTrialTimeGrowthRate(const Standard_Real tEq)
+{
+    Standard_Real e1 = myParameters.A1()
+            * Pow(myParameters.A2()*myTrialStress, myParameters.A3());
+    Standard_Real e2 = Exp(myParameters.C()*(myTrialTemperature-myParameters.T0()));
+    Standard_Real e3 = myParameters.B1()*Pow(myTrialStress,2.)
+            + myParameters.B2()*myTrialStress + myParameters.B3();
+    myTrialTimeGrowthRate = e1 * e2 * e3 * Pow(tEq, e3 - 1.);
     return Standard_True;
 }
 
