@@ -25,29 +25,21 @@ using namespace std;
 // MCLM1d
 #include <USSM_CableWire01.hxx>
 
+// Declarations
+#define Direction_NONE      0
+#define Direction_FORWARD   1
+#define Direction_BACKWARD  2
+
 
 // ============================================================================
 /*!
     \brief Constructor
 */
 // ============================================================================
-USSM_CableWire01::USSM_CableWire01(const Standard_Real Ei,
-                                   const Standard_Real Ef,
-                                   const Standard_Real EpsMax,
-                                   const Standard_Real A0,
-                                   const Standard_Real A1,
-                                   const Standard_Real A2,
-                                   const Standard_Real A3,
-                                   const Standard_Real A4,
-                                   const Standard_Real A5,
-                                   const Standard_Real R)
-    : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(A5),
-      myEf(Ef), myEi(Ei), myEpsMax(EpsMax),
-      myR(R),
-      myIsInitialLoading(Standard_True),
-      myPreviousDirection(0)
+USSM_CableWire01::USSM_CableWire01(const USSMP_CableWire01& theParameters)
+    : myParameters(theParameters)
 {
-
+    RevertToInitialState();
 }
 
 // ============================================================================
@@ -71,7 +63,9 @@ Standard_Boolean USSM_CableWire01::CommitState()
         myPreviousDirection = 1;
     if(myTrialStrain < myCommitStrain)
         myPreviousDirection = 2;
-    return USSM_Model::CommitState();
+    myCommitStrain = myTrialStrain;
+    myCommitStress = myTrialStress;
+    return Standard_True;
 }
 
 // ============================================================================
@@ -86,16 +80,46 @@ Standard_Real USSM_CableWire01::GetInitialStiffness()
 
 // ============================================================================
 /*!
+    \brief GetTrialStiffness()
+*/
+// ============================================================================
+Standard_Real USSM_CableWire01::GetTrialStiffness()
+{
+    return myTrialStiffness;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStrain()
+*/
+// ============================================================================
+Standard_Real USSM_CableWire01::GetTrialStrain()
+{
+    return myTrialStrain;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStress()
+*/
+// ============================================================================
+Standard_Real USSM_CableWire01::GetTrialStress()
+{
+    return myTrialStress;
+}
+
+// ============================================================================
+/*!
     \brief MenegottoStiffness()
 */
 // ============================================================================
 Standard_Real USSM_CableWire01::MenegottoStiffness(const Standard_Real theStrain)
 {
-    Standard_Real Et = MonotonicStiffness(myEpsMax);
-    Standard_Real b = Et/myEf;
-    Standard_Real D = (1.-b)/Pow((Pow(theStrain, myR) + 1.), 1./myR)
-            - (1.-b) * Pow(theStrain, myR)
-            * Pow(Pow(theStrain, myR) + 1., (-1./myR)-1.) + b;
+    Standard_Real Et = MonotonicStiffness(myParameters.EpsL());
+    Standard_Real b = Et/myParameters.E();
+    Standard_Real D = (1.-b)/Pow((Pow(theStrain, myParameters.R()) + 1.), 1./myParameters.R())
+            - (1.-b) * Pow(theStrain, myParameters.R())
+            * Pow(Pow(theStrain, myParameters.R()) + 1., (-1./myParameters.R())-1.) + b;
     return D;
 }
 
@@ -106,10 +130,11 @@ Standard_Real USSM_CableWire01::MenegottoStiffness(const Standard_Real theStrain
 // ============================================================================
 Standard_Real USSM_CableWire01::MenegottoStress(const Standard_Real theStrain)
 {
-    Standard_Real Et = MonotonicStiffness(myEpsMax);
-    Standard_Real b = Et/myEf;
+    Standard_Real Et = MonotonicStiffness(myParameters.EpsL());
+    Standard_Real b = Et/myParameters.E();
+
     Standard_Real F = b*theStrain
-            + ((1.-b)*theStrain)/Pow(1.+Pow(theStrain, myR), 1./myR);
+            + ((1.-b)*theStrain)/Pow(1.+Pow(theStrain, myParameters.R()), 1./myParameters.R());
     return F;
 }
 
@@ -120,8 +145,8 @@ Standard_Real USSM_CableWire01::MenegottoStress(const Standard_Real theStrain)
 // ============================================================================
 Standard_Real USSM_CableWire01::MonotonicStiffness(const Standard_Real theStrain)
 {
-    if(theStrain > myEpsMax) {
-        return PolynomialStiffness(myEpsMax);
+    if(theStrain > myParameters.EpsL()) {
+        return PolynomialStiffness(myParameters.EpsL());
     } else {
         return PolynomialStiffness(theStrain);
     }
@@ -134,9 +159,9 @@ Standard_Real USSM_CableWire01::MonotonicStiffness(const Standard_Real theStrain
 // ============================================================================
 Standard_Real USSM_CableWire01::MonotonicStress(const Standard_Real theStrain)
 {
-    if(theStrain > myEpsMax) {
-        return PolynomialStress(myEpsMax)
-                + PolynomialStiffness(myEpsMax) * (theStrain - myEpsMax);
+    if(theStrain > myParameters.EpsL()) {
+        return PolynomialStress(myParameters.EpsL())
+                + PolynomialStiffness(myParameters.EpsL()) * (theStrain - myParameters.EpsL());
     } else {
         return PolynomialStress(theStrain);
     }
@@ -149,9 +174,12 @@ Standard_Real USSM_CableWire01::MonotonicStress(const Standard_Real theStrain)
 // ============================================================================
 Standard_Real USSM_CableWire01::PolynomialStiffness(const Standard_Real theStrain)
 {
-    Standard_Real D = (5.*myA5*Pow(theStrain, 4.) + 4.*myA4*Pow(theStrain, 3.)
-            + 3.*myA3*Pow(theStrain, 2.) + 2.*myA2*Pow(theStrain, 1.)
-            + 1.*myA1*Pow(theStrain, 0.)) * myEi;
+    Standard_Real D = (6. * myParameters.A6() * Pow(theStrain, 5.)
+            + 5. * myParameters.A5() * Pow(theStrain, 4.)
+            + 4. * myParameters.A4() * Pow(theStrain, 3.)
+            + 3. * myParameters.A3() * Pow(theStrain, 2.)
+            + 2. * myParameters.A2() * Pow(theStrain, 1.)
+            + 1. * myParameters.A1()) * myParameters.E();
     return D;
 }
 
@@ -162,10 +190,26 @@ Standard_Real USSM_CableWire01::PolynomialStiffness(const Standard_Real theStrai
 // ============================================================================
 Standard_Real USSM_CableWire01::PolynomialStress(const Standard_Real theStrain)
 {
-    Standard_Real S = (myA5*Pow(theStrain, 5.) + myA4*Pow(theStrain, 4.)
-            + myA3*Pow(theStrain, 3.) + myA2*Pow(theStrain, 2.)
-            + myA1*Pow(theStrain, 1.) + myA0) * myEi;
-    return S;
+    Standard_Real F = (myParameters.A6() * Pow(theStrain, 6.)
+            + myParameters.A5() * Pow(theStrain, 5.)
+            + myParameters.A4() * Pow(theStrain, 4.)
+            + myParameters.A3() * Pow(theStrain, 3.)
+            + myParameters.A2() * Pow(theStrain, 2.)
+            + myParameters.A1() * Pow(theStrain, 1.)
+            + myParameters.A0()) * myParameters.E();
+    return F;
+}
+
+// ============================================================================
+/*!
+    \brief RevertToCommitState()
+*/
+// ============================================================================
+Standard_Boolean USSM_CableWire01::RevertToCommitState()
+{
+    myTrialStrain = myCommitStrain;
+    myTrialStress = myCommitStress;
+    return Standard_True;
 }
 
 // ============================================================================
@@ -175,11 +219,27 @@ Standard_Real USSM_CableWire01::PolynomialStress(const Standard_Real theStrain)
 // ============================================================================
 Standard_Boolean USSM_CableWire01::RevertToInitialState()
 {
+    myCommitStrain = 0.;
+    myCurrentDirection = Direction_NONE;
     myCurrentMaxStrain = 0.;
     myCurrentMaxStress = 0.;
     myCurrentMinStrain = 0.;
     myCurrentMinStress = 0.;
-    return USSM_Model::RevertToInitialState();
+    myIsInitialLoading = Standard_True;
+    myPreviousDirection = Direction_NONE;
+    myTrialStrain = 0.;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief SetTrialStrain()
+*/
+// ============================================================================
+Standard_Boolean USSM_CableWire01::SetTrialStrain(const Standard_Real theStrain)
+{
+    myTrialStrain = theStrain;
+    return UpdateInternalState();
 }
 
 // ============================================================================
@@ -189,22 +249,23 @@ Standard_Boolean USSM_CableWire01::RevertToInitialState()
 // ============================================================================
 Standard_Boolean USSM_CableWire01::UpdateInternalState()
 {
-    Standard_Real EpsL = myEpsMax;
-    Standard_Real Et = MonotonicStiffness(myEpsMax);
-    Standard_Real SigL = MonotonicStress(myEpsMax);
+    Standard_Real EpsL = myParameters.EpsL();
+    Standard_Real Et = MonotonicStiffness(EpsL);
+    Standard_Real SigL = MonotonicStress(EpsL);
 
     // check loading direction
-    if(myTrialStrain > myCommitStrain && myPreviousDirection == 2) {
+    if(myTrialStrain > myCommitStrain && myPreviousDirection == Direction_BACKWARD) {
         myCurrentMinStrain = myCommitStrain;
         myCurrentMinStress = myCommitStress;
         myIsInitialLoading = Standard_False;
     }
 
-    if(myTrialStrain < myCommitStrain && myPreviousDirection == 1) {
+    if(myTrialStrain < myCommitStrain && myPreviousDirection == Direction_FORWARD) {
         myCurrentMaxStrain = myCommitStrain;
         myCurrentMaxStress = myCommitStress;
         myIsInitialLoading = Standard_False;
     }
+
     // compute stress/stiffness
     if(myTrialStrain >= myCommitStrain) {
         if(myTrialStrain >= myCurrentMaxStrain && myIsInitialLoading == Standard_True) {
@@ -212,8 +273,8 @@ Standard_Boolean USSM_CableWire01::UpdateInternalState()
             myTrialStiffness = 1. * MonotonicStiffness(Abs(myTrialStrain));
         } else {
             Standard_Real Eps0 = (SigL - myCurrentMinStress
-                                  - EpsL * Et + myCurrentMinStrain * myEf) / (myEf - Et);
-            Standard_Real Sig0 = (Eps0 - myCurrentMinStrain) * myEf + myCurrentMinStress;
+                                  - EpsL * Et + myCurrentMinStrain * myParameters.E()) / (myParameters.E() - Et);
+            Standard_Real Sig0 = (Eps0 - myCurrentMinStrain) * myParameters.E() + myCurrentMinStress;
             Standard_Real Eps = (myTrialStrain-myCurrentMinStrain) /
                     (Eps0 - myCurrentMinStrain);
             Standard_Real F = MenegottoStress(Eps);
@@ -228,8 +289,8 @@ Standard_Boolean USSM_CableWire01::UpdateInternalState()
             myTrialStiffness = 1. * MonotonicStiffness(Abs(myTrialStrain));
         } else {
             Standard_Real Eps0 = (-SigL - myCurrentMaxStress
-                                  + EpsL * Et + myCurrentMaxStrain * myEf) / (myEf - Et);
-            Standard_Real Sig0 = (Eps0 - myCurrentMaxStrain) * myEf + myCurrentMaxStress;
+                                  + EpsL * Et + myCurrentMaxStrain * myParameters.E()) / (myParameters.E() - Et);
+            Standard_Real Sig0 = (Eps0 - myCurrentMaxStrain) * myParameters.E() + myCurrentMaxStress;
             Standard_Real Eps = (myTrialStrain-myCurrentMaxStrain) /
                     (Eps0 - myCurrentMaxStrain);
             Standard_Real F = MenegottoStress(Eps);
@@ -240,7 +301,6 @@ Standard_Boolean USSM_CableWire01::UpdateInternalState()
         }
     }
 
-    myMustBeUpdated = Standard_False;
     return Standard_True;
 }
 

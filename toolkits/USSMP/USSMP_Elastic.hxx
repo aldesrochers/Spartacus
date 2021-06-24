@@ -20,50 +20,44 @@
 // ============================================================================
 
 
-#ifndef __USSM_Model_hxx__
-#define __USSM_Model_hxx__
+#ifndef __USSMP_Elastic_hxx__
+#define __USSMP_Elastic_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
-#include <Standard_DefineHandle.hxx>
-#include <Standard_Transient.hxx>
-
-// Forward declarations
-class USSM_Model;
-
-// Handles
-DEFINE_STANDARD_HANDLE(USSM_Model, Standard_Transient);
+#include <Standard_DefineAlloc.hxx>
+#include <Standard_Real.hxx>
 
 
 // ============================================================================
 /*!
-    \brief USSM_Model
+ *  \brief USSMP_Elastic
 */
 // ============================================================================
-class USSM_Model : public Standard_Transient
+class USSMP_Elastic
 {
 
 public:
+
+    DEFINE_STANDARD_ALLOC;
+
+public:
     // constructors
-    USSM_Model();
+    USSMP_Elastic();
+    USSMP_Elastic(const Standard_Real E);
     // destructors
-    ~USSM_Model();
+    ~USSMP_Elastic();
 
 public:
 
-    virtual Standard_Boolean    CommitState() = 0;
-    virtual Standard_Real       GetInitialStiffness() = 0;
-    virtual Standard_Real       GetTrialStiffness() = 0;
-    virtual Standard_Real       GetTrialStrain() = 0;
-    virtual Standard_Real       GetTrialStress() = 0;
-    virtual Standard_Boolean    RevertToCommitState() = 0;
-    virtual Standard_Boolean    RevertToInitialState() = 0;
-    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) = 0;
+    Standard_Real           E() const;
 
-public:
+    void                    SetE(const Standard_Real E);
 
-    DEFINE_STANDARD_RTTIEXT(USSM_Model, Standard_Transient);
+private:
+
+    Standard_Real           myE;
 
 };
 
-#endif  // __USSM_Model_hxx__
+#endif  // __USSMP_Elastic_hxx__

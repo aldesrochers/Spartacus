@@ -30,9 +30,20 @@
 */
 // ============================================================================
 USSM_Elastic::USSM_Elastic(const Standard_Real E)
-    : myE(E)
 {
+    myParameters = USSMP_Elastic(E);
+    RevertToInitialState();
+}
 
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+USSM_Elastic::USSM_Elastic(const USSMP_Elastic& theParameters)
+    : myParameters(theParameters)
+{
+    RevertToInitialState();
 }
 
 // ============================================================================
@@ -47,14 +58,86 @@ USSM_Elastic::~USSM_Elastic()
 
 // ============================================================================
 /*!
-    \brief UpdateInternalState()
+    \brief CommitState()
 */
 // ============================================================================
-Standard_Boolean USSM_Elastic::UpdateInternalState()
+Standard_Boolean USSM_Elastic::CommitState()
 {
-    myTrialStress = myE * myTrialStrain;
-    myTrialStiffness = myE;
-    myMustBeUpdated = Standard_False;
+    myCommitStrain = myTrialStrain;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief GetInitialStiffness()
+*/
+// ============================================================================
+Standard_Real USSM_Elastic::GetInitialStiffness()
+{
+    return myParameters.E();
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStiffness()
+*/
+// ============================================================================
+Standard_Real USSM_Elastic::GetTrialStiffness()
+{
+    return myParameters.E();
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStrain()
+*/
+// ============================================================================
+Standard_Real USSM_Elastic::GetTrialStrain()
+{
+    return myTrialStrain;
+}
+
+// ============================================================================
+/*!
+    \brief GetTrialStress()
+*/
+// ============================================================================
+Standard_Real USSM_Elastic::GetTrialStress()
+{
+    return myTrialStrain * myParameters.E();
+}
+
+// ============================================================================
+/*!
+    \brief RevertToCommitState()
+*/
+// ============================================================================
+Standard_Boolean USSM_Elastic::RevertToCommitState()
+{
+    myTrialStrain = myCommitStrain;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief RevertToInitialState()
+*/
+// ============================================================================
+Standard_Boolean USSM_Elastic::RevertToInitialState()
+{
+    myCommitStrain = 0.;
+    myTrialStrain = 0.;
+    return Standard_True;
+}
+
+// ============================================================================
+/*!
+    \brief SetTrialStrain()
+*/
+// ============================================================================
+Standard_Boolean USSM_Elastic::SetTrialStrain(const Standard_Real theStrain)
+{
+    myTrialStrain = theStrain;
     return Standard_True;
 }
 

@@ -25,6 +25,7 @@
 
 // Spartacus
 #include <USSM_Model.hxx>
+#include <USSMP_Elastic.hxx>
 
 // Forward declarations
 class USSM_Elastic;
@@ -44,16 +45,29 @@ class USSM_Elastic : public USSM_Model
 public:
     // constructors
     USSM_Elastic(const Standard_Real E);
+    USSM_Elastic(const USSMP_Elastic& theParameters);
     // destructors
     ~USSM_Elastic();
 
 public:
 
-    virtual Standard_Boolean    UpdateInternalState() = 0;
+    virtual Standard_Boolean    CommitState() Standard_OVERRIDE;
+    virtual Standard_Real       GetInitialStiffness() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStiffness() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStrain() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStress() Standard_OVERRIDE;
+    virtual Standard_Boolean    RevertToCommitState() Standard_OVERRIDE;
+    virtual Standard_Boolean    RevertToInitialState() Standard_OVERRIDE;
+    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) Standard_OVERRIDE;
 
-protected:
+private:
 
-    Standard_Real       myE;
+    // Parameters
+    USSMP_Elastic               myParameters;
+
+    // History
+    Standard_Real               myCommitStrain;
+    Standard_Real               myTrialStrain;
 
 public:
 

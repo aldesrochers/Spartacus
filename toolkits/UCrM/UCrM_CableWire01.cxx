@@ -129,7 +129,7 @@ Standard_Real UCrM_CableWire01::GetTrialTime()
 // ============================================================================
 Standard_Real UCrM_CableWire01::GetTrialTimeGrowthRate()
 {
-    return myTrialStressGrowthRate;
+    return myTrialTimeGrowthRate;
 }
 
 // ============================================================================
@@ -235,18 +235,19 @@ Standard_Boolean UCrM_CableWire01::UpdateInternalState()
 Standard_Boolean UCrM_CableWire01::UpdateTrialStressGrowthRate(const Standard_Real tEq,
                                                                const Standard_Real Eps)
 {
-    if(tEq <= 0.)
-        return -1./Precision::Infinite();
-    Standard_Real e1 = myParameters.A1()
-            * Pow(myParameters.A2()*Eps, myParameters.A3());
-    Standard_Real e2 = Pow(tEq, myParameters.B1()
-                           * Pow(Eps, 2.) + myParameters.B1()
-                           * Eps + myParameters.B2());
-    Standard_Real e3 = Exp(myParameters.C()
+    if(tEq <= 0.) {
+        myTrialStressGrowthRate = -1./Precision::Infinite();
+        return Standard_True;
+    }
+    Standard_Real e1 = Exp(myParameters.C()
                            * (myTrialTemperature - myParameters.T0()));
-    Standard_Real e4 = 2.*myParameters.B1()*Log(tEq)*Pow(Eps, 2.)
-            + myParameters.B2()*Log(tEq)*Eps + myParameters.A3();
-    myTrialStressGrowthRate = e1 * e2 * e3 * e4 / Eps;
+    Standard_Real e2 = myParameters.B1() * Pow(Eps, 2.)
+            + myParameters.B2() * Eps + myParameters.B3();
+    Standard_Real e3 = myParameters.A1() * Pow(tEq, e2)
+            * Pow(myParameters.A2()*Eps, myParameters.A3());
+    Standard_Real e4 = (2. * myParameters.B1() * Log(tEq) * Pow(Eps, 2.)
+                        + myParameters.B2()*Eps*Log(tEq) + myParameters.A3()) / Eps;
+    myTrialStressGrowthRate = e3 * e4 * e1;
     return Standard_True;
 }
 
@@ -258,13 +259,12 @@ Standard_Boolean UCrM_CableWire01::UpdateTrialStressGrowthRate(const Standard_Re
 Standard_Boolean UCrM_CableWire01::UpdateTrialTemperatureGrowthRate(const Standard_Real tEq,
                                                                     const Standard_Real Eps)
 {
-    Standard_Real e1 = myParameters.A1()
-            * Pow(myParameters.A2()*Eps, myParameters.A3());
-    Standard_Real e2 = Pow(tEq, myParameters.B1()
-                           * Pow(Eps, 2.) + myParameters.B1()
-                           * Eps + myParameters.B2());
-    myTrialTemperatureGrowthRate = myParameters.C() * e1 * e2
+    Standard_Real e1 = myParameters.C()
             * Exp(myParameters.C() * (myTrialTemperature - myParameters.T0()));
+    Standard_Real e2 = myParameters.A1() * Pow(myParameters.A2()*Eps, myParameters.A3());
+    Standard_Real e3 = Pow(tEq, myParameters.B1()*Pow(Eps, 2.)
+                           + myParameters.B2()*Eps + myParameters.B3());
+    myTrialTemperatureGrowthRate = e1 * e2 * e3;
     return Standard_True;
 }
 
@@ -276,12 +276,17 @@ Standard_Boolean UCrM_CableWire01::UpdateTrialTemperatureGrowthRate(const Standa
 Standard_Boolean UCrM_CableWire01::UpdateTrialTimeGrowthRate(const Standard_Real tEq,
                                                              const Standard_Real Eps)
 {
-    Standard_Real e1 = myParameters.A1()
-            * Pow(myParameters.A2()*Eps, myParameters.A3());
-    Standard_Real e2 = Exp(myParameters.C()*(myTrialTemperature-myParameters.T0()));
-    Standard_Real e3 = myParameters.B1()*Pow(Eps,2.)
-            + myParameters.B2()*Eps + myParameters.B3();
-    myTrialTimeGrowthRate = e1 * e2 * e3 * Pow(tEq, e3 - 1.);
+    if(tEq <= 0.) {
+        myTrialTimeGrowthRate = 0.;
+        return Standard_True;
+    }
+    Standard_Real e1 = Exp(myParameters.C()
+                           * (myTrialTemperature - myParameters.T0()));
+    Standard_Real e2 = myParameters.A1() * Pow(myParameters.A2()*Eps, myParameters.A3());
+    Standard_Real e3 = myParameters.B1() * Pow(Eps, 2.)
+            + myParameters.B2() * Eps + myParameters.B3();
+    Standard_Real e4 = Pow(tEq, e3 -1.);
+    myTrialTimeGrowthRate = e1 * e2 * e3 * e4;
     return Standard_True;
 }
 

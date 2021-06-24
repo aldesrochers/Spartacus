@@ -24,6 +24,7 @@ using namespace std;
 
 // Spartacus
 #include <USSM_CableWire01.hxx>
+#include <USSMP_CableWire01.hxx>
 
 // OpenCascade
 #include <TColStd_SequenceOfReal.hxx>
@@ -38,9 +39,18 @@ using namespace std;
 // ============================================================================
 int main(int argc, char** argv)
 {
+    USSMP_CableWire01 Params;
+    Params.SetA0(0.);
+    Params.SetA1(6.406E-1);
+    Params.SetA2(6.341E1);
+    Params.SetA3(-3.810E4);
+    Params.SetA4(3.399E6);
+    Params.SetE(5.939E10);
+    Params.SetEpsL(0.006);
+    Params.SetR(20.);
 
-    Handle(USSM_CableWire01) aModel =
-            new USSM_CableWire01(1.641E11, 1.882E11, 0.0065, 0., 1., 1.217E1, -4.817E1, -5.939E5, 0., 10.);
+
+    Handle(USSM_CableWire01) aModel = new USSM_CableWire01(Params);
 
 
     TColStd_SequenceOfReal aList;
@@ -74,8 +84,7 @@ int main(int argc, char** argv)
     TColStd_SequenceOfReal::Iterator anIt(aList);
     for(; anIt.More(); anIt.Next()) {
         aModel->SetTrialStrain(anIt.Value());
-        aModel->UpdateInternalState();
-        cout << aModel->GetTrialStress()<< endl;
+        cout << aModel->GetTrialStrain() << " " << aModel->GetTrialStress()<< endl;
         aModel->CommitState();
 
 

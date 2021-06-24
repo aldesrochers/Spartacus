@@ -34,6 +34,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/UThM
     ${CMAKE_CURRENT_SOURCE_DIR}/UMM
     ${CMAKE_CURRENT_SOURCE_DIR}/USSM
+    ${CMAKE_CURRENT_SOURCE_DIR}/USSMP
     ${CMAKE_CURRENT_SOURCE_DIR}/XSM
 )
 
@@ -112,21 +113,30 @@ set(StkFEData_Sources
 
 set(StkFEData_Headers
     UCrM/UCrM_CableWire01.hxx
+    UCrM/UCrM_CableWire02.hxx
     UCrM/UCrM_Model.hxx
     UCrMP/UCrMP_CableWire01.hxx
     UCrMP/UCrMP_CableWire02.hxx
+    USSM/USSM_CableWire01.hxx
+    USSM/USSM_Elastic.hxx
+    USSM/USSM_Model.hxx
+    USSMP/USSMP_CableWire01.hxx
+    USSMP/USSMP_Elastic.hxx
 )
 
 set(StkFEData_Sources
     UCrM/UCrM_CableWire01.cxx
+    UCrM/UCrM_CableWire02.cxx
     UCrM/UCrM_Model.cxx
     UCrMP/UCrMP_CableWire01.cxx
     UCrMP/UCrMP_CableWire02.cxx
+    USSM/USSM_CableWire01.cxx
+    USSM/USSM_Elastic.cxx
+    USSM/USSM_Model.cxx
+    USSMP/USSMP_CableWire01.cxx
+    USSMP/USSMP_Elastic.cxx
 )
 
 #add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})
-add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_UCrM_CableWire01.cxx)
-#add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_CableWire01.cxx)
-#add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_BimetallicCableSection.cxx)
-#add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_SaggingAnalysis.cxx)
+add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_USSM_CableWire01.cxx)
 target_link_libraries(StkFEData ${StkFEData_LinkedLibraries})

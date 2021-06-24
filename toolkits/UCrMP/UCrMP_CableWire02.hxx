@@ -46,6 +46,48 @@ public:
 public:
     // constructors
     UCrMP_CableWire02();
+    UCrMP_CableWire02(const Standard_Real E,
+                      const Standard_Real Eps0,
+                      const Standard_Real Eps1,
+                      const Standard_Real Eps2,
+                      const Standard_Real Eps3,
+                      const Standard_Real A0,
+                      const Standard_Real A1,
+                      const Standard_Real A2,
+                      const Standard_Real A3,
+                      const Standard_Real B0,
+                      const Standard_Real B1,
+                      const Standard_Real B2,
+                      const Standard_Real B3);
+    UCrMP_CableWire02(const Standard_Real E,
+                      const Standard_Real Eps0,
+                      const Standard_Real Eps1,
+                      const Standard_Real Eps2,
+                      const Standard_Real Eps3,
+                      const Standard_Real A0,
+                      const Standard_Real A1,
+                      const Standard_Real A2,
+                      const Standard_Real A3,
+                      const Standard_Real B0,
+                      const Standard_Real B1,
+                      const Standard_Real B2,
+                      const Standard_Real B3,
+                      const Standard_Real C);
+    UCrMP_CableWire02(const Standard_Real E,
+                      const Standard_Real Eps0,
+                      const Standard_Real Eps1,
+                      const Standard_Real Eps2,
+                      const Standard_Real Eps3,
+                      const Standard_Real A0,
+                      const Standard_Real A1,
+                      const Standard_Real A2,
+                      const Standard_Real A3,
+                      const Standard_Real B0,
+                      const Standard_Real B1,
+                      const Standard_Real B2,
+                      const Standard_Real B3,
+                      const Standard_Real C,
+                      const Standard_Real T0);
     // destructors
     ~UCrMP_CableWire02();
 
@@ -60,10 +102,12 @@ public:
     Standard_Real           B2() const;
     Standard_Real           B3() const;
     Standard_Real           C() const;
-    Standard_Real           Sig0() const;
-    Standard_Real           Sig1() const;
-    Standard_Real           Sig2() const;
-    Standard_Real           Sig3() const;
+    Standard_Real           E() const;
+    Standard_Real           Eps0() const;
+    Standard_Real           Eps1() const;
+    Standard_Real           Eps2() const;
+    Standard_Real           Eps3() const;
+    Standard_Real           T0() const;
 
     void                    SetA0(const Standard_Real A0);
     void                    SetA1(const Standard_Real A1);
@@ -74,10 +118,12 @@ public:
     void                    SetB2(const Standard_Real B2);
     void                    SetB3(const Standard_Real B3);
     void                    SetC(const Standard_Real C);
-    void                    SetSig0(const Standard_Real Sig0);
-    void                    SetSig1(const Standard_Real Sig1);
-    void                    SetSig2(const Standard_Real Sig2);
-    void                    SetSig3(const Standard_Real Sig3);
+    void                    SetE(const Standard_Real E);
+    void                    SetEps0(const Standard_Real Eps0);
+    void                    SetEps1(const Standard_Real Eps1);
+    void                    SetEps2(const Standard_Real Eps2);
+    void                    SetEps3(const Standard_Real Eps3);
+    void                    SetT0(const Standard_Real T0);
 
 private:
 
@@ -90,10 +136,12 @@ private:
     Standard_Real           myB2;
     Standard_Real           myB3;
     Standard_Real           myC;
-    Standard_Real           mySig0;
-    Standard_Real           mySig1;
-    Standard_Real           mySig2;
-    Standard_Real           mySig3;
+    Standard_Real           myE;
+    Standard_Real           myEps0;
+    Standard_Real           myEps1;
+    Standard_Real           myEps2;
+    Standard_Real           myEps3;
+    Standard_Real           myT0;
 
 };
 

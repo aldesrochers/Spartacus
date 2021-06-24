@@ -20,50 +20,59 @@
 // ============================================================================
 
 
-#ifndef __USSM_Model_hxx__
-#define __USSM_Model_hxx__
-
-// OpenCascade
-#include <Standard.hxx>
-#include <Standard_DefineHandle.hxx>
-#include <Standard_Transient.hxx>
-
-// Forward declarations
-class USSM_Model;
-
-// Handles
-DEFINE_STANDARD_HANDLE(USSM_Model, Standard_Transient);
+// Spartacus
+#include <USSMP_Elastic.hxx>
 
 
 // ============================================================================
 /*!
-    \brief USSM_Model
+ *  \brief Constructor
 */
 // ============================================================================
-class USSM_Model : public Standard_Transient
+USSMP_Elastic::USSMP_Elastic()
+    : myE(0.)
 {
 
-public:
-    // constructors
-    USSM_Model();
-    // destructors
-    ~USSM_Model();
+}
 
-public:
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+USSMP_Elastic::USSMP_Elastic(const Standard_Real E)
+    : myE(E)
+{
 
-    virtual Standard_Boolean    CommitState() = 0;
-    virtual Standard_Real       GetInitialStiffness() = 0;
-    virtual Standard_Real       GetTrialStiffness() = 0;
-    virtual Standard_Real       GetTrialStrain() = 0;
-    virtual Standard_Real       GetTrialStress() = 0;
-    virtual Standard_Boolean    RevertToCommitState() = 0;
-    virtual Standard_Boolean    RevertToInitialState() = 0;
-    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) = 0;
+}
 
-public:
+// ============================================================================
+/*!
+ *  \brief Destructor
+*/
+// ============================================================================
+USSMP_Elastic::~USSMP_Elastic()
+{
 
-    DEFINE_STANDARD_RTTIEXT(USSM_Model, Standard_Transient);
+}
 
-};
+// ============================================================================
+/*!
+ *  \brief E()
+*/
+// ============================================================================
+Standard_Real USSMP_Elastic::E() const
+{
+    return myE;
+}
 
-#endif  // __USSM_Model_hxx__
+// ============================================================================
+/*!
+ *  \brief SetE()
+*/
+// ============================================================================
+void USSMP_Elastic::SetE(const Standard_Real E)
+{
+    myE = E;
+}
+

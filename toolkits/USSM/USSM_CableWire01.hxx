@@ -25,6 +25,7 @@
 
 // Spartacus
 #include <USSM_Model.hxx>
+#include <USSMP_CableWire01.hxx>
 
 // Forward declarations
 class USSM_CableWire01;
@@ -40,10 +41,6 @@ DEFINE_STANDARD_HANDLE(USSM_CableWire01, USSM_Model);
     Class implementation of a generic cable wire material with a polynomial
     monotonic stress-strain curve and a menegotto-pinto unloading/reloading
     curve.
-
-    Ei, Ef -> Initial/Final elastic modulous
-    A0-A5 -> Coefficients of the monotonic loading curve
-    R -> Menegotto-Pinto shape parameter
 */
 // ============================================================================
 class USSM_CableWire01 : public USSM_Model
@@ -51,56 +48,49 @@ class USSM_CableWire01 : public USSM_Model
 
 public:
     // constructors
-    USSM_CableWire01(const Standard_Real Ei,
-                     const Standard_Real Ef,
-                     const Standard_Real EpsMax,
-                     const Standard_Real A0,
-                     const Standard_Real A1,
-                     const Standard_Real A2,
-                     const Standard_Real A3,
-                     const Standard_Real A4,
-                     const Standard_Real A5,
-                     const Standard_Real R);
+    USSM_CableWire01(const USSMP_CableWire01& theParameters);
     // destructors
     ~USSM_CableWire01();
 
 public:
 
-    virtual Standard_Boolean    CommitState();
+    virtual Standard_Boolean    CommitState() Standard_OVERRIDE;
     virtual Standard_Real       GetInitialStiffness() Standard_OVERRIDE;
-    virtual Standard_Boolean    RevertToInitialState();
-    virtual Standard_Boolean    UpdateInternalState();
+    virtual Standard_Real       GetTrialStiffness() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStrain() Standard_OVERRIDE;
+    virtual Standard_Real       GetTrialStress() Standard_OVERRIDE;
+    virtual Standard_Boolean    RevertToCommitState() Standard_OVERRIDE;
+    virtual Standard_Boolean    RevertToInitialState() Standard_OVERRIDE;
+    virtual Standard_Boolean    SetTrialStrain(const Standard_Real theStrain) Standard_OVERRIDE;
 
-protected:
+private:
 
-    virtual Standard_Real       MenegottoStiffness(const Standard_Real theStrain);
-    virtual Standard_Real       MenegottoStress(const Standard_Real theStrain);
-    virtual Standard_Real       MonotonicStiffness(const Standard_Real theStrain);
-    virtual Standard_Real       MonotonicStress(const Standard_Real theStrain);
-    virtual Standard_Real       PolynomialStiffness(const Standard_Real theStrain);
-    virtual Standard_Real       PolynomialStress(const Standard_Real theStrain);
+    Standard_Real               MenegottoStiffness(const Standard_Real theStrain);
+    Standard_Real               MenegottoStress(const Standard_Real theStrain);
+    Standard_Real               MonotonicStiffness(const Standard_Real theStrain);
+    Standard_Real               MonotonicStress(const Standard_Real theStrain);
+    Standard_Real               PolynomialStiffness(const Standard_Real theStrain);
+    Standard_Real               PolynomialStress(const Standard_Real theStrain);
+    Standard_Boolean            UpdateInternalState();
 
-protected:
+private:
 
     // Parameters
-    Standard_Real       myA0;
-    Standard_Real       myA1;
-    Standard_Real       myA2;
-    Standard_Real       myA3;
-    Standard_Real       myA4;
-    Standard_Real       myA5;
-    Standard_Real       myEf;
-    Standard_Real       myEi;
-    Standard_Real       myEpsMax;
-    Standard_Real       myR;
+    USSMP_CableWire01           myParameters;
 
-    // Additionnal history
-    Standard_Real       myCurrentMaxStrain;
-    Standard_Real       myCurrentMaxStress;
-    Standard_Real       myCurrentMinStrain;
-    Standard_Real       myCurrentMinStress;
-    Standard_Integer    myIsInitialLoading;
-    Standard_Integer    myPreviousDirection;
+    // History
+    Standard_Real               myCommitStrain;
+    Standard_Real               myCommitStress;
+    Standard_Integer            myCurrentDirection;
+    Standard_Real               myCurrentMaxStrain;
+    Standard_Real               myCurrentMaxStress;
+    Standard_Real               myCurrentMinStrain;
+    Standard_Real               myCurrentMinStress;
+    Standard_Integer            myIsInitialLoading;
+    Standard_Integer            myPreviousDirection;
+    Standard_Real               myTrialStiffness;
+    Standard_Real               myTrialStrain;
+    Standard_Real               myTrialStress;
 
 public:
 

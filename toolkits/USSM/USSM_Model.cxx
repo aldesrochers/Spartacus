@@ -20,7 +20,7 @@
 // ============================================================================
 
 
-// MCLM1d
+// Spartacus
 #include <USSM_Model.hxx>
 
 
@@ -44,129 +44,6 @@ USSM_Model::~USSM_Model()
 
 }
 
-// ============================================================================
-/*!
-    \brief CommitState()
-*/
-// ============================================================================
-Standard_Boolean USSM_Model::CommitState()
-{
-    myCommitStiffness = myTrialStiffness;
-    myCommitStrain = myTrialStrain;
-    myCommitStress = myTrialStress;
-    return Standard_True;
-}
-
-// ============================================================================
-/*!
-    \brief GetCommitStiffness()
-*/
-// ============================================================================
-Standard_Real USSM_Model::GetCommitStiffness()
-{
-    return myCommitStiffness;
-}
-
-// ============================================================================
-/*!
-    \brief GetCommitStrain()
-*/
-// ============================================================================
-Standard_Real USSM_Model::GetCommitStrain()
-{
-    return myCommitStrain;
-}
-
-// ============================================================================
-/*!
-    \brief GetCommitStress()
-*/
-// ============================================================================
-Standard_Real USSM_Model::GetCommitStress()
-{
-    return myCommitStress;
-}
-
-// ============================================================================
-/*!
-    \brief GetTrialStiffness()
-*/
-// ============================================================================
-Standard_Real USSM_Model::GetTrialStiffness()
-{
-    return myTrialStiffness;
-}
-
-// ============================================================================
-/*!
-    \brief GetTrialStrain()
-*/
-// ============================================================================
-Standard_Real USSM_Model::GetTrialStrain()
-{
-    return myTrialStrain;
-}
-
-// ============================================================================
-/*!
-    \brief GetTrialStress()
-*/
-// ============================================================================
-Standard_Real USSM_Model::GetTrialStress()
-{
-    return myTrialStress;
-}
-
-// ============================================================================
-/*!
-    \brief MustBeUpdated()
-*/
-// ============================================================================
-Standard_Boolean USSM_Model::MustBeUpdated()
-{
-    return myMustBeUpdated;
-}
-
-// ============================================================================
-/*!
-    \brief RevertToCommitState()
-*/
-// ============================================================================
-Standard_Boolean USSM_Model::RevertToCommitState()
-{
-    myTrialStiffness = myCommitStiffness;
-    myTrialStrain = myCommitStrain;
-    myTrialStress = myCommitStress;
-    return Standard_True;
-}
-
-// ============================================================================
-/*!
-    \brief RevertToInitialState()
-*/
-// ============================================================================
-Standard_Boolean USSM_Model::RevertToInitialState()
-{
-    myCommitStiffness = 0.;
-    myCommitStrain = 0.;
-    myCommitStress = 0.;
-    myTrialStiffness = 0.;
-    myTrialStrain = 0.;
-    myTrialStress = 0.;
-    return Standard_True;
-}
-
-// ============================================================================
-/*!
-    \brief SetTrialStrain()
-*/
-// ============================================================================
-Standard_Boolean USSM_Model::SetTrialStrain(const Standard_Real theStrain)
-{
-    myTrialStrain = theStrain;
-    myMustBeUpdated = Standard_True;
-    return Standard_True;
-}
 
 
 // ****************************************************************************

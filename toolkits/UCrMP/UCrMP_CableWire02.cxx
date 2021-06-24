@@ -30,9 +30,99 @@
 */
 // ============================================================================
 UCrMP_CableWire02::UCrMP_CableWire02()
-    : myA1(0.), myA2(0.), myA3(0.),
-      myB1(0.), myB2(0.), myB3(0.),
-      myC(0.)
+    : myA0(0.), myA1(0.), myA2(0.), myA3(0.),
+      myB0(0.), myB1(0.), myB2(0.), myB3(0.),
+      myC(0.),
+      myE(0.),
+      myEps0(0.), myEps1(0.), myEps2(0.), myEps3(0.),
+      myT0(0.)
+{
+
+}
+
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+UCrMP_CableWire02::UCrMP_CableWire02(const Standard_Real E,
+                                     const Standard_Real Eps0,
+                                     const Standard_Real Eps1,
+                                     const Standard_Real Eps2,
+                                     const Standard_Real Eps3,
+                                     const Standard_Real A0,
+                                     const Standard_Real A1,
+                                     const Standard_Real A2,
+                                     const Standard_Real A3,
+                                     const Standard_Real B0,
+                                     const Standard_Real B1,
+                                     const Standard_Real B2,
+                                     const Standard_Real B3)
+    : myA0(A0), myA1(A1), myA2(A2), myA3(A3),
+      myB0(B0), myB1(B1), myB2(B2), myB3(B3),
+      myC(0.),
+      myE(E),
+      myEps0(Eps0), myEps1(Eps1), myEps2(Eps2), myEps3(Eps3),
+      myT0(0.)
+{
+
+}
+
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+UCrMP_CableWire02::UCrMP_CableWire02(const Standard_Real E,
+                                     const Standard_Real Eps0,
+                                     const Standard_Real Eps1,
+                                     const Standard_Real Eps2,
+                                     const Standard_Real Eps3,
+                                     const Standard_Real A0,
+                                     const Standard_Real A1,
+                                     const Standard_Real A2,
+                                     const Standard_Real A3,
+                                     const Standard_Real B0,
+                                     const Standard_Real B1,
+                                     const Standard_Real B2,
+                                     const Standard_Real B3,
+                                     const Standard_Real C)
+    : myA0(A0), myA1(A1), myA2(A2), myA3(A3),
+      myB0(B0), myB1(B1), myB2(B2), myB3(B3),
+      myC(C),
+      myE(E),
+      myEps0(Eps0), myEps1(Eps1), myEps2(Eps2), myEps3(Eps3),
+      myT0(0.)
+{
+
+}
+
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+UCrMP_CableWire02::UCrMP_CableWire02(const Standard_Real E,
+                                     const Standard_Real Eps0,
+                                     const Standard_Real Eps1,
+                                     const Standard_Real Eps2,
+                                     const Standard_Real Eps3,
+                                     const Standard_Real A0,
+                                     const Standard_Real A1,
+                                     const Standard_Real A2,
+                                     const Standard_Real A3,
+                                     const Standard_Real B0,
+                                     const Standard_Real B1,
+                                     const Standard_Real B2,
+                                     const Standard_Real B3,
+                                     const Standard_Real C,
+                                     const Standard_Real T0)
+    : myA0(A0), myA1(A1), myA2(A2), myA3(A3),
+      myB0(B0), myB1(B1), myB2(B2), myB3(B3),
+      myC(C),
+      myE(E),
+      myEps0(Eps0), myEps1(Eps1), myEps2(Eps2), myEps3(Eps3),
+      myT0(T0)
 {
 
 }
@@ -139,42 +229,62 @@ Standard_Real UCrMP_CableWire02::C() const
 
 // ============================================================================
 /*!
-    \brief Sig0()
+    \brief E()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire02::Sig0() const
+Standard_Real UCrMP_CableWire02::E() const
 {
-    return mySig0;
+    return myE;
 }
 
 // ============================================================================
 /*!
-    \brief Sig1()
+    \brief Eps0()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire02::Sig1() const
+Standard_Real UCrMP_CableWire02::Eps0() const
 {
-    return mySig1;
+    return myEps0;
 }
 
 // ============================================================================
 /*!
-    \brief Sig2()
+    \brief Eps1()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire02::Sig2() const
+Standard_Real UCrMP_CableWire02::Eps1() const
 {
-    return mySig2;
+    return myEps1;
 }
 
 // ============================================================================
 /*!
-    \brief Sig3()
+    \brief Eps2()
 */
 // ============================================================================
-Standard_Real UCrMP_CableWire02::Sig3() const
+Standard_Real UCrMP_CableWire02::Eps2() const
 {
-    return mySig3;
+    return myEps2;
+}
+
+// ============================================================================
+/*!
+    \brief Eps3()
+*/
+// ============================================================================
+Standard_Real UCrMP_CableWire02::Eps3() const
+{
+    return myEps3;
+}
+
+// ============================================================================
+/*!
+    \brief T0()
+*/
+// ============================================================================
+Standard_Real UCrMP_CableWire02::T0() const
+{
+    return myT0;
 }
 
 // ============================================================================
@@ -270,40 +380,60 @@ void UCrMP_CableWire02::SetC(const Standard_Real C)
 
 // ============================================================================
 /*!
-    \brief SetSig0()
+    \brief SetE()
 */
 // ============================================================================
-void UCrMP_CableWire02::SetSig0(const Standard_Real Sig0)
+void UCrMP_CableWire02::SetE(const Standard_Real E)
 {
-    mySig0 = Sig0;
+    myE = E;
 }
 
 // ============================================================================
 /*!
-    \brief SetSig1()
+    \brief SetEps0()
 */
 // ============================================================================
-void UCrMP_CableWire02::SetSig1(const Standard_Real Sig1)
+void UCrMP_CableWire02::SetEps0(const Standard_Real Eps0)
 {
-    mySig1 = Sig1;
+    myEps0 = Eps0;
 }
 
 // ============================================================================
 /*!
-    \brief SetSig2()
+    \brief SetEps1()
 */
 // ============================================================================
-void UCrMP_CableWire02::SetSig2(const Standard_Real Sig2)
+void UCrMP_CableWire02::SetEps1(const Standard_Real Eps1)
 {
-    mySig2 = Sig2;
+    myEps1 = Eps1;
 }
 
 // ============================================================================
 /*!
-    \brief SetSig3()
+    \brief SetEps2()
 */
 // ============================================================================
-void UCrMP_CableWire02::SetSig3(const Standard_Real Sig3)
+void UCrMP_CableWire02::SetEps2(const Standard_Real Eps2)
 {
-    mySig3 = Sig3;
+    myEps2 = Eps2;
+}
+
+// ============================================================================
+/*!
+    \brief SetEps3()
+*/
+// ============================================================================
+void UCrMP_CableWire02::SetEps3(const Standard_Real Eps3)
+{
+    myEps3 = Eps3;
+}
+
+// ============================================================================
+/*!
+    \brief SetT0()
+*/
+// ============================================================================
+void UCrMP_CableWire02::SetT0(const Standard_Real T0)
+{
+    myT0 = T0;
 }
