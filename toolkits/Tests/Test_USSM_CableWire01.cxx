@@ -47,8 +47,7 @@ int main(int argc, char** argv)
     Params.SetA4(3.399E6);
     Params.SetE(5.939E10);
     Params.SetEpsL(0.006);
-    Params.SetR(20.);
-
+    //Params.SetFc(3E7);
 
     Handle(USSM_CableWire01) aModel = new USSM_CableWire01(Params);
 
@@ -59,24 +58,25 @@ int main(int argc, char** argv)
     aList.Append(0.002);
     aList.Append(0.003);
     aList.Append(0.004);
-    aList.Append(0.005);
-    aList.Append(0.006);
-    aList.Append(0.005);
-    aList.Append(0.004);
     aList.Append(0.003);
     aList.Append(0.002);
     aList.Append(0.001);
-    aList.Append(0.0);
+    aList.Append(0.000);
     aList.Append(-0.001);
     aList.Append(-0.002);
     aList.Append(-0.003);
     aList.Append(-0.004);
     aList.Append(-0.005);
     aList.Append(-0.006);
-    aList.Append(-0.007);
-    aList.Append(-0.008);
-    aList.Append(-0.009);
-    aList.Append(-0.010);
+    aList.Append(-0.005);
+    aList.Append(-0.004);
+    aList.Append(-0.003);
+    aList.Append(-0.002);
+    aList.Append(-0.001);
+    aList.Append(-0.000);
+    aList.Append(0.002);
+    aList.Append(0.004);
+    aList.Append(0.006);
 
 
 

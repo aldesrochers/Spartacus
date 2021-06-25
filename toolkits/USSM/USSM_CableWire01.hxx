@@ -65,12 +65,14 @@ public:
 
 private:
 
-    Standard_Real               MenegottoStiffness(const Standard_Real theStrain);
-    Standard_Real               MenegottoStress(const Standard_Real theStrain);
-    Standard_Real               MonotonicStiffness(const Standard_Real theStrain);
-    Standard_Real               MonotonicStress(const Standard_Real theStrain);
-    Standard_Real               PolynomialStiffness(const Standard_Real theStrain);
-    Standard_Real               PolynomialStress(const Standard_Real theStrain);
+    Standard_Real               MenegottoStiffness(const Standard_Real Eps,
+                                                   const Standard_Real B);
+    Standard_Real               MenegottoStress(const Standard_Real Eps,
+                                                const Standard_Real B);
+    Standard_Real               MonotonicStiffness(const Standard_Real Eps);
+    Standard_Real               MonotonicStress(const Standard_Real Eps);
+    Standard_Real               PolynomialStiffness(const Standard_Real Eps);
+    Standard_Real               PolynomialStress(const Standard_Real Eps);
     Standard_Boolean            UpdateInternalState();
 
 private:

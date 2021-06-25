@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __USSMP_CableWire01_hxx__
-#define __USSMP_CableWire01_hxx__
+#ifndef __USSMP_CableWire02_hxx__
+#define __USSMP_CableWire02_hxx__
 
 // OpenCascade
 #include <Standard.hxx>
@@ -31,10 +31,10 @@
 
 // ============================================================================
 /*!
- *  \brief USSMP_CableWire01
+ *  \brief USSMP_CableWire02
 */
 // ============================================================================
-class USSMP_CableWire01
+class USSMP_CableWire02
 {
 
 public:
@@ -43,29 +43,37 @@ public:
 
 public:
     // constructors
-    USSMP_CableWire01(const Standard_Real R = 12.);
-    USSMP_CableWire01(const Standard_Real E,
+    USSMP_CableWire02(const Standard_Real R = 12.,
+                      const Standard_Real B = 0.001);
+    USSMP_CableWire02(const Standard_Real E,
+                      const Standard_Real Fc,
                       const Standard_Real A0,
                       const Standard_Real A1,
                       const Standard_Real A2,
                       const Standard_Real EpsL,
-                      const Standard_Real R = 12.);
-    USSMP_CableWire01(const Standard_Real E,
+                      const Standard_Real R = 12.,
+                      const Standard_Real B = 0.001);
+    USSMP_CableWire02(const Standard_Real E,
+                      const Standard_Real Fc,
                       const Standard_Real A0,
                       const Standard_Real A1,
                       const Standard_Real A2,
                       const Standard_Real A3,
                       const Standard_Real EpsL,
-                      const Standard_Real R = 12.);
-    USSMP_CableWire01(const Standard_Real E,
+                      const Standard_Real R = 12.,
+                      const Standard_Real B = 0.001);
+    USSMP_CableWire02(const Standard_Real E,
+                      const Standard_Real Fc,
                       const Standard_Real A0,
                       const Standard_Real A1,
                       const Standard_Real A2,
                       const Standard_Real A3,
                       const Standard_Real A4,
                       const Standard_Real EpsL,
-                      const Standard_Real R = 12.);
-    USSMP_CableWire01(const Standard_Real E,
+                      const Standard_Real R = 12.,
+                      const Standard_Real B = 0.001);
+    USSMP_CableWire02(const Standard_Real E,
+                      const Standard_Real Fc,
                       const Standard_Real A0,
                       const Standard_Real A1,
                       const Standard_Real A2,
@@ -73,8 +81,10 @@ public:
                       const Standard_Real A4,
                       const Standard_Real A5,
                       const Standard_Real EpsL,
-                      const Standard_Real R = 12.);
-    USSMP_CableWire01(const Standard_Real E,
+                      const Standard_Real R = 12.,
+                      const Standard_Real B = 0.001);
+    USSMP_CableWire02(const Standard_Real E,
+                      const Standard_Real Fc,
                       const Standard_Real A0,
                       const Standard_Real A1,
                       const Standard_Real A2,
@@ -83,9 +93,10 @@ public:
                       const Standard_Real A5,
                       const Standard_Real A6,
                       const Standard_Real EpsL,
-                      const Standard_Real R = 12.);
+                      const Standard_Real R = 12.,
+                      const Standard_Real B = 0.001);
     // destructors
-    ~USSMP_CableWire01();
+    ~USSMP_CableWire02();
 
 public:
 
@@ -96,8 +107,10 @@ public:
     Standard_Real           A4() const;
     Standard_Real           A5() const;
     Standard_Real           A6() const;
+    Standard_Real           B() const;
     Standard_Real           E() const;
     Standard_Real           EpsL() const;
+    Standard_Real           Fc() const;
     Standard_Real           R() const;
 
     void                    SetA0(const Standard_Real A0);
@@ -107,8 +120,10 @@ public:
     void                    SetA4(const Standard_Real A4);
     void                    SetA5(const Standard_Real A5);
     void                    SetA6(const Standard_Real A6);
+    void                    SetB(const Standard_Real B);
     void                    SetE(const Standard_Real E);
     void                    SetEpsL(const Standard_Real EpsL);
+    void                    SetFc(const Standard_Real Fc);
     void                    SetR(const Standard_Real R);
 
 private:
@@ -120,10 +135,12 @@ private:
     Standard_Real           myA4;
     Standard_Real           myA5;
     Standard_Real           myA6;
+    Standard_Real           myB;
     Standard_Real           myE;
     Standard_Real           myEpsL;
+    Standard_Real           myFc;
     Standard_Real           myR;
 
 };
 
-#endif  // __USSMP_CableWire01_hxx__
+#endif  // __USSMP_CableWire02_hxx__

@@ -21,7 +21,7 @@
 
 
 // Spartacus
-#include <USSMP_CableWire01.hxx>
+#include <USSMP_CableWire02.hxx>
 
 
 // ============================================================================
@@ -29,9 +29,10 @@
  *  \brief Constructor
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real R)
+USSMP_CableWire02::USSMP_CableWire02(const Standard_Real R,
+                                     const Standard_Real B)
     : myA0(0.), myA1(0.), myA2(0.), myA3(0.), myA4(0.), myA5(0.), myA6(0.),
-      myE(0.), myEpsL(0.), myR(R)
+      myB(B), myE(0.), myEpsL(0.), myFc(0.), myR(R)
 {
 
 }
@@ -41,14 +42,16 @@ USSMP_CableWire01::USSMP_CableWire01(const Standard_Real R)
     \brief Constructor
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
+USSMP_CableWire02::USSMP_CableWire02(const Standard_Real E,
+                                     const Standard_Real Fc,
                                      const Standard_Real A0,
                                      const Standard_Real A1,
                                      const Standard_Real A2,
                                      const Standard_Real EpsL,
-                                     const Standard_Real R)
+                                     const Standard_Real R,
+                                     const Standard_Real B)
     : myA0(A0), myA1(A1), myA2(A2), myA3(0.), myA4(0.), myA5(0.), myA6(0.),
-      myE(E), myEpsL(EpsL), myR(R)
+      myB(B), myE(E), myEpsL(EpsL), myFc(Fc), myR(R)
 {
 
 }
@@ -58,15 +61,17 @@ USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
     \brief Constructor
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
+USSMP_CableWire02::USSMP_CableWire02(const Standard_Real E,
+                                     const Standard_Real Fc,
                                      const Standard_Real A0,
                                      const Standard_Real A1,
                                      const Standard_Real A2,
                                      const Standard_Real A3,
                                      const Standard_Real EpsL,
-                                     const Standard_Real R)
+                                     const Standard_Real R,
+                                     const Standard_Real B)
     : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(0.), myA5(0.), myA6(0.),
-      myE(E), myEpsL(EpsL), myR(R)
+      myB(B), myE(E), myEpsL(EpsL), myFc(Fc), myR(R)
 {
 
 }
@@ -76,16 +81,18 @@ USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
     \brief Constructor
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
+USSMP_CableWire02::USSMP_CableWire02(const Standard_Real E,
+                                     const Standard_Real Fc,
                                      const Standard_Real A0,
                                      const Standard_Real A1,
                                      const Standard_Real A2,
                                      const Standard_Real A3,
                                      const Standard_Real A4,
                                      const Standard_Real EpsL,
-                                     const Standard_Real R)
+                                     const Standard_Real R,
+                                     const Standard_Real B)
     : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(0.), myA6(0.),
-      myE(E), myEpsL(EpsL), myR(R)
+      myB(B), myE(E), myEpsL(EpsL), myFc(Fc), myR(R)
 {
 
 }
@@ -95,7 +102,8 @@ USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
     \brief Constructor
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
+USSMP_CableWire02::USSMP_CableWire02(const Standard_Real E,
+                                     const Standard_Real Fc,
                                      const Standard_Real A0,
                                      const Standard_Real A1,
                                      const Standard_Real A2,
@@ -103,9 +111,10 @@ USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
                                      const Standard_Real A4,
                                      const Standard_Real A5,
                                      const Standard_Real EpsL,
-                                     const Standard_Real R)
+                                     const Standard_Real R,
+                                     const Standard_Real B)
     : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(A5), myA6(0.),
-      myE(E), myEpsL(EpsL), myR(R)
+      myB(B), myE(E), myEpsL(EpsL), myFc(Fc), myR(R)
 {
 
 }
@@ -115,7 +124,8 @@ USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
     \brief Constructor
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
+USSMP_CableWire02::USSMP_CableWire02(const Standard_Real E,
+                                     const Standard_Real Fc,
                                      const Standard_Real A0,
                                      const Standard_Real A1,
                                      const Standard_Real A2,
@@ -124,9 +134,10 @@ USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
                                      const Standard_Real A5,
                                      const Standard_Real A6,
                                      const Standard_Real EpsL,
-                                     const Standard_Real R)
+                                     const Standard_Real R,
+                                     const Standard_Real B)
     : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(A5), myA6(A6),
-      myE(E), myEpsL(EpsL), myR(R)
+      myB(B), myE(E), myEpsL(EpsL), myFc(Fc), myR(R)
 {
 
 }
@@ -136,7 +147,7 @@ USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
  *  \brief Destructor
 */
 // ============================================================================
-USSMP_CableWire01::~USSMP_CableWire01()
+USSMP_CableWire02::~USSMP_CableWire02()
 {
 
 }
@@ -146,7 +157,7 @@ USSMP_CableWire01::~USSMP_CableWire01()
     \brief A0()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A0() const
+Standard_Real USSMP_CableWire02::A0() const
 {
     return myA0;
 }
@@ -156,7 +167,7 @@ Standard_Real USSMP_CableWire01::A0() const
  *  \brief A1()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A1() const
+Standard_Real USSMP_CableWire02::A1() const
 {
     return myA1;
 }
@@ -166,7 +177,7 @@ Standard_Real USSMP_CableWire01::A1() const
  *  \brief A2()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A2() const
+Standard_Real USSMP_CableWire02::A2() const
 {
     return myA2;
 }
@@ -176,7 +187,7 @@ Standard_Real USSMP_CableWire01::A2() const
  *  \brief A3()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A3() const
+Standard_Real USSMP_CableWire02::A3() const
 {
     return myA3;
 }
@@ -186,7 +197,7 @@ Standard_Real USSMP_CableWire01::A3() const
  *  \brief A4()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A4() const
+Standard_Real USSMP_CableWire02::A4() const
 {
     return myA4;
 }
@@ -196,7 +207,7 @@ Standard_Real USSMP_CableWire01::A4() const
  *  \brief A5()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A5() const
+Standard_Real USSMP_CableWire02::A5() const
 {
     return myA5;
 }
@@ -206,9 +217,19 @@ Standard_Real USSMP_CableWire01::A5() const
  *  \brief A6()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A6() const
+Standard_Real USSMP_CableWire02::A6() const
 {
     return myA6;
+}
+
+// ============================================================================
+/*!
+ *  \brief B()
+*/
+// ============================================================================
+Standard_Real USSMP_CableWire02::B() const
+{
+    return myB;
 }
 
 // ============================================================================
@@ -216,7 +237,7 @@ Standard_Real USSMP_CableWire01::A6() const
  *  \brief E()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::E() const
+Standard_Real USSMP_CableWire02::E() const
 {
     return myE;
 }
@@ -226,9 +247,19 @@ Standard_Real USSMP_CableWire01::E() const
     \brief EpsL()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::EpsL() const
+Standard_Real USSMP_CableWire02::EpsL() const
 {
     return myEpsL;
+}
+
+// ============================================================================
+/*!
+ *  \brief Fc()
+*/
+// ============================================================================
+Standard_Real USSMP_CableWire02::Fc() const
+{
+    return myFc;
 }
 
 // ============================================================================
@@ -236,7 +267,7 @@ Standard_Real USSMP_CableWire01::EpsL() const
     \brief R()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::R() const
+Standard_Real USSMP_CableWire02::R() const
 {
     return myR;
 }
@@ -246,7 +277,7 @@ Standard_Real USSMP_CableWire01::R() const
     \brief SetA0()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA0(const Standard_Real A0)
+void USSMP_CableWire02::SetA0(const Standard_Real A0)
 {
     myA0 = A0;
 }
@@ -256,7 +287,7 @@ void USSMP_CableWire01::SetA0(const Standard_Real A0)
  *  \brief SetA1()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA1(const Standard_Real A1)
+void USSMP_CableWire02::SetA1(const Standard_Real A1)
 {
     myA1 = A1;
 }
@@ -266,7 +297,7 @@ void USSMP_CableWire01::SetA1(const Standard_Real A1)
  *  \brief SetA2()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA2(const Standard_Real A2)
+void USSMP_CableWire02::SetA2(const Standard_Real A2)
 {
     myA2 = A2;
 }
@@ -277,7 +308,7 @@ void USSMP_CableWire01::SetA2(const Standard_Real A2)
  *  \brief SetA3()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA3(const Standard_Real A3)
+void USSMP_CableWire02::SetA3(const Standard_Real A3)
 {
     myA3 = A3;
 }
@@ -287,7 +318,7 @@ void USSMP_CableWire01::SetA3(const Standard_Real A3)
  *  \brief SetA4()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA4(const Standard_Real A4)
+void USSMP_CableWire02::SetA4(const Standard_Real A4)
 {
     myA4 = A4;
 }
@@ -297,7 +328,7 @@ void USSMP_CableWire01::SetA4(const Standard_Real A4)
  *  \brief SetA5()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA5(const Standard_Real A5)
+void USSMP_CableWire02::SetA5(const Standard_Real A5)
 {
     myA5 = A5;
 }
@@ -307,9 +338,19 @@ void USSMP_CableWire01::SetA5(const Standard_Real A5)
  *  \brief SetA6()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA6(const Standard_Real A6)
+void USSMP_CableWire02::SetA6(const Standard_Real A6)
 {
     myA6 = A6;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetB()
+*/
+// ============================================================================
+void USSMP_CableWire02::SetB(const Standard_Real B)
+{
+    myB = B;
 }
 
 // ============================================================================
@@ -317,7 +358,7 @@ void USSMP_CableWire01::SetA6(const Standard_Real A6)
  *  \brief SetE()
 */
 // ============================================================================
-void USSMP_CableWire01::SetE(const Standard_Real E)
+void USSMP_CableWire02::SetE(const Standard_Real E)
 {
     myE = E;
 }
@@ -327,9 +368,19 @@ void USSMP_CableWire01::SetE(const Standard_Real E)
     \brief SetEpsL()
 */
 // ============================================================================
-void USSMP_CableWire01::SetEpsL(const Standard_Real EpsL)
+void USSMP_CableWire02::SetEpsL(const Standard_Real EpsL)
 {
     myEpsL = EpsL;
+}
+
+// ============================================================================
+/*!
+ *  \brief SetFc()
+*/
+// ============================================================================
+void USSMP_CableWire02::SetFc(const Standard_Real Fc)
+{
+    myFc = Fc;
 }
 
 // ============================================================================
@@ -337,7 +388,7 @@ void USSMP_CableWire01::SetEpsL(const Standard_Real EpsL)
     \brief SetR()
 */
 // ============================================================================
-void USSMP_CableWire01::SetR(const Standard_Real R)
+void USSMP_CableWire02::SetR(const Standard_Real R)
 {
     myR = R;
 }

@@ -19,325 +19,331 @@
 //
 // ============================================================================
 
+// cable
+#include <fp_Polynomial.hxx>
 
-// Spartacus
-#include <USSMP_CableWire01.hxx>
 
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+fp_Polynomial::fp_Polynomial()
+{
+    myCoefficients.Resize(0, 6, Standard_True);
+}
 
 // ============================================================================
 /*!
  *  \brief Constructor
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real R)
-    : myA0(0.), myA1(0.), myA2(0.), myA3(0.), myA4(0.), myA5(0.), myA6(0.),
-      myE(0.), myEpsL(0.), myR(R)
+fp_Polynomial::fp_Polynomial(const Standard_Real C0)
+{
+    myCoefficients.Resize(0, 6, Standard_True);
+    myCoefficients.SetValue(0, C0);
+}
+
+// ============================================================================
+/*!
+ *  \brief Constructor
+*/
+// ============================================================================
+fp_Polynomial::fp_Polynomial(const Standard_Real C0,
+                             const Standard_Real C1)
+{
+    myCoefficients.Resize(0, 6, Standard_True);
+    myCoefficients.SetValue(0, C0);
+    myCoefficients.SetValue(1, C1);
+}
+
+// ============================================================================
+/*!
+ *  \brief Constructor
+*/
+// ============================================================================
+fp_Polynomial::fp_Polynomial(const Standard_Real C0,
+                             const Standard_Real C1,
+                             const Standard_Real C2)
+{
+    myCoefficients.Resize(0, 6, Standard_True);
+    myCoefficients.SetValue(0, C0);
+    myCoefficients.SetValue(1, C1);
+    myCoefficients.SetValue(2, C2);
+}
+
+// ============================================================================
+/*!
+ *  \brief Constructor
+*/
+// ============================================================================
+fp_Polynomial::fp_Polynomial(const Standard_Real C0,
+                             const Standard_Real C1,
+                             const Standard_Real C2,
+                             const Standard_Real C3)
+{
+    myCoefficients.Resize(0, 6, Standard_True);
+    myCoefficients.SetValue(0, C0);
+    myCoefficients.SetValue(1, C1);
+    myCoefficients.SetValue(2, C2);
+    myCoefficients.SetValue(3, C3);
+}
+
+// ============================================================================
+/*!
+ *  \brief Constructor
+*/
+// ============================================================================
+fp_Polynomial::fp_Polynomial(const Standard_Real C0,
+                             const Standard_Real C1,
+                             const Standard_Real C2,
+                             const Standard_Real C3,
+                             const Standard_Real C4)
+{
+    myCoefficients.Resize(0, 6, Standard_True);
+    myCoefficients.SetValue(0, C0);
+    myCoefficients.SetValue(1, C1);
+    myCoefficients.SetValue(2, C2);
+    myCoefficients.SetValue(3, C3);
+    myCoefficients.SetValue(4, C4);
+}
+
+// ============================================================================
+/*!
+ *  \brief Constructor
+*/
+// ============================================================================
+fp_Polynomial::fp_Polynomial(const Standard_Real C0,
+                             const Standard_Real C1,
+                             const Standard_Real C2,
+                             const Standard_Real C3,
+                             const Standard_Real C4,
+                             const Standard_Real C5)
+{
+    myCoefficients.Resize(0, 6, Standard_True);
+    myCoefficients.SetValue(0, C0);
+    myCoefficients.SetValue(1, C1);
+    myCoefficients.SetValue(2, C2);
+    myCoefficients.SetValue(3, C3);
+    myCoefficients.SetValue(4, C4);
+    myCoefficients.SetValue(5, C5);
+}
+
+// ============================================================================
+/*!
+ *  \brief Constructor
+*/
+// ============================================================================
+fp_Polynomial::fp_Polynomial(const Standard_Real C0,
+                             const Standard_Real C1,
+                             const Standard_Real C2,
+                             const Standard_Real C3,
+                             const Standard_Real C4,
+                             const Standard_Real C5,
+                             const Standard_Real C6)
+{
+    myCoefficients.Resize(0, 6, Standard_True);
+    myCoefficients.SetValue(0, C0);
+    myCoefficients.SetValue(1, C1);
+    myCoefficients.SetValue(2, C2);
+    myCoefficients.SetValue(3, C3);
+    myCoefficients.SetValue(4, C4);
+    myCoefficients.SetValue(5, C5);
+    myCoefficients.SetValue(6, C6);
+}
+
+// ============================================================================
+/*!
+ *  \brief Constructor
+*/
+// ============================================================================
+fp_Polynomial::fp_Polynomial(const TColStd_Array1OfReal& theCoefficients)
+    : myCoefficients(theCoefficients)
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Constructor
+    \brief Destructor
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
-                                     const Standard_Real A0,
-                                     const Standard_Real A1,
-                                     const Standard_Real A2,
-                                     const Standard_Real EpsL,
-                                     const Standard_Real R)
-    : myA0(A0), myA1(A1), myA2(A2), myA3(0.), myA4(0.), myA5(0.), myA6(0.),
-      myE(E), myEpsL(EpsL), myR(R)
+fp_Polynomial::~fp_Polynomial()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief C0()
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
-                                     const Standard_Real A0,
-                                     const Standard_Real A1,
-                                     const Standard_Real A2,
-                                     const Standard_Real A3,
-                                     const Standard_Real EpsL,
-                                     const Standard_Real R)
-    : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(0.), myA5(0.), myA6(0.),
-      myE(E), myEpsL(EpsL), myR(R)
+Standard_Real fp_Polynomial::C0() const
 {
-
+    return myCoefficients.Value(0);
 }
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief C1()
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
-                                     const Standard_Real A0,
-                                     const Standard_Real A1,
-                                     const Standard_Real A2,
-                                     const Standard_Real A3,
-                                     const Standard_Real A4,
-                                     const Standard_Real EpsL,
-                                     const Standard_Real R)
-    : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(0.), myA6(0.),
-      myE(E), myEpsL(EpsL), myR(R)
+Standard_Real fp_Polynomial::C1() const
 {
-
+    return myCoefficients.Value(1);
 }
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief C2()
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
-                                     const Standard_Real A0,
-                                     const Standard_Real A1,
-                                     const Standard_Real A2,
-                                     const Standard_Real A3,
-                                     const Standard_Real A4,
-                                     const Standard_Real A5,
-                                     const Standard_Real EpsL,
-                                     const Standard_Real R)
-    : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(A5), myA6(0.),
-      myE(E), myEpsL(EpsL), myR(R)
+Standard_Real fp_Polynomial::C2() const
 {
-
+    return myCoefficients.Value(2);
 }
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief C3()
 */
 // ============================================================================
-USSMP_CableWire01::USSMP_CableWire01(const Standard_Real E,
-                                     const Standard_Real A0,
-                                     const Standard_Real A1,
-                                     const Standard_Real A2,
-                                     const Standard_Real A3,
-                                     const Standard_Real A4,
-                                     const Standard_Real A5,
-                                     const Standard_Real A6,
-                                     const Standard_Real EpsL,
-                                     const Standard_Real R)
-    : myA0(A0), myA1(A1), myA2(A2), myA3(A3), myA4(A4), myA5(A5), myA6(A6),
-      myE(E), myEpsL(EpsL), myR(R)
+Standard_Real fp_Polynomial::C3() const
 {
-
+    return myCoefficients.Value(3);
 }
 
 // ============================================================================
 /*!
- *  \brief Destructor
+ *  \brief C4()
 */
 // ============================================================================
-USSMP_CableWire01::~USSMP_CableWire01()
+Standard_Real fp_Polynomial::C4() const
 {
-
+    return myCoefficients.Value(4);
 }
 
 // ============================================================================
 /*!
-    \brief A0()
+ *  \brief C5()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A0() const
+Standard_Real fp_Polynomial::C5() const
 {
-    return myA0;
+    return myCoefficients.Value(5);
 }
 
 // ============================================================================
 /*!
- *  \brief A1()
+ *  \brief C6()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A1() const
+Standard_Real fp_Polynomial::C6() const
 {
-    return myA1;
+    return myCoefficients.Value(6);
 }
 
 // ============================================================================
 /*!
- *  \brief A2()
+ *  \brief Coefficient()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A2() const
+Standard_Real fp_Polynomial::Coefficient(const Standard_Integer theDegree) const
 {
-    return myA2;
+    if(theDegree > myCoefficients.Size())
+        return 0.;
+    return myCoefficients.Value(theDegree);
 }
 
 // ============================================================================
 /*!
- *  \brief A3()
+ *  \brief Coefficients()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A3() const
+TColStd_Array1OfReal fp_Polynomial::Coefficients() const
 {
-    return myA3;
+    return myCoefficients;
 }
 
 // ============================================================================
 /*!
- *  \brief A4()
+ *  \brief SetC0()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A4() const
+void fp_Polynomial::SetC0(const Standard_Real C0)
 {
-    return myA4;
+    myCoefficients.SetValue(0, C0);
 }
 
 // ============================================================================
 /*!
- *  \brief A5()
+ *  \brief SetC1()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A5() const
+void fp_Polynomial::SetC1(const Standard_Real C1)
 {
-    return myA5;
+    myCoefficients.SetValue(1, C1);
 }
 
 // ============================================================================
 /*!
- *  \brief A6()
+ *  \brief SetC2()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::A6() const
+void fp_Polynomial::SetC2(const Standard_Real C2)
 {
-    return myA6;
+    myCoefficients.SetValue(2, C2);
 }
 
 // ============================================================================
 /*!
- *  \brief E()
+ *  \brief SetC3()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::E() const
+void fp_Polynomial::SetC3(const Standard_Real C3)
 {
-    return myE;
+    myCoefficients.SetValue(3, C3);
 }
 
 // ============================================================================
 /*!
-    \brief EpsL()
+ *  \brief SetC4()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::EpsL() const
+void fp_Polynomial::SetC4(const Standard_Real C4)
 {
-    return myEpsL;
+    myCoefficients.SetValue(4, C4);
 }
 
 // ============================================================================
 /*!
-    \brief R()
+ *  \brief SetC5()
 */
 // ============================================================================
-Standard_Real USSMP_CableWire01::R() const
+void fp_Polynomial::SetC5(const Standard_Real C5)
 {
-    return myR;
+    myCoefficients.SetValue(5, C5);
 }
 
 // ============================================================================
 /*!
-    \brief SetA0()
+ *  \brief SetC6()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA0(const Standard_Real A0)
+void fp_Polynomial::SetC6(const Standard_Real C6)
 {
-    myA0 = A0;
+    myCoefficients.SetValue(6, C6);
 }
 
 // ============================================================================
 /*!
- *  \brief SetA1()
+ *  \brief SetCoefficient()
 */
 // ============================================================================
-void USSMP_CableWire01::SetA1(const Standard_Real A1)
+void fp_Polynomial::SetCoefficient(const Standard_Integer theDegree,
+                                   const Standard_Real theCoefficient)
 {
-    myA1 = A1;
-}
-
-// ============================================================================
-/*!
- *  \brief SetA2()
-*/
-// ============================================================================
-void USSMP_CableWire01::SetA2(const Standard_Real A2)
-{
-    myA2 = A2;
-}
-
-
-// ============================================================================
-/*!
- *  \brief SetA3()
-*/
-// ============================================================================
-void USSMP_CableWire01::SetA3(const Standard_Real A3)
-{
-    myA3 = A3;
-}
-
-// ============================================================================
-/*!
- *  \brief SetA4()
-*/
-// ============================================================================
-void USSMP_CableWire01::SetA4(const Standard_Real A4)
-{
-    myA4 = A4;
-}
-
-// ============================================================================
-/*!
- *  \brief SetA5()
-*/
-// ============================================================================
-void USSMP_CableWire01::SetA5(const Standard_Real A5)
-{
-    myA5 = A5;
-}
-
-// ============================================================================
-/*!
- *  \brief SetA6()
-*/
-// ============================================================================
-void USSMP_CableWire01::SetA6(const Standard_Real A6)
-{
-    myA6 = A6;
-}
-
-// ============================================================================
-/*!
- *  \brief SetE()
-*/
-// ============================================================================
-void USSMP_CableWire01::SetE(const Standard_Real E)
-{
-    myE = E;
-}
-
-// ============================================================================
-/*!
-    \brief SetEpsL()
-*/
-// ============================================================================
-void USSMP_CableWire01::SetEpsL(const Standard_Real EpsL)
-{
-    myEpsL = EpsL;
-}
-
-// ============================================================================
-/*!
-    \brief SetR()
-*/
-// ============================================================================
-void USSMP_CableWire01::SetR(const Standard_Real R)
-{
-    myR = R;
+    if(theDegree > myCoefficients.Size())
+        myCoefficients.Resize(0, theDegree, Standard_True);
+    myCoefficients.SetValue(theDegree, theCoefficient);
 }

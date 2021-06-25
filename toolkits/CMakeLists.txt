@@ -27,6 +27,7 @@ include_directories(
     ${OpenCASCADE_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/CRSA
     ${CMAKE_CURRENT_SOURCE_DIR}/FE
+    ${CMAKE_CURRENT_SOURCE_DIR}/fp
     ${CMAKE_CURRENT_SOURCE_DIR}/FLib
     ${CMAKE_CURRENT_SOURCE_DIR}/mmp
     ${CMAKE_CURRENT_SOURCE_DIR}/UCrM
@@ -112,28 +113,40 @@ set(StkFEData_Sources
 
 
 set(StkFEData_Headers
+    fp/fp_MenegottoPinto.hxx
+    fp/fp_Polynomial.hxx
+    fp/fp_StressStrain.hxx
+    FLib/FLib_StressStrain.hxx
     UCrM/UCrM_CableWire01.hxx
     UCrM/UCrM_CableWire02.hxx
     UCrM/UCrM_Model.hxx
     UCrMP/UCrMP_CableWire01.hxx
     UCrMP/UCrMP_CableWire02.hxx
     USSM/USSM_CableWire01.hxx
+    USSM/USSM_CableWire02.hxx
     USSM/USSM_Elastic.hxx
     USSM/USSM_Model.hxx
     USSMP/USSMP_CableWire01.hxx
+    USSMP/USSMP_CableWire02.hxx
     USSMP/USSMP_Elastic.hxx
 )
 
 set(StkFEData_Sources
+    fp/fp_MenegottoPinto.cxx
+    fp/fp_Polynomial.cxx
+    fp/fp_StressStrain.cxx
+    FLib/FLib_StressStrain.cxx
     UCrM/UCrM_CableWire01.cxx
     UCrM/UCrM_CableWire02.cxx
     UCrM/UCrM_Model.cxx
     UCrMP/UCrMP_CableWire01.cxx
     UCrMP/UCrMP_CableWire02.cxx
     USSM/USSM_CableWire01.cxx
+    USSM/USSM_CableWire02.cxx
     USSM/USSM_Elastic.cxx
     USSM/USSM_Model.cxx
     USSMP/USSMP_CableWire01.cxx
+    USSMP/USSMP_CableWire02.cxx
     USSMP/USSMP_Elastic.cxx
 )
 
