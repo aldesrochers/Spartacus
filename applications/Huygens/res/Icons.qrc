@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Huygens.png</file>
+    </qresource>
+</RCC>

@@ -26,8 +26,9 @@ set(Spartacus_VERSION_MINOR 0)
 set(Spartacus_VERSION_PATCH 0)
 
 # check for project cmake files
-if(EXISTS ${PROJECT_SOURCE_DIR}/cmake)
-    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+if(EXISTS ${PROJECT_SOURCE_DIR}/cmakes)
+    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmakes)
+    include(SpartacusMacros)
 else()
     message(FATAL_ERROR "Could not locate project cmake files.")
 endif()
@@ -45,8 +46,11 @@ endif()
 ###
 # options
 ###
-option(Spartacus_BUILD_DOCUMENTATION  "Build Spartacus documentation ?" ON)
-option(Spartacus_BUILD_SHARED         "Build Spartacus in shared mode ?" ON)
+option(Spartacus_BUILD_DOCUMENTATION    "Build Spartacus documentation ?" ON)
+option(Spartacus_BUILD_SHARED           "Build Spartacus in shared mode ?" ON)
+
+# applications
+option(Spartacus_BUILD_Huygens          "Build Spartacus with Huygens application ?" ON)
 
 ###
 # configure
@@ -57,20 +61,23 @@ set(BUILD_SHARED_LIBS ${Spartacus_BUILD_SHARED})
 # install
 ###
 set(Spartacus_INSTALL_BINS bin)
+set(Spartacus_INSTALL_DOCS doc)
 set(Spartacus_INSTALL_LIBS lib)
-set(Spartacus_INSTALL_RCCS res)
+set(Spartacus_INSTALL_RCCS share/rcc)
 
 ###
 # prerequisites
 ###
-find_package(Qt5 COMPONENTS Core Gui Widgets Sql Xml Charts REQUIRED)
-find_package(OpenCASCADE REQUIRED)
-find_package(VTK REQUIRED)
-include(${VTK_USE_FILE})
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
+if(Spartacus_BUILD_DOCUMENTATION)
+    include(Configure_Doxygen)
+endif()
+include(Configure_OpenCascade)
+include(Configure_Qt)
 
 ###
 # sources
 ###
+add_subdirectory(applications)
+add_subdirectory(databases)
+add_subdirectory(tests)
 add_subdirectory(toolkits)

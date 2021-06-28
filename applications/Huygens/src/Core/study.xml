@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document format="Huygens_XmlStudyFormat" xmlns="http://www.opencascade.org/OCAF/XML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opencascade.org/OCAF/XML /usr/share/opencascade/resources/XmlOcafResource/XmlOcaf.xsd">
+ <info date="2021-06-27" schemav="0" DocVersion="9" objnb="3">
+  <iitem>REFERENCE_COUNTER: 0</iitem>
+  <iitem>MODIFICATION_COUNTER: 1</iitem>
+ </info>
+ <comments/>
+ <label tag="0">
+  <label tag="1">
+   <TDataStd_UAttribute id="1" guid="353a6869-e3b4-487c-b46c-f8b20b997961"/>
+   <TDataStd_Integer id="2">1</TDataStd_Integer>
+   <TDataStd_UAttribute id="3" guid="ef8c3f44-8bfb-4332-add5-4d58d8c551cd"/>
+  </label>
+ </label>
+ <shapes/>
+</document>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document format="Huygens_XmlDocumentFormat" xmlns="http://www.opencascade.org/OCAF/XML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opencascade.org/OCAF/XML /usr/share/opencascade/resources/XmlOcafResource/XmlOcaf.xsd">
+ <info date="2021-06-27" schemav="0" DocVersion="9" objnb="6">
+  <iitem>REFERENCE_COUNTER: 0</iitem>
+  <iitem>MODIFICATION_COUNTER: 1</iitem>
+ </info>
+ <comments/>
+ <label tag="0">
+  <label tag="1">
+   <TDataStd_Integer id="1">1</TDataStd_Integer>
+   <label tag="1">
+    <TDataStd_UAttribute id="2" guid="353a6869-e3b4-487c-b46c-f8b20b997961"/>
+    <TDataStd_Integer id="3">1</TDataStd_Integer>
+    <TDataStd_UAttribute id="4" guid="4c4da5ed-cd6c-4435-b401-cc101a48e840"/>
+    <label tag="1">
+     <TDataStd_AsciiString id="5">Alexis</TDataStd_AsciiString>
+    </label>
+    <label tag="2">
+     <TDataStd_AsciiString id="6">Desrochers</TDataStd_AsciiString>
+    </label>
+   </label>
+  </label>
+ </label>
+ <shapes/>
+</document>

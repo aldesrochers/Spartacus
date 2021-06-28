@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Spartacus.png</file>
+        <file>Exit.png</file>
+        <file>OpenFile.png</file>
+    </qresource>
+</RCC>

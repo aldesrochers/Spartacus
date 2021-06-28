@@ -1,6 +1,0 @@
-MaterialCLaw
-Material -> Material
-C -> Constitutive
-Law -> Law
-
-This is a library containing material constitutive laws.

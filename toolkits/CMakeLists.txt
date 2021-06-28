@@ -19,137 +19,132 @@
 #
 # =============================================================================
 
+project(SpartacusToolkits)
 
-# include directories
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-    ${OpenCASCADE_INCLUDE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/CRSA
-    ${CMAKE_CURRENT_SOURCE_DIR}/FE
-    ${CMAKE_CURRENT_SOURCE_DIR}/fp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FLib
-    ${CMAKE_CURRENT_SOURCE_DIR}/mmp
-    ${CMAKE_CURRENT_SOURCE_DIR}/UCrM
-    ${CMAKE_CURRENT_SOURCE_DIR}/UCrMP
-    ${CMAKE_CURRENT_SOURCE_DIR}/UThM
-    ${CMAKE_CURRENT_SOURCE_DIR}/UMM
-    ${CMAKE_CURRENT_SOURCE_DIR}/USSM
-    ${CMAKE_CURRENT_SOURCE_DIR}/USSMP
-    ${CMAKE_CURRENT_SOURCE_DIR}/XSM
+###
+# Rules : Build documentation
+###
+
+# dev
+if(Spartacus_BUILD_DOCUMENTATION)
+    configure_file(doc/dev/Doxyfile.in doc/dev/Doxyfile)
+    execute_process(
+        COMMAND ${Doxygen_EXECUTABLE} Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/dev
+        RESULT_VARIABLE _result
+        OUTPUT_QUIET
+        ERROR_QUIET
+    )
+    if(NOT ${_result} EQUAL 0)
+        message(FATAL_ERROR "Could not generate toolkits developer documentation.")
+    endif()
+    install(
+        DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/dev/html
+        DESTINATION ${Spartacus_INSTALL_DOCS}/dev/Spartacus
+    )
+endif()
+
+###
+# Rules : Build resources
+###
+
+# icons
+qt5_add_binary_resources(Spartacus_Icons res/icons/Resources.qrc)
+install(
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/Spartacus_Icons.rcc
+    DESTINATION ${Spartacus_INSTALL_RCCS}
 )
 
 ###
-# StkFEData
+# Rules : Build toolkits
 ###
 
-set(StkFEData_LinkedLibraries
-    ${OpenCASCADE_FoundationClasses_LIBRARIES}
-)
+# check for toolkits definition
+if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/TOOLKITS)
+    message(FATAL_ERROR "Could not locate toolkits definition file.")
+endif()
+file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/src/TOOLKITS _toolkits)
 
-#[[
-set(StkFEData_Headers
-    CRSA/CRSA_Command.hxx
-    CRSA/CRSA_Error.hxx
-    CRSA/CRSA_FindEmptyLength.hxx
-    CRSA/CRSA_LoadCase.hxx
-    CRSA/CRSA_SequenceOfLoadCase.hxx
-    CRSA/CRSA_SpanGeometry.hxx
-    FE/FE_Domain.hxx
-    FE/FE_Node.hxx
-    FLib/FLib_Catenary.hxx
-    mmp/mmp_CableCreep01.hxx
-    mmp/mmp_CableWireCreep01.hxx
-    mmp/mmp_Elastic.hxx
-    mmp/mmp_CableWireStressStrain01.hxx
-    UCrM/UCrM_CableCreep01.hxx
-    UCrM/UCrM_CableWire01.hxx
-    UCrM/UCrM_Model.hxx
-    UThM/UThM_BiLinear.hxx
-    UThM/UThM_Model.hxx
-    UThM/UThM_Linear.hxx
-    UMM/UMM_CableWire01.hxx
-    UMM/UMM_Elastic.hxx
-    UMM/UMM_Model.hxx
-    USSM/USSM_CableWire01.hxx
-    USSM/USSM_CableWire02.hxx
-    USSM/USSM_Elastic.hxx
-    USSM/USSM_Model.hxx
-    XSM/XSM_BimetallicCable01.hxx
-    XSM/XSM_Elastic.hxx
-    XSM/XSM_Model.hxx
-)
+#
+# loop each toolkit, process input files
+#
+foreach(_toolkit ${_toolkits})
+    # check for packages definition
+    if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/${_toolkit}/PACKAGES)
+        message("Could not locate packages definition for toolkit ${_toolkit}.")
+    endif()
 
-set(StkFEData_Sources
-    CRSA/CRSA_Command.cxx
-    CRSA/CRSA_FindEmptyLength.cxx
-    CRSA/CRSA_LoadCase.cxx
-    CRSA/CRSA_SpanGeometry.cxx
-    FE/FE_Domain.cxx
-    FE/FE_Node.cxx
-    FLib/FLib_Catenary.cxx
-    mmp/mmp_CableCreep01.cxx
-    mmp/mmp_CableWireCreep01.cxx
-    mmp/mmp_Elastic.cxx
-    mmp/mmp_CableWireStressStrain01.cxx
-    UCrM/UCrM_CableCreep01.cxx
-    UCrM/UCrM_CableWire01.cxx
-    UCrM/UCrM_Model.cxx
-    UThM/UThM_BiLinear.cxx
-    UThM/UThM_Model.cxx
-    UThM/UThM_Linear.cxx
-    UMM/UMM_CableWire01.cxx
-    UMM/UMM_Elastic.cxx
-    UMM/UMM_Model.cxx
-    USSM/USSM_CableWire01.cxx
-    USSM/USSM_CableWire02.cxx
-    USSM/USSM_Elastic.cxx
-    USSM/USSM_Model.cxx
-    XSM/XSM_BimetallicCable01.cxx
-    XSM/XSM_Elastic.cxx
-    XSM/XSM_Model.cxx
-)
-#]]
+    # check for prerequisites definition
+    if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/${_toolkit}/PREREQUISITES)
+        message("Could not locate prerequisites definition for toolkit ${_toolkit}.")
+    endif()
 
+    # read packages
+    file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/src/${_toolkit}/PACKAGES _packages)
 
-set(StkFEData_Headers
-    fp/fp_MenegottoPinto.hxx
-    fp/fp_Polynomial.hxx
-    fp/fp_StressStrain.hxx
-    FLib/FLib_StressStrain.hxx
-    UCrM/UCrM_CableWire01.hxx
-    UCrM/UCrM_CableWire02.hxx
-    UCrM/UCrM_Model.hxx
-    UCrMP/UCrMP_CableWire01.hxx
-    UCrMP/UCrMP_CableWire02.hxx
-    USSM/USSM_CableWire01.hxx
-    USSM/USSM_CableWire02.hxx
-    USSM/USSM_Elastic.hxx
-    USSM/USSM_Model.hxx
-    USSMP/USSMP_CableWire01.hxx
-    USSMP/USSMP_CableWire02.hxx
-    USSMP/USSMP_Elastic.hxx
-)
+    # read prerequisites
+    file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/src/${_toolkit}/PREREQUISITES _prerequisites)
 
-set(StkFEData_Sources
-    fp/fp_MenegottoPinto.cxx
-    fp/fp_Polynomial.cxx
-    fp/fp_StressStrain.cxx
-    FLib/FLib_StressStrain.cxx
-    UCrM/UCrM_CableWire01.cxx
-    UCrM/UCrM_CableWire02.cxx
-    UCrM/UCrM_Model.cxx
-    UCrMP/UCrMP_CableWire01.cxx
-    UCrMP/UCrMP_CableWire02.cxx
-    USSM/USSM_CableWire01.cxx
-    USSM/USSM_CableWire02.cxx
-    USSM/USSM_Elastic.cxx
-    USSM/USSM_Model.cxx
-    USSMP/USSMP_CableWire01.cxx
-    USSMP/USSMP_CableWire02.cxx
-    USSMP/USSMP_Elastic.cxx
-)
+    # find source files / include directories for packages
+    unset(_source_directories)
+    unset(_source_files)
+    foreach(_package ${_packages})
 
-#add_library(StkFEData ${StkFEData_Headers} ${StkFEData_Sources})
-add_executable(StkFEData ${StkFEData_Headers} ${StkFEData_Sources} Tests/Test_USSM_CableWire01.cxx)
-target_link_libraries(StkFEData ${StkFEData_LinkedLibraries})
+        # check for files definition in package
+        if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/${_package}/FILES)
+            message(FATAL_ERROR "Could not locate files definition for package ${_package}.")
+        endif()
+
+        # append package directory
+        list(APPEND _source_directories ${CMAKE_CURRENT_SOURCE_DIR}/src/${_package})
+
+        # read files
+        file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/src/${_package}/FILES _files)
+
+        # loop files, check if exists, append to sources
+        foreach(_file ${_files})
+            if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/${_package}/${_file})
+                message(FATAL_ERROR "Could not locate file ${_file} in package ${_package}.")
+            endif()
+            list(APPEND _source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/${_package}/${_file})
+        endforeach()
+    endforeach()
+
+    message(${OpenCascade_FoundationClasses_INCLUDE_DIRS})
+
+    # find required libraries (intern / extern)
+    unset(_include_directories)
+    unset(_linked_libraries)
+    foreach(_prerequisite ${_prerequisites})
+
+        # check for include directories
+        if(NOT ${_prerequisite}_INCLUDE_DIRS)
+            message(FATAL_ERROR "Could not locate prerequisite ${_prerequisite} include directories.")
+        endif()
+        list(APPEND _include_directories ${${_prerequisite}_INCLUDE_DIRS})
+
+        # check for required libraries
+        if(NOT ${_prerequisite}_LIBRARIES)
+            message(FATAL_ERROR "Could not locate prerequisite ${_prerequisite} libraries.")
+        endif()
+        list(APPEND _linked_libraries ${${_prerequisite}_LIBRARIES})
+
+    endforeach()
+
+    # rules
+    include_directories(${_source_directories} ${_include_directories})
+    add_library(${_toolkit} ${_source_files})
+    target_link_libraries(${_toolkit} ${_linked_libraries})
+    install(
+        TARGETS ${_toolkit}
+        ARCHIVE DESTINATION ${Spartacus_INSTALL_LIBS}
+        LIBRARY DESTINATION ${Spartacus_INSTALL_LIBS}
+        RUNTIME DESTINATION ${Spartacus_INSTALL_BINS}
+    )
+
+    # expose target in cache
+    set(${_toolkit}_INCLUDE_DIRS ${_source_directories} CACHE PATH "Toolkit ${_toolkit} include directories.")
+    set(${_toolkit}_LIBRARIES ${_toolkit} CACHE PATH "Toolkit ${_toolkit} libraries.")
+
+endforeach()
+

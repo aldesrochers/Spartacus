@@ -1,7 +1,0 @@
-MaterialFLib
-Material -> Material
-F -> Function
-Lib -> Librarie
-
-This is a library containing generic material functions. Most of those
-functions are continuous functions used to describe monotonic curves.
