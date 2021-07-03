@@ -35,6 +35,7 @@ set(_required_components
     FoundationClasses
     ModelingData
     ModelingAlgorithms
+    Visualization
     ApplicationFramework
 )
 
@@ -60,6 +61,16 @@ foreach(_component ${_required_components})
     set(OpenCascade_${_component}_LIBRARIES ${OpenCASCADE_${_component}_LIBRARIES} CACHE PATH "OpenCascade ${_component} libraries.")
 endforeach()
 
-
+###
+# Install required libraries - WIN32
+###
+if(WIN32)
+    foreach(_component ${_required_components})
+        foreach(_lib ${OpenCascade_${_component}_LIBRARIES})
+            get_target_property(_filename ${_lib} LOCATION)
+            install(FILES ${_filename} DESTINATION ${Spartacus_INSTALL_BINS})
+        endforeach()
+    endforeach()
+endif()
 
 

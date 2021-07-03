@@ -40,7 +40,7 @@ DEFINE_STANDARD_HANDLE(USSM_Model, Standard_Transient);
     \brief USSM_Model
 */
 // ============================================================================
-class USSM_Model : public Standard_Transient
+class Standard_EXPORT USSM_Model : public Standard_Transient
 {
 
 public:

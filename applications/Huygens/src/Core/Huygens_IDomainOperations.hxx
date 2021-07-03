@@ -23,36 +23,49 @@
 #define __Huygens_IDomainOperations_hxx__
 
 // Huygens
-#include <Huygens_IStudyOperations.hxx>
+#include <Huygens_IOperations.hxx>
 
 // Forward declarations
 class Huygens_IDomainOperations;
 class Huygens_Engine;
 
 // Handles
-DEFINE_STANDARD_HANDLE(Huygens_IDomainOperations, Huygens_IStudyOperations);
+DEFINE_STANDARD_HANDLE(Huygens_IDomainOperations, Huygens_IOperations);
 
 
 // ============================================================================
 /*!
  *  \brief Huygens_IDomainOperations
- *  Class implementation of a basic operations interface.
+ *  Class implementation of operations on document properties.
 */
 // ============================================================================
-class Huygens_IDomainOperations : public Huygens_IStudyOperations
+class Huygens_IDomainOperations : public Huygens_IOperations
 {
 
 public:
     // constructors
     Huygens_IDomainOperations(Handle(Huygens_Engine) theEngine,
-                              const Standard_Integer theDocumentId,
-                              const Standard_Integer theStudyId);
+                              const Standard_Integer theDocumentId);
     // destructors
     ~Huygens_IDomainOperations();
 
 public:
 
-    DEFINE_STANDARD_RTTIEXT(Huygens_IDomainOperations, Huygens_IStudyOperations);
+    TCollection_AsciiString     GetAuthorFirstName();
+    TCollection_AsciiString     GetAuthorLastName();
+    TCollection_AsciiString     GetProjectDescription();
+    TCollection_AsciiString     GetProjectName();
+
+    void            SetAuthorFirstName(const TCollection_AsciiString& theFirstName);
+    void            SetAuthorName(const TCollection_AsciiString& theFirstName,
+                                  const TCollection_AsciiString& theLastName);
+    void            SetAuthorLastName(const TCollection_AsciiString& theLastName);
+    void            SetProjectDescription(const TCollection_AsciiString& theDescription);
+    void            SetProjectName(const TCollection_AsciiString& theName);
+
+public:
+
+    DEFINE_STANDARD_RTTIEXT(Huygens_IDomainOperations, Huygens_IOperations);
 
 };
 

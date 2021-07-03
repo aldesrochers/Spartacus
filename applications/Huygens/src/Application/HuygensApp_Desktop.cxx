@@ -37,8 +37,11 @@ HuygensApp_Desktop::HuygensApp_Desktop(QWidget* theParent)
     : QMainWindow(theParent)
 {
     // create menus
-    createFileMenu();
-    createHelpMenu();
+    CreateFileMenu();
+    CreateHelpMenu();
+
+    // initialize an engine
+    myEngine = new Huygens_Engine();
 }
 
 // ============================================================================
@@ -53,20 +56,42 @@ HuygensApp_Desktop::~HuygensApp_Desktop()
 
 // ============================================================================
 /*!
- *  \brief createFileMenu()
+ *  \brief CreateFileMenu()
 */
 // ============================================================================
-void HuygensApp_Desktop::createFileMenu()
+void HuygensApp_Desktop::CreateFileMenu()
 {
     QMenu* aMenu = menuBar()->addMenu(tr("&File"));
 }
 
 // ============================================================================
 /*!
- *  \brief createHelpMenu()
+ *  \brief CreateHelpMenu()
 */
 // ============================================================================
-void HuygensApp_Desktop::createHelpMenu()
+void HuygensApp_Desktop::CreateHelpMenu()
 {
     QMenu* aMenu = menuBar()->addMenu(tr("&Help"));
 }
+
+// ============================================================================
+/*!
+    \brief GetEngine()
+*/
+// ============================================================================
+Handle(Huygens_Engine) HuygensApp_Desktop::GetEngine()
+{
+    return myEngine;
+}
+
+// ============================================================================
+/*!
+    \brief GetResourcesMgr()
+    Convenient shortcut to the framwework resources manager.
+*/
+// ============================================================================
+FWR_Manager* HuygensApp_Desktop::GetResourcesMgr()
+{
+    return FWR_Manager::Manager();
+}
+

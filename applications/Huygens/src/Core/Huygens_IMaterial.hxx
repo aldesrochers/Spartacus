@@ -23,7 +23,7 @@
 #define __Huygens_IMaterial_hxx__
 
 // Huygens
-#include <Huygens_DataObject.hxx>
+#include <Huygens_Material.hxx>
 
 // Properties
 #define ATTR_E      1
@@ -43,6 +43,7 @@
 #define ATTR_B5     15
 #define ATTR_B6     16
 #define ATTR_C      17
+#define ATTR_T0     18
 
 
 // ============================================================================
@@ -55,50 +56,52 @@ class Huygens_IMaterial
 
 public:
     // constructors
-    Huygens_IMaterial(Handle(Huygens_DataObject) theObject)
+    Huygens_IMaterial(Handle(Huygens_Material) theObject)
         : myObject(theObject) {}
 
 public:
 
-    Standard_Real   GetA0() {return myObject->GetRealAttribute(ATTR_A0);}
-    Standard_Real   GetA1() {return myObject->GetRealAttribute(ATTR_A1);}
-    Standard_Real   GetA2() {return myObject->GetRealAttribute(ATTR_A2);}
-    Standard_Real   GetA3() {return myObject->GetRealAttribute(ATTR_A3);}
-    Standard_Real   GetA4() {return myObject->GetRealAttribute(ATTR_A4);}
-    Standard_Real   GetA5() {return myObject->GetRealAttribute(ATTR_A5);}
-    Standard_Real   GetA6() {return myObject->GetRealAttribute(ATTR_A6);}
-    Standard_Real   GetAlpha() {return myObject->GetRealAttribute(ATTR_Alpha);}
-    Standard_Real   GetB1() {return myObject->GetRealAttribute(ATTR_B1);}
-    Standard_Real   GetB2() {return myObject->GetRealAttribute(ATTR_B2);}
-    Standard_Real   GetB3() {return myObject->GetRealAttribute(ATTR_B3);}
-    Standard_Real   GetB4() {return myObject->GetRealAttribute(ATTR_B4);}
-    Standard_Real   GetB5() {return myObject->GetRealAttribute(ATTR_B5);}
-    Standard_Real   GetB6() {return myObject->GetRealAttribute(ATTR_B6);}
-    Standard_Real   GetC() {return myObject->GetRealAttribute(ATTR_C);}
-    Standard_Real   GetE() {return myObject->GetRealAttribute(ATTR_E);}
-    Standard_Real   GetEpsL() {return myObject->GetRealAttribute(ATTR_EpsL);}
+    Standard_Real   GetA0() {return myObject->GetRealAttr(ATTR_A0);}
+    Standard_Real   GetA1() {return myObject->GetRealAttr(ATTR_A1);}
+    Standard_Real   GetA2() {return myObject->GetRealAttr(ATTR_A2);}
+    Standard_Real   GetA3() {return myObject->GetRealAttr(ATTR_A3);}
+    Standard_Real   GetA4() {return myObject->GetRealAttr(ATTR_A4);}
+    Standard_Real   GetA5() {return myObject->GetRealAttr(ATTR_A5);}
+    Standard_Real   GetA6() {return myObject->GetRealAttr(ATTR_A6);}
+    Standard_Real   GetAlpha() {return myObject->GetRealAttr(ATTR_Alpha);}
+    Standard_Real   GetB1() {return myObject->GetRealAttr(ATTR_B1);}
+    Standard_Real   GetB2() {return myObject->GetRealAttr(ATTR_B2);}
+    Standard_Real   GetB3() {return myObject->GetRealAttr(ATTR_B3);}
+    Standard_Real   GetB4() {return myObject->GetRealAttr(ATTR_B4);}
+    Standard_Real   GetB5() {return myObject->GetRealAttr(ATTR_B5);}
+    Standard_Real   GetB6() {return myObject->GetRealAttr(ATTR_B6);}
+    Standard_Real   GetC() {return myObject->GetRealAttr(ATTR_C);}
+    Standard_Real   GetE() {return myObject->GetRealAttr(ATTR_E);}
+    Standard_Real   GetEpsL() {return myObject->GetRealAttr(ATTR_EpsL);}
+    Standard_Real   GetT0() {return myObject->GetRealAttr(ATTR_T0);}
 
-    void    SetA0(const Standard_Real A0) {myObject->SetRealAttribute(ATTR_A0, A0);}
-    void    SetA1(const Standard_Real A1) {myObject->SetRealAttribute(ATTR_A1, A1);}
-    void    SetA2(const Standard_Real A2) {myObject->SetRealAttribute(ATTR_A2, A2);}
-    void    SetA3(const Standard_Real A3) {myObject->SetRealAttribute(ATTR_A3, A3);}
-    void    SetA4(const Standard_Real A4) {myObject->SetRealAttribute(ATTR_A4, A4);}
-    void    SetA5(const Standard_Real A5) {myObject->SetRealAttribute(ATTR_A5, A5);}
-    void    SetA6(const Standard_Real A6) {myObject->SetRealAttribute(ATTR_A6, A6);}
-    void    SetAlpha(const Standard_Real Alpha) {myObject->SetRealAttribute(ATTR_Alpha, Alpha);}
-    void    SetB1(const Standard_Real B1) {myObject->SetRealAttribute(ATTR_B1, B1);}
-    void    SetB2(const Standard_Real B2) {myObject->SetRealAttribute(ATTR_B2, B2);}
-    void    SetB3(const Standard_Real B3) {myObject->SetRealAttribute(ATTR_B3, B3);}
-    void    SetB4(const Standard_Real B4) {myObject->SetRealAttribute(ATTR_B4, B4);}
-    void    SetB5(const Standard_Real B5) {myObject->SetRealAttribute(ATTR_B5, B5);}
-    void    SetB6(const Standard_Real B6) {myObject->SetRealAttribute(ATTR_B6, B6);}
-    void    SetC(const Standard_Real C) {myObject->SetRealAttribute(ATTR_C, C);}
-    void    SetE(const Standard_Real E) {myObject->SetRealAttribute(ATTR_E, E);}
-    void    SetEpsL(const Standard_Real EpsL) {myObject->SetRealAttribute(ATTR_EpsL, EpsL);}
+    void    SetA0(const Standard_Real A0) {myObject->SetRealAttr(ATTR_A0, A0);}
+    void    SetA1(const Standard_Real A1) {myObject->SetRealAttr(ATTR_A1, A1);}
+    void    SetA2(const Standard_Real A2) {myObject->SetRealAttr(ATTR_A2, A2);}
+    void    SetA3(const Standard_Real A3) {myObject->SetRealAttr(ATTR_A3, A3);}
+    void    SetA4(const Standard_Real A4) {myObject->SetRealAttr(ATTR_A4, A4);}
+    void    SetA5(const Standard_Real A5) {myObject->SetRealAttr(ATTR_A5, A5);}
+    void    SetA6(const Standard_Real A6) {myObject->SetRealAttr(ATTR_A6, A6);}
+    void    SetAlpha(const Standard_Real Alpha) {myObject->SetRealAttr(ATTR_Alpha, Alpha);}
+    void    SetB1(const Standard_Real B1) {myObject->SetRealAttr(ATTR_B1, B1);}
+    void    SetB2(const Standard_Real B2) {myObject->SetRealAttr(ATTR_B2, B2);}
+    void    SetB3(const Standard_Real B3) {myObject->SetRealAttr(ATTR_B3, B3);}
+    void    SetB4(const Standard_Real B4) {myObject->SetRealAttr(ATTR_B4, B4);}
+    void    SetB5(const Standard_Real B5) {myObject->SetRealAttr(ATTR_B5, B5);}
+    void    SetB6(const Standard_Real B6) {myObject->SetRealAttr(ATTR_B6, B6);}
+    void    SetC(const Standard_Real C) {myObject->SetRealAttr(ATTR_C, C);}
+    void    SetE(const Standard_Real E) {myObject->SetRealAttr(ATTR_E, E);}
+    void    SetEpsL(const Standard_Real EpsL) {myObject->SetRealAttr(ATTR_EpsL, EpsL);}
+    void    SetT0(const Standard_Real T0) {myObject->SetRealAttr(ATTR_T0, T0);}
 
 private:
 
-    Handle(Huygens_DataObject)  myObject;
+    Handle(Huygens_Material)  myObject;
 
 };
 

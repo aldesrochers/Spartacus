@@ -30,13 +30,22 @@
 // ============================================================================
 namespace Huygens {
 
-// objects
-enum ObjectType {
-    Undefined = 0,
-    DocumentProperties = 1,
-    Study = 2,
-    CableMaterial01 = 3,
-    CableSection = 4
+// materials
+enum Material {
+    UnknownMaterial = 0,
+    ElasticMaterial = 1
+};
+
+// cable sections
+enum Cable {
+    UnknownCable = 0
+};
+
+// study
+enum Study
+{
+    UnknownStudy = 0,
+    RulingSpanStudy = 1
 };
 
 }

@@ -39,7 +39,7 @@ DEFINE_STANDARD_HANDLE(XSM_Elastic, XSM_Model);
     \brief XSM_Elastic
 */
 // ============================================================================
-class XSM_Elastic : public XSM_Model
+class Standard_EXPORT XSM_Elastic : public XSM_Model
 {
 
 public:

@@ -28,13 +28,16 @@
 #include <Standard_DefineAlloc.hxx>
 #include <Standard_Real.hxx>
 
+// Spartacus
+#include <UThMP_Model.hxx>
+
 
 // ============================================================================
 /*!
  *  \brief UThMP_Linear
 */
 // ============================================================================
-class UThMP_Linear
+class Standard_EXPORT UThMP_Linear : public UThMP_Model
 {
 
 public:

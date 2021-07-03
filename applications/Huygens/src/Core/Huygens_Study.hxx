@@ -43,7 +43,7 @@ class Huygens_Study : public Huygens_Object
 public:
     // constructors
     Huygens_Study(const TDF_Label& theLabel,
-                  const Huygens::ObjectType theType);
+                  const Huygens::Study theType);
     // destructors
     ~Huygens_Study();
 
@@ -55,7 +55,22 @@ public:
 
     static Standard_GUID&           GetID();
     static Handle(Huygens_Study)    GetStudy(const TDF_Label& theLabel);
+    static Huygens::Study           GetType(const TDF_Label& theLabel);
     static Standard_Boolean         IsStudy(const TDF_Label& theLabel);
+
+public:
+
+    Standard_Integer            GetIntegerAttr(const Standard_Integer theIndex);
+    Standard_Real               GetRealAttr(const Standard_Integer theIndex);
+    TCollection_AsciiString     GetStringAttr(const Standard_Integer theIndex);
+    Huygens::Study              GetType();
+
+    void            SetIntegerAttr(const Standard_Integer theIndex,
+                                   const Standard_Integer theValue);
+    void            SetRealAttr(const Standard_Integer theIndex,
+                                const Standard_Real theValue);
+    void            SetStringAttr(const Standard_Integer theIndex,
+                                  const TCollection_AsciiString& theValue);
 
 public:
 

@@ -110,10 +110,10 @@ set(Huygens_INCLUDE_DIRS
 include_directories(${Huygens_INCLUDE_DIRS})
 
 # rules
-add_library(Huygens ${_sources})
-target_link_libraries(Huygens ${_linked_libraries})
+add_library(HuygensCore ${_sources})
+target_link_libraries(HuygensCore ${_linked_libraries})
 install(
-    TARGETS Huygens
+    TARGETS HuygensCore
     ARCHIVE DESTINATION ${Spartacus_INSTALL_LIBS}
     LIBRARY DESTINATION ${Spartacus_INSTALL_LIBS}
     RUNTIME DESTINATION ${Spartacus_INSTALL_BINS}
@@ -168,15 +168,17 @@ include_directories(
     ${_include_directories}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Application
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Core
 )
 
 # rules
 if(WIN32)
     add_executable(HuygensApp WIN32 ${_sources} ${_icons})
+    target_link_libraries(HuygensApp ${_linked_libraries} HuygensCore)
     set_target_properties(HuygensApp PROPERTIES OUTPUT_NAME Huygens)
 else()
     add_executable(HuygensApp ${_sources} ${_icons})
+    target_link_libraries(HuygensApp ${_linked_libraries} HuygensCore)
     set_target_properties(HuygensApp PROPERTIES OUTPUT_NAME spartacus-huygens)
 endif()
-target_link_libraries(HuygensApp ${_linked_libraries})
 install(TARGETS HuygensApp DESTINATION ${Spartacus_INSTALL_BINS})

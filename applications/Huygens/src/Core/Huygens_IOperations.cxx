@@ -82,17 +82,6 @@ Standard_Integer Huygens_IOperations::GetDocumentId()
 
 // ============================================================================
 /*!
- *  \brief GetDocumentProperties()
- *  Convenient shortcut to the document properties object.
-*/
-// ============================================================================
-Handle(Huygens_DataObject) Huygens_IOperations::GetDocumentProperties()
-{
-    return GetEngine()->GetDocumentProperties(GetDocumentId());
-}
-
-// ============================================================================
-/*!
  *  \brief GetEngine()
  *  Convenient shortcut to the engine.
 */

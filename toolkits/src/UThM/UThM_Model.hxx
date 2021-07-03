@@ -40,7 +40,7 @@ DEFINE_STANDARD_HANDLE(UThM_Model, Standard_Transient);
     \brief UThM_Model
 */
 // ============================================================================
-class UThM_Model : public Standard_Transient
+class Standard_EXPORT UThM_Model : public Standard_Transient
 {
 
 public:

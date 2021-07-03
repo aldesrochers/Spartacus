@@ -40,7 +40,7 @@ DEFINE_STANDARD_HANDLE(UCrM_Model, Standard_Transient);
     \brief UCrM_Model
 */
 // ============================================================================
-class UCrM_Model : public Standard_Transient
+class Standard_EXPORT UCrM_Model : public Standard_Transient
 {
 
 public:

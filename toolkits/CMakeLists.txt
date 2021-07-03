@@ -22,6 +22,12 @@
 project(SpartacusToolkits)
 
 ###
+# Configure
+###
+configure_file(src/FW/FW_Configuration.hxx.in FW_Configuration.hxx)
+
+
+###
 # Rules : Build documentation
 ###
 
@@ -110,8 +116,6 @@ foreach(_toolkit ${_toolkits})
         endforeach()
     endforeach()
 
-    message(${OpenCascade_FoundationClasses_INCLUDE_DIRS})
-
     # find required libraries (intern / extern)
     unset(_include_directories)
     unset(_linked_libraries)
@@ -132,7 +136,7 @@ foreach(_toolkit ${_toolkits})
     endforeach()
 
     # rules
-    include_directories(${_source_directories} ${_include_directories})
+    include_directories(${_source_directories} ${_include_directories} ${CMAKE_CURRENT_BINARY_DIR})
     add_library(${_toolkit} ${_source_files})
     target_link_libraries(${_toolkit} ${_linked_libraries})
     install(
@@ -143,6 +147,8 @@ foreach(_toolkit ${_toolkits})
     )
 
     # expose target in cache
+    unset(${_toolkit}_INCLUDE_DIRS CACHE)
+    unset(${_toolkit}_LIBRARIES} CACHE)
     set(${_toolkit}_INCLUDE_DIRS ${_source_directories} CACHE PATH "Toolkit ${_toolkit} include directories.")
     set(${_toolkit}_LIBRARIES ${_toolkit} CACHE PATH "Toolkit ${_toolkit} libraries.")
 

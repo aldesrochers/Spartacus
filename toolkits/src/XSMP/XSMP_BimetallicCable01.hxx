@@ -29,6 +29,7 @@
 #include <Standard_Real.hxx>
 
 // Spartacus
+#include <XSMP_Model.hxx>
 #include <UCrM_Model.hxx>
 #include <USSM_Model.hxx>
 #include <UThM_Model.hxx>
@@ -39,7 +40,7 @@
  *  \brief XSMP_BimetallicCable01
 */
 // ============================================================================
-class XSMP_BimetallicCable01
+class Standard_EXPORT XSMP_BimetallicCable01 : public XSMP_Model
 {
 
 public:

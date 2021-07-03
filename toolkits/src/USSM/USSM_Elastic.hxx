@@ -39,7 +39,7 @@ DEFINE_STANDARD_HANDLE(USSM_Elastic, USSM_Model);
     \brief USSM_Elastic
 */
 // ============================================================================
-class USSM_Elastic : public USSM_Model
+class Standard_EXPORT USSM_Elastic : public USSM_Model
 {
 
 public:

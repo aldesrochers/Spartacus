@@ -25,6 +25,13 @@
 // Qt
 #include <QMainWindow>
 
+// Huygens
+#include <Huygens_Engine.hxx>
+
+// Spartacus
+#include <FWR_Manager.hxx>
+
+
 
 // ============================================================================
 /*!
@@ -41,10 +48,19 @@ public:
     // destructors
     ~HuygensApp_Desktop();
 
+public:
+
+    Handle(Huygens_Engine)  GetEngine();
+    FWR_Manager*            GetResourcesMgr();
+
 private:
 
-    void        createFileMenu();
-    void        createHelpMenu();
+    void                    CreateFileMenu();
+    void                    CreateHelpMenu();
+
+private:
+
+    Handle(Huygens_Engine)  myEngine;
 
 };
 

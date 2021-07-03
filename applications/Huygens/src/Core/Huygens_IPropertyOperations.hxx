@@ -23,6 +23,7 @@
 #define __Huygens_IPropertyOperations_hxx__
 
 // Huygens
+#include <Huygens_DataObject.hxx>
 #include <Huygens_IOperations.hxx>
 
 // Forward declarations
@@ -36,7 +37,7 @@ DEFINE_STANDARD_HANDLE(Huygens_IPropertyOperations, Huygens_IOperations);
 // ============================================================================
 /*!
  *  \brief Huygens_IPropertyOperations
- *  Class implementation of operations on document properties.
+ *  Class implementation of operations on cable models.
 */
 // ============================================================================
 class Huygens_IPropertyOperations : public Huygens_IOperations
@@ -45,23 +46,10 @@ class Huygens_IPropertyOperations : public Huygens_IOperations
 public:
     // constructors
     Huygens_IPropertyOperations(Handle(Huygens_Engine) theEngine,
-                                const Standard_Integer theDocumentId);
+                             const Standard_Integer theDocumentId);
     // destructors
     ~Huygens_IPropertyOperations();
 
-public:
-
-    TCollection_AsciiString     GetAuthorFirstName();
-    TCollection_AsciiString     GetAuthorLastName();
-    TCollection_AsciiString     GetProjectDescription();
-    TCollection_AsciiString     GetProjectName();
-
-    void            SetAuthorFirstName(const TCollection_AsciiString& theFirstName);
-    void            SetAuthorName(const TCollection_AsciiString& theFirstName,
-                                  const TCollection_AsciiString& theLastName);
-    void            SetAuthorLastName(const TCollection_AsciiString& theLastName);
-    void            SetProjectDescription(const TCollection_AsciiString& theDescription);
-    void            SetProjectName(const TCollection_AsciiString& theName);
 
 public:
 

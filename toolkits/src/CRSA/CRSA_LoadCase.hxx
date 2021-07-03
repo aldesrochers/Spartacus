@@ -34,7 +34,7 @@
     \brief CRSA_LoadCase
 */
 // ============================================================================
-class CRSA_LoadCase
+class Standard_EXPORT CRSA_LoadCase
 {
 
 public:

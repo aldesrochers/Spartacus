@@ -19,44 +19,34 @@
 //
 // ============================================================================
 
-#ifndef __Huygens_IFileOperations_hxx__
-#define __Huygens_IFileOperations_hxx__
 
-// Huygens
-#include <Huygens_IOperations.hxx>
+#ifndef __UCrMP_Model_hxx__
+#define __UCrMP_Model_hxx__
 
-// Forward declarations
-class Huygens_IFileOperations;
-class Huygens_Engine;
-
-// Handles
-DEFINE_STANDARD_HANDLE(Huygens_IFileOperations, Huygens_IOperations);
+// OpenCascade
+#include <Standard.hxx>
+#include <Standard_DefineAlloc.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief Huygens_IFileOperations
- *  Class implementation of operations on files.
+ *  \brief UCrMP_Model
+ *  Base class implementation of creep model parameters.
 */
 // ============================================================================
-class Huygens_IFileOperations : public Huygens_IOperations
+class Standard_EXPORT UCrMP_Model
 {
 
 public:
+
+    DEFINE_STANDARD_ALLOC;
+
+public:
     // constructors
-    Huygens_IFileOperations(Handle(Huygens_Engine) theEngine,
-                            const Standard_Integer theDocumentId);
+    UCrMP_Model();
     // destructors
-    ~Huygens_IFileOperations();
-
-public:
-
-
-
-public:
-
-    DEFINE_STANDARD_RTTIEXT(Huygens_IFileOperations, Huygens_IOperations);
+    ~UCrMP_Model();
 
 };
 
-#endif  // __Huygens_IFileOperations_hxx__
+#endif  // __UCrMP_Model_hxx__

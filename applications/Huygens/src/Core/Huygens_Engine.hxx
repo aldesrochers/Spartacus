@@ -29,11 +29,9 @@
 #include <TDocStd_Document.hxx>
 #include <TColStd_DataMapOfIntegerTransient.hxx>
 
-// Huygens
-#include <Huygens_DataObject.hxx>
-#include <Huygens_IDomainOperations.hxx>
-#include <Huygens_IPropertyOperations.hxx>
-#include <Huygens_Study.hxx>
+// Spartacus
+#include <Huygens_ICableOperations.hxx>
+#include <Huygens_IMaterialOperations.hxx>
 
 // Forward declarations
 class Huygens_Engine;
@@ -47,7 +45,7 @@ DEFINE_STANDARD_HANDLE(Huygens_Engine, Standard_Transient);
  *  \brief Huygens_Engine
 */
 // ============================================================================
-class Huygens_Engine : public Standard_Transient
+class Standard_EXPORT Huygens_Engine : public Standard_Transient
 {
 
 public:
@@ -62,79 +60,23 @@ public:
     Standard_Boolean                    CloseDocument(const Standard_Integer theDocumentId);
     Handle(TDocStd_Document)            GetDocument(const Standard_Integer theDocumentId,
                                                     const Standard_Boolean force = Standard_True);
-    Handle(Huygens_DataObject)          GetDocumentProperties(const Standard_Integer theDocumentId,
-                                                              const Standard_Boolean force = Standard_True);
-    Handle(Huygens_IDomainOperations)   GetIDomainOperations(const Standard_Integer theDocumentId,
-                                                             const Standard_Integer theStudyId);
-    Handle(Huygens_IPropertyOperations) GetIPropertyOperations(const Standard_Integer theDocumentId);
-    Handle(Huygens_Study)               GetStudy(const Standard_Integer theDocumentId,
-                                                 const Standard_Integer theStudyId);
-    Handle(Huygens_DataObject)          NewMaterial(const Standard_Integer theDocumentId,
-                                                    const Huygens::ObjectType theType);
-    Standard_Boolean                    SaveDocumentAsXML(const Standard_Integer theDocumentId,
-                                                          const TCollection_AsciiString& theFileName);
-
-
-
-
-
-
-
-
-
-    Standard_Boolean                    ExportStudyToHSF(Handle(Huygens_Study) theStudy,
-                                                         const TCollection_AsciiString& theFileName);
-    Standard_Boolean                    ExportStudyToHSF(const Standard_Integer theDocumentId,
-                                                         const Standard_Integer theStudyId,
-                                                         const TCollection_AsciiString& theFileName);
-    Standard_Boolean                    ExportStudyToXML(Handle(Huygens_Study) theStudy,
-                                                         const TCollection_AsciiString& theFileName);
-    Standard_Boolean                    ExportStudyToXML(const Standard_Integer theDocumentId,
-                                                         const Standard_Integer theStudyId,
-                                                         const TCollection_AsciiString& theFileName);
-    Standard_Boolean                    ImportStudyFromHSF(Handle(Huygens_Study) theStudy,
-                                                           const TCollection_AsciiString& theFileName);
-    Standard_Boolean                    ImportStudyFromHSF(const Standard_Integer theDocumentId,
-                                                           const Standard_Integer theStudyId,
-                                                           const TCollection_AsciiString& theFileName);
-    Standard_Boolean                    ImportStudyFromXML(Handle(Huygens_Study) theStudy,
-                                                           const TCollection_AsciiString& theFileName);
-    Standard_Boolean                    ImportStudyFromXML(const Standard_Integer theDocumentId,
-                                                           const Standard_Integer theStudyId,
-                                                           const TCollection_AsciiString& theFileName);
-    Standard_Boolean                    IsStudy(const Standard_Integer theDocumentId,
-                                                const Standard_Integer theStudyId);
+    Handle(Huygens_ICableOperations)    GetICableOperations(const Standard_Integer theDocumentId);
+    Handle(Huygens_IMaterialOperations) GetIMaterialOperations(const Standard_Integer theDocumentId);
+    Handle(Huygens_Material)            NewMaterial(const Standard_Integer theDocumentId,
+                                                    const Huygens::Material theType);
     Standard_Boolean                    LoadDocument(const Standard_Integer theDocumentId,
                                                      const TCollection_AsciiString& theFileName);
-    Standard_Integer                    NbStudies(const Standard_Integer theDocumentId);
-    Handle(Huygens_Study)               NewStudy(const Standard_Integer theDocumentId);
-    Standard_Boolean                    RemoveStudy(Handle(Huygens_Study) theStudy);
-    Standard_Boolean                    RemoveStudy(const Standard_Integer theDocumentId,
-                                                    const Standard_Integer theStudyId);
     Standard_Boolean                    SaveDocument(const Standard_Integer theDocumentId,
                                                      const TCollection_AsciiString& theFileName);
-
-private:
-
-    Standard_Boolean                    ExportStudyToANY(Handle(Huygens_Study) theStudy,
-                                                         const TCollection_AsciiString& theFileName,
-                                                         const Standard_Integer theFormat);
-    Standard_Boolean                    ExportStudyToANY(const Standard_Integer theDocumentId,
-                                                         const Standard_Integer theStudyId,
-                                                         const TCollection_AsciiString& theFileName,
-                                                         const Standard_Integer theFormat);
-    Standard_Boolean                    ImportStudyFromANY(const Standard_Integer theDocumentId,
-                                                           const Standard_Integer theStudyId,
-                                                           const TCollection_AsciiString& theFileName,
-                                                           const Standard_Integer theFormat);
-    Standard_Boolean                    ImportStudyFromANY(Handle(Huygens_Study) theStudy,
-                                                           const TCollection_AsciiString& theFileName,
-                                                           const Standard_Integer theFormat);
+    Standard_Boolean                    SaveDocumentAsXML(const Standard_Integer theDocumentId,
+                                                          const TCollection_AsciiString& theFileName);
 
 private:
 
     Handle(TDocStd_Application)         myApplication;
     TColStd_DataMapOfIntegerTransient   myDocuments;
+    TColStd_DataMapOfIntegerTransient   myICableOperations;
+    TColStd_DataMapOfIntegerTransient   myIMaterialOperations;
 
 public:
 

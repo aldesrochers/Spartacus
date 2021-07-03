@@ -20,36 +20,55 @@
 // ============================================================================
 
 
-// Huygens
-#include <Huygens_Engine.hxx>
-#include <Huygens_IFileOperations.hxx>
+#ifndef __FWR_Manager_hxx__
+#define __FWR_Manager_hxx__
+
+// Qt
+#include <QIcon>
+#include <QResource>
+
+// Spartacus
+#include <FWR_Icon.hxx>
+#include <FWR_Theme.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief Constructor
+    \brief FWR_Manager
+    Class implementation of a resource manager.
 */
 // ============================================================================
-Huygens_IFileOperations::Huygens_IFileOperations(Handle(Huygens_Engine) theEngine,
-                                                 const Standard_Integer theDocumentId)
-    : Huygens_IOperations(theEngine, theDocumentId)
+class FWR_Manager
 {
 
-}
+private:
+    // constructors
+    FWR_Manager();
+    // destructors
+    ~FWR_Manager();
 
-// ============================================================================
-/*!
- *  \brief Destructor
-*/
-// ============================================================================
-Huygens_IFileOperations::~Huygens_IFileOperations()
-{
+public:
 
-}
+    static FWR_Manager*     Manager();
 
+public:
 
-// ****************************************************************************
-// Handles
-// ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(Huygens_IFileOperations, Huygens_IOperations);
-IMPLEMENT_STANDARD_RTTIEXT(Huygens_IFileOperations, Huygens_IOperations);
+    QIcon           GetIcon(const FWR_Icon theIcon,
+                            const FWR_Theme theTheme = FWR_StandardTheme);
+
+private:
+
+    QString         GetFileName(const FWR_Icon theIcon);
+    QString         GetFilePath(const FWR_Icon theIcon,
+                                const FWR_Theme theTheme = FWR_StandardTheme);
+    QString         GetThemeDir(const FWR_Theme theTheme);
+
+    bool            RegisterIconResources();
+
+private:
+
+    static FWR_Manager*     myManager;
+
+};
+
+#endif  // __FWR_Manager_hxx__

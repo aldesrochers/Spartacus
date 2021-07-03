@@ -39,7 +39,7 @@ DEFINE_STANDARD_HANDLE(UCrM_CableWire01, UCrM_Model);
     \brief UCrM_CableWire01
 */
 // ============================================================================
-class UCrM_CableWire01 : public UCrM_Model
+class Standard_EXPORT UCrM_CableWire01 : public UCrM_Model
 {
 
 public:

@@ -39,7 +39,7 @@
     \brief CRSA_FindEmptyLength
 */
 // ============================================================================
-class CRSA_FindEmptyLength : public CRSA_Command
+class Standard_EXPORT CRSA_FindEmptyLength : public CRSA_Command
 {
 
 public:

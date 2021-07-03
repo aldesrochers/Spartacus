@@ -47,26 +47,24 @@ class Huygens_Object : public Standard_Transient
 
 public:
     // constructors
-    Huygens_Object(const TDF_Label& theLabel,
-                   const Huygens::ObjectType theType);
+    Huygens_Object(const TDF_Label& theLabel);
     // destructors
     ~Huygens_Object();
-
-protected:
-    // constructors
-    Huygens_Object(const TDF_Label& theLabel);
 
 public:
 
     static Standard_GUID&           GetID();
     static Handle(Huygens_Object)   GetObject(const TDF_Label& theLabel);
-    static Standard_Integer         GetType(const TDF_Label& theLabel);
 
 public:
 
+    TCollection_AsciiString     GetDescription();
     TCollection_AsciiString     GetEntry();
     TDF_Label                   GetLabel();
-    Standard_Integer            GetType();
+    TCollection_AsciiString     GetName();
+
+    void            SetDescription(const TCollection_AsciiString& theDescription);
+    void            SetName(const TCollection_AsciiString& theName);
 
 private:
 

@@ -1,7 +1,21 @@
 <RCC>
     <qresource prefix="/">
-        <file>Spartacus.png</file>
-        <file>Exit.png</file>
-        <file>OpenFile.png</file>
+        <file>standard/close.png</file>
+        <file>standard/db_configuration.png</file>
+        <file>standard/exit.png</file>
+        <file>standard/file_close.png</file>
+        <file>standard/file_export.png</file>
+        <file>standard/file_new.png</file>
+        <file>standard/file_open.png</file>
+        <file>standard/file_save.png</file>
+        <file>standard/ImportFile.png</file>
+        <file>standard/not_found.png</file>
+        <file>standard/spartacus.png</file>
+        <file>standard/view_fit_all.png</file>
+        <file>standard/view_move.png</file>
+        <file>standard/view_rotate.png</file>
+        <file>standard/view_zoom_in.png</file>
+        <file>standard/view_zoom_out.png</file>
+        <file>standard/color_picker.png</file>
     </qresource>
 </RCC>

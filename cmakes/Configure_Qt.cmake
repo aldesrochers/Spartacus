@@ -66,3 +66,26 @@ endforeach()
 ###
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
+
+###
+# Install required libraries - WIN32
+###
+if(WIN32)
+    foreach(_component ${_required_components})
+        foreach(_lib ${Qt_${_component}_LIBRARIES})
+            get_target_property(_filename ${_lib} LOCATION)
+            install(FILES ${_filename} DESTINATION ${Spartacus_INSTALL_BINS})
+        endforeach()
+    endforeach()
+endif()
+
+# install required plugins on windows
+if(MINGW)
+    if(NOT EXISTS $ENV{MINGW_PREFIX}/share/qt5/plugins/platforms/qwindows.dll)
+        message(FATAL_ERROR "Could not locate Qt5 plugins in MinGW distribution.")
+    endif()
+    install(
+        FILES $ENV{MINGW_PREFIX}/share/qt5/plugins/platforms/qwindows.dll
+        DESTINATION ${Spartacus_INSTALL_BINS}/platforms
+    )
+endif()

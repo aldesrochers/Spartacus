@@ -28,13 +28,16 @@
 #include <Standard_DefineAlloc.hxx>
 #include <Standard_Real.hxx>
 
+// Spartacus
+#include <USSMP_Model.hxx>
+
 
 // ============================================================================
 /*!
  *  \brief USSMP_Elastic
 */
 // ============================================================================
-class USSMP_Elastic
+class Standard_EXPORT USSMP_Elastic : public USSMP_Model
 {
 
 public:

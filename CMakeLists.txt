@@ -46,8 +46,10 @@ endif()
 ###
 # options
 ###
+option(Spartacus_BUILD_DEVELOPMENT      "Build Spartacus in development mode ?" ON)
 option(Spartacus_BUILD_DOCUMENTATION    "Build Spartacus documentation ?" ON)
 option(Spartacus_BUILD_SHARED           "Build Spartacus in shared mode ?" ON)
+option(Spartacus_BUILD_TESTS            "Build Spartacus tests ?" ON)
 
 # applications
 option(Spartacus_BUILD_Huygens          "Build Spartacus with Huygens application ?" ON)
@@ -64,6 +66,8 @@ set(Spartacus_INSTALL_BINS bin)
 set(Spartacus_INSTALL_DOCS doc)
 set(Spartacus_INSTALL_LIBS lib)
 set(Spartacus_INSTALL_RCCS share/rcc)
+set(Spartacus_INSTALL_SHARES share)
+set(Spartacus_INSTALL_TESTS bin)
 
 ###
 # prerequisites
@@ -71,13 +75,18 @@ set(Spartacus_INSTALL_RCCS share/rcc)
 if(Spartacus_BUILD_DOCUMENTATION)
     include(Configure_Doxygen)
 endif()
+if(MINGW)
+    include(Configure_MINGW)
+endif()
 include(Configure_OpenCascade)
 include(Configure_Qt)
+
 
 ###
 # sources
 ###
-add_subdirectory(applications)
+#
 add_subdirectory(databases)
-add_subdirectory(tests)
 add_subdirectory(toolkits)
+add_subdirectory(tests)
+add_subdirectory(applications)

@@ -21,6 +21,7 @@
 
 
 // Huygens
+#include <Huygens_IDocumentProperties.hxx>
 #include <Huygens_Engine.hxx>
 #include <Huygens_IDomainOperations.hxx>
 
@@ -31,9 +32,8 @@
 */
 // ============================================================================
 Huygens_IDomainOperations::Huygens_IDomainOperations(Handle(Huygens_Engine) theEngine,
-                                                     const Standard_Integer theDocumentId,
-                                                     const Standard_Integer theStudyId)
-    : Huygens_IStudyOperations(theEngine, theDocumentId, theStudyId)
+                                                     const Standard_Integer theDocumentId)
+    : Huygens_IOperations(theEngine, theDocumentId)
 {
 
 }
@@ -48,9 +48,110 @@ Huygens_IDomainOperations::~Huygens_IDomainOperations()
 
 }
 
+// ============================================================================
+/*!
+ *  \brief GetAuthorFirstName()
+*/
+// ============================================================================
+TCollection_AsciiString Huygens_IDomainOperations::GetAuthorFirstName()
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    return i.GetAuthorFirstName();
+}
+
+// ============================================================================
+/*!
+ *  \brief GetAuthorLastName()
+*/
+// ============================================================================
+TCollection_AsciiString Huygens_IDomainOperations::GetAuthorLastName()
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    return i.GetAuthorLastName();
+}
+
+// ============================================================================
+/*!
+ *  \brief GetProjectDescription()
+*/
+// ============================================================================
+TCollection_AsciiString Huygens_IDomainOperations::GetProjectDescription()
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    return i.GetProjectDescription();
+}
+
+// ============================================================================
+/*!
+ *  \brief GetProjectName()
+*/
+// ============================================================================
+TCollection_AsciiString Huygens_IDomainOperations::GetProjectName()
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    return i.GetProjectName();
+}
+
+// ============================================================================
+/*!
+ *  \brief SetAuthorFirstName()
+*/
+// ============================================================================
+void Huygens_IDomainOperations::SetAuthorFirstName(const TCollection_AsciiString &theFirstName)
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    i.SetAuthorFirstName(theFirstName);
+}
+
+// ============================================================================
+/*!
+ *  \brief SetAuthorName()
+*/
+// ============================================================================
+void Huygens_IDomainOperations::SetAuthorLastName(const TCollection_AsciiString &theLastName)
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    i.SetAuthorLastName(theLastName);
+}
+
+// ============================================================================
+/*!
+ *  \brief SetAuthorName()
+*/
+// ============================================================================
+void Huygens_IDomainOperations::SetAuthorName(const TCollection_AsciiString &theFirstName,
+                                                const TCollection_AsciiString &theLastName)
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    i.SetAuthorFirstName(theFirstName);
+    i.SetAuthorLastName(theLastName);
+}
+
+// ============================================================================
+/*!
+ *  \brief SetProjectDescription()
+*/
+// ============================================================================
+void Huygens_IDomainOperations::SetProjectDescription(const TCollection_AsciiString &theDescription)
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    i.SetProjectDescription(theDescription);
+}
+
+// ============================================================================
+/*!
+ *  \brief SetProjectName()
+*/
+// ============================================================================
+void Huygens_IDomainOperations::SetProjectName(const TCollection_AsciiString &theName)
+{
+    Huygens_IDocumentProperties i(GetDocumentProperties());
+    i.SetProjectName(theName);
+}
+
 
 // ****************************************************************************
 // Handles
 // ****************************************************************************
-IMPLEMENT_STANDARD_HANDLE(Huygens_IDomainOperations, Huygens_IStudyOperations);
-IMPLEMENT_STANDARD_RTTIEXT(Huygens_IDomainOperations, Huygens_IStudyOperations);
+IMPLEMENT_STANDARD_HANDLE(Huygens_IDomainOperations, Huygens_IOperations);
+IMPLEMENT_STANDARD_RTTIEXT(Huygens_IDomainOperations, Huygens_IOperations);

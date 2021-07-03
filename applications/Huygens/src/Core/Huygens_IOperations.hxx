@@ -28,9 +28,6 @@
 #include <TDocStd_Application.hxx>
 #include <TDocStd_Document.hxx>
 
-// Huygens
-#include <Huygens_DataObject.hxx>
-
 // Forward declarations
 class Huygens_IOperations;
 class Huygens_Engine;
@@ -60,7 +57,6 @@ public:
     Handle(TDocStd_Application) GetApplication();
     Handle(TDocStd_Document)    GetDocument();
     Standard_Integer            GetDocumentId();
-    Handle(Huygens_DataObject)  GetDocumentProperties();
     Handle(Huygens_Engine)      GetEngine();
 
 private:

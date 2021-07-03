@@ -43,7 +43,7 @@ DEFINE_STANDARD_HANDLE(XSM_BimetallicCable01, XSM_Model);
     thermal models and a single creep model for the whole cable.
 */
 // ============================================================================
-class XSM_BimetallicCable01 : public XSM_Model
+class Standard_EXPORT XSM_BimetallicCable01 : public XSM_Model
 {
 
 public:

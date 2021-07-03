@@ -25,6 +25,26 @@
 
 // OpenCascade
 #include <TDataStd_UAttribute.hxx>
+#include <TDataStd_Integer.hxx>
+#include <TDataStd_Real.hxx>
+#include <TDataStd_AsciiString.hxx>
+
+// Object data structure
+// Cable ---- GUID
+//   |   ---- Type
+//   | ==== Properties (from object)
+//   | ==== Attributes
+//   | ==== Geometry
+//   | ==== Cable
+
+// Define root tags
+#define TAG_Properties  1
+#define TAG_Attributes  2
+#define TAG_Geometry    3
+#define TAG_Cable       4
+
+// Define basic macros
+#define ATTRIBUTE_LABEL(theIndex)   GetLabel().FindChild(TAG_Attributes).FindChild((theIndex))
 
 
 // ============================================================================
@@ -46,11 +66,13 @@ Huygens_Study::Huygens_Study(const TDF_Label& theLabel)
 */
 // ============================================================================
 Huygens_Study::Huygens_Study(const TDF_Label& theLabel,
-                             const Huygens::ObjectType theType)
-    : Huygens_Object(theLabel, theType)
+                             const Huygens::Study theType)
+    : Huygens_Object(theLabel)
 {
     // set guid
     TDataStd_UAttribute::Set(theLabel, GetID());
+    // set type attribute on label
+    TDataStd_Integer::Set(theLabel, theType);
 }
 
 // ============================================================================
@@ -76,6 +98,48 @@ Standard_GUID& Huygens_Study::GetID()
 
 // ============================================================================
 /*!
+    \brief GetIntegerAttr()
+*/
+// ============================================================================
+Standard_Integer Huygens_Study::GetIntegerAttr(const Standard_Integer theIndex)
+{
+    TDF_Label aLabel = ATTRIBUTE_LABEL(theIndex);
+    Handle(TDataStd_Integer) aValue;
+    if(!aLabel.FindAttribute(TDataStd_Integer::GetID(), aValue))
+        return 0;
+    return aValue->Get();
+}
+
+// ============================================================================
+/*!
+    \brief GetRealAttr()
+*/
+// ============================================================================
+Standard_Real Huygens_Study::GetRealAttr(const Standard_Integer theIndex)
+{
+    TDF_Label aLabel = ATTRIBUTE_LABEL(theIndex);
+    Handle(TDataStd_Real) aValue;
+    if(!aLabel.FindAttribute(TDataStd_Real::GetID(), aValue))
+        return 0.;
+    return aValue->Get();
+}
+
+// ============================================================================
+/*!
+    \brief GetStringAttr()
+*/
+// ============================================================================
+TCollection_AsciiString Huygens_Study::GetStringAttr(const Standard_Integer theIndex)
+{
+    TDF_Label aLabel = ATTRIBUTE_LABEL(theIndex);
+    Handle(TDataStd_AsciiString) aValue;
+    if(!aLabel.FindAttribute(TDataStd_AsciiString::GetID(), aValue))
+        return TCollection_AsciiString();
+    return aValue->Get();
+}
+
+// ============================================================================
+/*!
  *  \brief GetStudy()
 */
 // ============================================================================
@@ -90,12 +154,76 @@ Handle(Huygens_Study) Huygens_Study::GetStudy(const TDF_Label& theLabel)
 
 // ============================================================================
 /*!
+    \brief GetType()
+*/
+// ============================================================================
+Huygens::Study Huygens_Study::GetType(const TDF_Label &theLabel)
+{
+    if(!theLabel.IsAttribute(GetID()))
+        return Huygens::UnknownStudy;
+    Handle(TDataStd_Integer) aValue;
+    if(!theLabel.FindAttribute(TDataStd_Integer::GetID(), aValue))
+        return Huygens::UnknownStudy;
+    return (Huygens::Study) aValue->Get();
+}
+
+// ============================================================================
+/*!
+    \brief GetType()
+*/
+// ============================================================================
+Huygens::Study Huygens_Study::GetType()
+{
+    Handle(TDataStd_Integer) aValue;
+    if(!GetLabel().FindAttribute(TDataStd_Integer::GetID(), aValue))
+        return Huygens::UnknownStudy;
+    return (Huygens::Study) aValue->Get();
+}
+
+// ============================================================================
+/*!
  *  \brief IsStudy()
 */
 // ============================================================================
 Standard_Boolean Huygens_Study::IsStudy(const TDF_Label &theLabel)
 {
     return theLabel.IsAttribute(GetID());
+}
+
+// ============================================================================
+/*!
+    \brief SetIntegerAttr()
+*/
+// ============================================================================
+void Huygens_Study::SetIntegerAttr(const Standard_Integer theIndex,
+                                   const Standard_Integer theValue)
+{
+    TDF_Label aLabel = ATTRIBUTE_LABEL(theIndex);
+    TDataStd_Integer::Set(aLabel, theValue);
+}
+
+// ============================================================================
+/*!
+    \brief SetRealAttr()
+*/
+// ============================================================================
+void Huygens_Study::SetRealAttr(const Standard_Integer theIndex,
+                                const Standard_Real theValue)
+{
+    TDF_Label aLabel = ATTRIBUTE_LABEL(theIndex);
+    TDataStd_Real::Set(aLabel, theValue);
+}
+
+// ============================================================================
+/*!
+    \brief SetStringAttr()
+*/
+// ============================================================================
+void Huygens_Study::SetStringAttr(const Standard_Integer theIndex,
+                                  const TCollection_AsciiString &theValue)
+{
+    TDF_Label aLabel = ATTRIBUTE_LABEL(theIndex);
+    TDataStd_AsciiString::Set(aLabel, theValue);
 }
 
 

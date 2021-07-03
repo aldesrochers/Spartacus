@@ -28,6 +28,9 @@
 #include <Standard_DefineAlloc.hxx>
 #include <Standard_Real.hxx>
 
+// Spartacus
+#include <UCrMP_Model.hxx>
+
 
 // ============================================================================
 /*!
@@ -36,7 +39,7 @@
  *  CableWire02.
 */
 // ============================================================================
-class UCrMP_CableWire02
+class Standard_EXPORT UCrMP_CableWire02 : public UCrMP_Model
 {
 
 public:

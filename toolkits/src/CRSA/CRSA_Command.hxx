@@ -33,7 +33,7 @@
     \brief CRSA_Command
 */
 // ============================================================================
-class CRSA_Command
+class Standard_EXPORT CRSA_Command
 {
 
 public:

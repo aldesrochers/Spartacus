@@ -25,37 +25,33 @@
 // OpenCascade
 #include <TDataStd_Integer.hxx>
 #include <TDataStd_UAttribute.hxx>
+#include <TDataStd_AsciiString.hxx>
 #include <TDF_Tool.hxx>
 
+// Definition of an object basic data structure
 // Object  ---- Type
 //   |     ---- GUID
+//   | ==== Properties
+
+// Definition of tags
+#define TAG_Properties      1
+#define PROP_Name           1
+#define PROP_Description    2
+
+// Definition of basic macros
+#define PROPERTY_LABEL(theIndex)    GetLabel().FindChild(TAG_Properties).FindChild((theIndex))
 
 
 // ============================================================================
 /*!
  *  \brief Constructor
- *  Basic constructor for existing objects.
 */
 // ============================================================================
 Huygens_Object::Huygens_Object(const TDF_Label& theLabel)
     : myLabel(theLabel)
 {
-
-}
-
-// ============================================================================
-/*!
- *  \brief Constructor
-*/
-// ============================================================================
-Huygens_Object::Huygens_Object(const TDF_Label& theLabel,
-                               const Huygens::ObjectType theType)
-    : myLabel(theLabel)
-{
     // set GUID on label
     TDataStd_UAttribute::Set(myLabel, GetID());
-    // set type on label
-    TDataStd_Integer::Set(myLabel, theType);
 }
 
 // ============================================================================
@@ -66,6 +62,20 @@ Huygens_Object::Huygens_Object(const TDF_Label& theLabel,
 Huygens_Object::~Huygens_Object()
 {
 
+}
+
+// ============================================================================
+/*!
+    \brief GetDescription()
+*/
+// ============================================================================
+TCollection_AsciiString Huygens_Object::GetDescription()
+{
+    TDF_Label aLabel = PROPERTY_LABEL(PROP_Description);
+    Handle(TDataStd_AsciiString) aValue;
+    if(!aLabel.FindAttribute(TDataStd_AsciiString::GetID(), aValue))
+        return TCollection_AsciiString();
+    return aValue->Get();
 }
 
 // ============================================================================
@@ -103,6 +113,21 @@ TDF_Label Huygens_Object::GetLabel()
 
 // ============================================================================
 /*!
+    \brief GetName()
+*/
+// ============================================================================
+TCollection_AsciiString Huygens_Object::GetName()
+{
+    TDF_Label aLabel = PROPERTY_LABEL(PROP_Name);
+    Handle(TDataStd_AsciiString) aValue;
+    if(!aLabel.FindAttribute(TDataStd_AsciiString::GetID(), aValue))
+        return TCollection_AsciiString();
+    return aValue->Get();
+}
+
+
+// ============================================================================
+/*!
  *  \brief GetObject()
 */
 // ============================================================================
@@ -117,31 +142,26 @@ Handle(Huygens_Object) Huygens_Object::GetObject(const TDF_Label& theLabel)
 
 // ============================================================================
 /*!
- *  \brief GetType()
+    \brief SetDescription()
 */
 // ============================================================================
-Standard_Integer Huygens_Object::GetType(const TDF_Label &theLabel)
+void Huygens_Object::SetDescription(const TCollection_AsciiString &theDescription)
 {
-    if(!theLabel.IsAttribute(GetID()))
-        return -1;
-    Handle(TDataStd_Integer) aValue;
-    if(!theLabel.FindAttribute(TDataStd_Integer::GetID(), aValue))
-        return -1;
-    return aValue->Get();
+    TDF_Label aLabel = PROPERTY_LABEL(PROP_Description);
+    TDataStd_AsciiString::Set(aLabel, theDescription);
 }
 
 // ============================================================================
 /*!
- *  \brief GetType()
+    \brief SetName()
 */
 // ============================================================================
-Standard_Integer Huygens_Object::GetType()
+void Huygens_Object::SetName(const TCollection_AsciiString &theName)
 {
-    Handle(TDataStd_Integer) aValue;
-    if(!myLabel.FindAttribute(TDataStd_Integer::GetID(), aValue))
-        return -1;
-    return aValue->Get();
+    TDF_Label aLabel = PROPERTY_LABEL(PROP_Name);
+    TDataStd_AsciiString::Set(aLabel, theName);
 }
+
 
 
 // ****************************************************************************

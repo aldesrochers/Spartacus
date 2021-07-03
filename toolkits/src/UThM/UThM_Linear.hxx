@@ -39,7 +39,7 @@ DEFINE_STANDARD_HANDLE(UThM_Linear, UThM_Model);
     \brief UThM_Linear
 */
 // ============================================================================
-class UThM_Linear : public UThM_Model
+class Standard_EXPORT UThM_Linear : public UThM_Model
 {
 
 public:

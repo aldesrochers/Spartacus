@@ -33,7 +33,7 @@
     \brief CRSA_SpanGeometry
 */
 // ============================================================================
-class CRSA_SpanGeometry
+class Standard_EXPORT CRSA_SpanGeometry
 {
 
 public:

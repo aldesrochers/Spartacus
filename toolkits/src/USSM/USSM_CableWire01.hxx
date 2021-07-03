@@ -43,7 +43,7 @@ DEFINE_STANDARD_HANDLE(USSM_CableWire01, USSM_Model);
     curve.
 */
 // ============================================================================
-class USSM_CableWire01 : public USSM_Model
+class Standard_EXPORT USSM_CableWire01 : public USSM_Model
 {
 
 public:

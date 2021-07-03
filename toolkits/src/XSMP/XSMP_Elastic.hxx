@@ -28,13 +28,16 @@
 #include <Standard_DefineAlloc.hxx>
 #include <Standard_Real.hxx>
 
+// Spartacus
+#include <XSMP_Model.hxx>
+
 
 // ============================================================================
 /*!
  *  \brief XSMP_Elastic
 */
 // ============================================================================
-class XSMP_Elastic
+class Standard_EXPORT XSMP_Elastic : public XSMP_Model
 {
 
 public:

@@ -41,7 +41,7 @@ DEFINE_STANDARD_HANDLE(XSM_Model, Standard_Transient);
     Base class implementation of cross-section behaviour.
 */
 // ============================================================================
-class XSM_Model : public Standard_Transient
+class Standard_EXPORT XSM_Model : public Standard_Transient
 {
 
 public:

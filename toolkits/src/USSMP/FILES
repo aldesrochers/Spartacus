@@ -4,3 +4,5 @@ USSMP_CableWire02.cxx
 USSMP_CableWire02.hxx
 USSMP_Elastic.cxx
 USSMP_Elastic.hxx
+USSMP_Model.cxx
+USSMP_Model.hxx
