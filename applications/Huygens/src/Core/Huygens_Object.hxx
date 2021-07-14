@@ -66,7 +66,7 @@ public:
     void            SetDescription(const TCollection_AsciiString& theDescription);
     void            SetName(const TCollection_AsciiString& theName);
 
-private:
+protected:
 
     TDF_Label                   myLabel;
 

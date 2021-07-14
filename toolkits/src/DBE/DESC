@@ -1,0 +1,5 @@
+DBE
+DB -> Database
+E -> Entry
+
+This package provides definition of Spartacus database entries.

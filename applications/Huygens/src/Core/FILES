@@ -1,9 +1,14 @@
 Huygens_Cable.cxx
 Huygens_Cable.hxx
+Huygens_DataObject.cxx
+Huygens_DataObject.hxx
 Huygens_Engine.cxx
 Huygens_Engine.hxx
 Huygens_ICableOperations.cxx
 Huygens_ICableOperations.hxx
+Huygens_IDocumentProperty.hxx
+Huygens_IGeneralOperations.cxx
+Huygens_IGeneralOperations.hxx
 Huygens_IMaterial.hxx
 Huygens_IMaterialOperations.cxx
 Huygens_IMaterialOperations.hxx

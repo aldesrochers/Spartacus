@@ -27,7 +27,6 @@ include(${VTK_USE_FILE})
 unset(VTK_DIR CACHE)
 unset(VTKm_DIR CACHE)
 
-
 ###
 # check for required components
 ###

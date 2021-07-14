@@ -67,7 +67,7 @@ Handle(TDocStd_Application) Huygens_IOperations::GetApplication()
 // ============================================================================
 Handle(TDocStd_Document) Huygens_IOperations::GetDocument()
 {
-    return GetEngine()->GetDocument(GetDocumentId());
+    return myEngine->GetDocument(myDocumentId);
 }
 
 // ============================================================================
@@ -78,6 +78,17 @@ Handle(TDocStd_Document) Huygens_IOperations::GetDocument()
 Standard_Integer Huygens_IOperations::GetDocumentId()
 {
     return myDocumentId;
+}
+
+// ============================================================================
+/*!
+ *  \brief GetDocumentProperties()
+ *  Convenient shortcut to document properties.
+*/
+// ============================================================================
+Handle(Huygens_DataObject) Huygens_IOperations::GetDocumentProperties()
+{
+    return myEngine->GetDocumentProperties(myDocumentId);
 }
 
 // ============================================================================

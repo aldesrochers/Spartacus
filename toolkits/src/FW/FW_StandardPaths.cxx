@@ -26,6 +26,7 @@
 // Qt
 #include <QCoreApplication>
 #include <QDir>
+#include <QFileInfo>
 #include <QStandardPaths>
 
 
@@ -102,6 +103,25 @@ QString FW_StandardPaths::RootDirPath()
         aDir.cdUp();
         aPath = aDir.absolutePath();
     }
+    return aPath;
+}
+
+// ============================================================================
+/*!
+ *  \brief UserFilePath()
+ *  Get the absolute path to a user file.
+ *
+ *  The file will be located in the 'user' root directory under subpath
+ *  provided by 'fileName'
+*/
+// ============================================================================
+QString FW_StandardPaths::UserFilePath(const QString &theFileName,
+                                       const bool create)
+{
+    QString aPath = UserHomeDirPath() + QDir::separator() + theFileName;
+    QFileInfo anInfo(aPath);
+    if(!anInfo.absoluteDir().exists() && create)
+        QDir().mkpath(anInfo.absoluteDir().absolutePath());
     return aPath;
 }
 

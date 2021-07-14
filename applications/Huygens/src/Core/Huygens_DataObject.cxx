@@ -33,6 +33,7 @@
 // Definition of the object data structure
 // ***
 // DataObject ---- GUID
+//     |      ---- Type
 //     | ==== Attribute 1
 //     | ==== Attribute 2
 //     | ==== ...
@@ -43,7 +44,6 @@
 // ============================================================================
 /*!
  *  \brief Constructor
- *  Basic constructors for existing studies.
 */
 // ============================================================================
 Huygens_DataObject::Huygens_DataObject(const TDF_Label& theLabel)
@@ -59,11 +59,13 @@ Huygens_DataObject::Huygens_DataObject(const TDF_Label& theLabel)
 */
 // ============================================================================
 Huygens_DataObject::Huygens_DataObject(const TDF_Label& theLabel,
-                                       const Huygens::ObjectType theType)
-    : Huygens_Object(theLabel, theType)
+                                       const Huygens::DataObject theType)
+    : Huygens_Object(theLabel)
 {
     // set guid
     TDataStd_UAttribute::Set(theLabel, GetID());
+    // set type
+    TDataStd_Integer::Set(theLabel, theType);
 }
 
 // ============================================================================
@@ -155,6 +157,34 @@ TCollection_AsciiString Huygens_DataObject::GetStringAttribute(const Standard_In
     if(!aLabel.FindAttribute(TDataStd_AsciiString::GetID(), aValue))
         return TCollection_AsciiString();
     return aValue->Get();
+}
+
+// ============================================================================
+/*!
+ *  \brief GetType()
+*/
+// ============================================================================
+Huygens::DataObject Huygens_DataObject::GetType(const TDF_Label &theLabel)
+{
+    if(!theLabel.IsAttribute(GetID()))
+        return Huygens::DO_Unknown;
+    Handle(TDataStd_Integer) aValue;
+    if(!theLabel.FindAttribute(TDataStd_Integer::GetID(), aValue))
+        return Huygens::DO_Unknown;
+    return (Huygens::DataObject) aValue->Get();
+}
+
+// ============================================================================
+/*!
+ *  \brief GetType()
+*/
+// ============================================================================
+Huygens::DataObject Huygens_DataObject::GetType()
+{
+    Handle(TDataStd_Integer) aValue;
+    if(!myLabel.FindAttribute(TDataStd_Integer::GetID(), aValue))
+        return Huygens::DO_Unknown;
+    return (Huygens::DataObject) aValue->Get();
 }
 
 // ============================================================================

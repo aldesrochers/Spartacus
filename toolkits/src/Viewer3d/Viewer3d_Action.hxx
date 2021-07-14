@@ -32,26 +32,12 @@
 
 // enumeration of viewer actions
 enum Viewer3d_Action
-{
+{   
     Viewer3d_MoveAction,
     Viewer3d_NoAction,
     Viewer3d_RotateAction,
-    Viewer3d_PopupAction,
     Viewer3d_ZoomAction,
-    Viewer3d_ZoomOnPointAction
-};
-
-// enumeration of viewer action flags
-enum Viewer3d_ActionFlag
-{
-    Viewer3d_EndMoveAction,
-    Viewer3d_EndRotateAction,
-    Viewer3d_EndZoomOnPointAction,
-    Viewer3d_ShowPopupMenu,
-    Viewer3d_StartMoveAction,
-    Viewer3d_StartRotateAction,
-    Viewer3d_StartZoomOnPointAction
-
+    Viewer3d_ZoomAtPointAction
 };
 
 #endif  // __Viewer3d_Action_hxx__

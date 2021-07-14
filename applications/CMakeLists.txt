@@ -19,6 +19,8 @@
 #
 # =============================================================================
 
+add_subdirectory(CreateCluster)
+
 if(Spartacus_BUILD_Huygens)
     add_subdirectory(Huygens)
 endif()

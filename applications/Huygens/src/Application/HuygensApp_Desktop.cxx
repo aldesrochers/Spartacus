@@ -22,8 +22,14 @@
 
 // Huygens
 #include <HuygensApp_Desktop.hxx>
+#include <HuygensApp_Navigator.hxx>
+
+// Spartacus
+#include <Viewer3d_BasicViewerWidget.hxx>
 
 // Qt
+#include <QDebug>
+#include <QDockWidget>
 #include <QMenuBar>
 #include <QMenu>
 
@@ -36,12 +42,18 @@
 HuygensApp_Desktop::HuygensApp_Desktop(QWidget* theParent)
     : QMainWindow(theParent)
 {
-    // create menus
-    CreateFileMenu();
-    CreateHelpMenu();
-
     // initialize an engine
     myEngine = new Huygens_Engine();
+
+    // create menus
+    createFileMenu();
+    createHelpMenu();
+
+    // create dock widgets
+    createNavigatorDockWidget();
+    createViewerWidget();
+
+
 }
 
 // ============================================================================
@@ -56,22 +68,71 @@ HuygensApp_Desktop::~HuygensApp_Desktop()
 
 // ============================================================================
 /*!
- *  \brief CreateFileMenu()
+ *  \brief createFileMenu()
 */
 // ============================================================================
-void HuygensApp_Desktop::CreateFileMenu()
+void HuygensApp_Desktop::createFileMenu()
 {
     QMenu* aMenu = menuBar()->addMenu(tr("&File"));
+
+    // action : new document
+    QAction* newDocument = aMenu->addAction(GetResourcesMgr()->GetIcon(FWR_NewFileIcon),
+                                            tr("New"));
+    connect(newDocument, SIGNAL(triggered()), this, SLOT(NewDocument()));
+
+    // action : close document
+    QAction* closeDocument = new QAction(GetResourcesMgr()->GetIcon(FWR_CloseFileIcon),
+                                         tr("Close"));
+    aMenu->addAction(closeDocument);
+    connect(closeDocument, SIGNAL(triggered()), this, SLOT(CloseDocument()));
+
+    // action : quit
+    aMenu->addSeparator();
+    QAction* quit = aMenu->addAction(GetResourcesMgr()->GetIcon(FWR_ExitIcon),
+                                     tr("&Quit"));
+    connect(quit, SIGNAL(triggered()), this, SLOT(close()));
+
 }
 
 // ============================================================================
 /*!
- *  \brief CreateHelpMenu()
+ *  \brief createHelpMenu()
 */
 // ============================================================================
-void HuygensApp_Desktop::CreateHelpMenu()
+void HuygensApp_Desktop::createHelpMenu()
 {
     QMenu* aMenu = menuBar()->addMenu(tr("&Help"));
+}
+
+// ============================================================================
+/*!
+ *  \brief createNavigatorDockWidget()
+*/
+// ============================================================================
+void HuygensApp_Desktop::createNavigatorDockWidget()
+{
+    myNavigatorTreeWidget = new QTreeWidget();
+    myNavigatorTreeWidget->setHeaderHidden(true);
+    myNavigatorTreeWidget->setColumnCount(1);
+
+    QDockWidget* aDockWidget = new QDockWidget(tr("Navigator"));
+    aDockWidget->setWidget(myNavigatorTreeWidget);
+    aDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    aDockWidget->setToolTip(tr("Document navigator"));
+    addDockWidget(Qt::LeftDockWidgetArea, aDockWidget);
+
+
+}
+
+// ============================================================================
+/*!
+ *  \brief createViewerWidget()
+*/
+// ============================================================================
+void HuygensApp_Desktop::createViewerWidget()
+{
+    Viewer3d_BasicViewerWidget* aViewer = new Viewer3d_BasicViewerWidget();
+    setCentralWidget(aViewer);
 }
 
 // ============================================================================
@@ -95,3 +156,28 @@ FWR_Manager* HuygensApp_Desktop::GetResourcesMgr()
     return FWR_Manager::Manager();
 }
 
+// ============================================================================
+/*!
+ *  \brief CloseDocument()
+*/
+// ============================================================================
+void HuygensApp_Desktop::CloseDocument()
+{
+
+}
+
+// ============================================================================
+/*!
+ *  \brief NewDocument()
+*/
+// ============================================================================
+void HuygensApp_Desktop::NewDocument()
+{
+    QTreeWidgetItem* aMaterialItem = new QTreeWidgetItem(1);
+    aMaterialItem->setText(0, "Test");
+    aMaterialItem->setIcon(0, GetResourcesMgr()->GetIcon(FWR_SpartacusIcon));
+    myNavigatorTreeWidget->addTopLevelItem(aMaterialItem);
+
+
+
+}

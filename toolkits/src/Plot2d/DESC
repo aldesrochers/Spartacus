@@ -1,0 +1,4 @@
+Viewer3d
+
+Implementation of a generic viewer widget based on OpenCascade
+and Qt.

@@ -42,6 +42,8 @@ public:
     static QString      RccFileDirPath();
     static QString      RccFilePath(const QString& theFileName);
     static QString      RootDirPath();
+    static QString      UserFilePath(const QString& theFileName,
+                                     const bool create = true);
     static QString      UserHomeDirPath(const bool create = true);
 
 };

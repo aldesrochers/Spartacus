@@ -1,4 +1,8 @@
+OpenCascade_FoundationClasses
+OpenCascade_ApplicationFramework
 Qt_Core
 Qt_Gui
 Qt_Widgets
+StkFEM
 StkFW
+StkUI

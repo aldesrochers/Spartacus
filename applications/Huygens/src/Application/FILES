@@ -1,3 +1,8 @@
+HuygensApp_DataModel.cxx
+HuygensApp_DataModel.hxx
 HuygensApp_Desktop.cxx
 HuygensApp_Desktop.hxx
 HuygensApp_Main.cxx
+HuygensApp_MapOfDockWidget.hxx
+HuygensApp_Navigator.cxx
+HuygensApp_Navigator.hxx

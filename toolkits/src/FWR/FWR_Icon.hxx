@@ -39,16 +39,20 @@ enum FWR_Icon
     FWR_ExitIcon,
     FWR_ExportFileIcon,
     FWR_ImportFileIcon,
+    FWR_MinusIcon,
     FWR_NewFileIcon,
     FWR_NotFoundIcon,
     FWR_OpenFileIcon,
+    FWR_PlusIcon,
     FWR_SaveFileIcon,
     FWR_SpartacusIcon,
     FWR_ViewFitAllIcon,
     FWR_ViewMove,
     FWR_ViewRotate,
+    FWR_ViewSettings,
     FWR_ViewZoomInIcon,
-    FWR_ViewZoomOutIcon
+    FWR_ViewZoomOutIcon,
+    FWR_ViewZoomSettings
 };
 
 #endif  // __FWR_Icon_hxx__

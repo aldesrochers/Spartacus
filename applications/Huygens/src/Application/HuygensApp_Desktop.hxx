@@ -24,12 +24,16 @@
 
 // Qt
 #include <QMainWindow>
+#include <QTreeWidget>
 
 // Huygens
 #include <Huygens_Engine.hxx>
+#include <HuygensApp_DataModel.hxx>
+#include <HuygensApp_Navigator.hxx>
 
 // Spartacus
 #include <FWR_Manager.hxx>
+
 
 
 
@@ -53,14 +57,22 @@ public:
     Handle(Huygens_Engine)  GetEngine();
     FWR_Manager*            GetResourcesMgr();
 
+public slots:
+
+    void                    CloseDocument();
+    void                    NewDocument();
+
 private:
 
-    void                    CreateFileMenu();
-    void                    CreateHelpMenu();
+    void                    createFileMenu();
+    void                    createHelpMenu();
+    void                    createNavigatorDockWidget();
+    void                    createViewerWidget();
 
 private:
 
     Handle(Huygens_Engine)  myEngine;
+    QTreeWidget*            myNavigatorTreeWidget;
 
 };
 

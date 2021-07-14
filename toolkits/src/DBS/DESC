@@ -1,0 +1,5 @@
+DBS
+DB -> Database
+S -> Schema
+
+This package contains classes used to define schema of databases.

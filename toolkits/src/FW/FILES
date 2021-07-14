@@ -1,5 +1,15 @@
 FW.cxx
 FW.hxx
+FW_Boolean.cxx
+FW_Boolean.hxx
+FW_Integer.cxx
+FW_Integer.hxx
+FW_Real.cxx
+FW_Real.hxx
 FW_StandardPaths.cxx
 FW_StandardPaths.hxx
+FW_Quantity.cxx
+FW_Quantity.hxx
+FW_String.cxx
+FW_String.hxx
 

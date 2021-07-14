@@ -30,15 +30,13 @@
 #include <QMap>
 #include <QMouseEvent>
 #include <QRgb>
+#include <QSettings>
 #include <QWheelEvent>
 #include <QWidget>
 
 // Spartacus
 #include <FWR_Manager.hxx>
-#include <Viewer3d_MapOfActionBoolean.hxx>
-#include <Viewer3d_MapOfKeyAction.hxx>
-#include <Viewer3d_MapOfMouseButtonAction.hxx>
-#include <Viewer3d_Zoom.hxx>
+#include <Viewer3d_Action.hxx>
 
 // OpenCascade
 #include <AIS_InteractiveContext.hxx>
@@ -59,29 +57,18 @@ public:
     // constructors
     Viewer3d_ViewWidget(Handle(AIS_InteractiveContext) theContext,
                         QWidget* theParent = 0);
+    Viewer3d_ViewWidget(Handle(AIS_InteractiveContext) theContext,
+                        QSettings* theSettings,
+                        QWidget* theParent = 0);
     // destructors
     ~Viewer3d_ViewWidget();
 
 
 public:
 
-    void                            activateAction(const Viewer3d_Action theAction,
-                                                   const bool isActived);
-    void                            enableAction(const Viewer3d_Action theAction,
-                                                 const bool isEnabled);
-    Handle(AIS_InteractiveContext)  getContext();
-    FWR_Manager*                    getResourcesMgr();
-    bool                            isActiveAction(const Viewer3d_Action theAction);
-    bool                            isActiveAndEnabledAction(const Viewer3d_Action theAction);
-    bool                            isEnabledAction(const Viewer3d_Action theAction);
+    QColor                          backgroundColor() const;
     virtual QPaintEngine*           paintEngine() const;
-    void                            setActionTrigger(const Qt::Key theKey,
-                                                     const Viewer3d_Action theAction);
-    void                            setActionTrigger(const Qt::MouseButton theButton,
-                                                     const Viewer3d_Action theAction);
-    void                            setZoomSpeed(const Viewer3d_ZoomSpeed theZoomSpeed);
-    Viewer3d_Action                 triggeredAction(const Qt::Key theKey);
-    Viewer3d_Action                 triggeredAction(const Qt::MouseButton theButton);
+    void                            setBackgroundColor(const QColor& theColor);
 
 protected:
 
@@ -91,37 +78,21 @@ protected:
     virtual void                    mousePressEvent(QMouseEvent* theEvent);
     virtual void                    mouseReleaseEvent(QMouseEvent* theEvent);
     virtual void                    paintEvent(QPaintEvent* theEvent);
-    virtual QMenu*                  popupMenu();
-    void                            processAction(const Viewer3d_ActionFlag theActionFlag);
     virtual void                    resizeEvent(QResizeEvent* theEvent);
-
-    void                            setBackgroundColor(const QColor& theColor);
-    void                            setupAction(const Viewer3d_Action theAction,
-                                                const Qt::Key theKey);
-    void                            setupAction(const Viewer3d_Action theAction,
-                                                const Qt::MouseButton theButton);
-    void                            updateView();
     virtual void                    wheelEvent(QWheelEvent* theEvent);
-
-public slots:
-
-    void                            activateAction(const Viewer3d_Action theAction);
-    void                            deactivateAction(const Viewer3d_Action theAction);
-
-    void                            fitAll();
-    void                            rotate();
-    void                            selectBackgroundColor();
-    void                            showPopupMenu();
 
 private:
 
-    Viewer3d_MapOfActionBoolean             myActiveActions;
+    Viewer3d_Action                 currentAction() const;
+    void                            initialize();
+    void                            setCurrentAction(const Viewer3d_Action& theAction);
+
+private:
+
     Handle(AIS_InteractiveContext)          myContext;
-    Viewer3d_MapOfActionBoolean             myEnabledActions;
-    Viewer3d_MapOfKeyAction                 myKeyboardTriggers;
-    Viewer3d_MapOfMouseButtonAction         myMouseTriggers;
+    Viewer3d_Action                         myCurrentAction;
+    QSettings*                              mySettings;
     Handle(V3d_View)                        myView;
-    Viewer3d_ZoomSpeed                      myZoomSpeed;
 
 };
 

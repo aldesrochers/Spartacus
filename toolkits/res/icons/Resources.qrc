@@ -17,5 +17,9 @@
         <file>standard/view_zoom_in.png</file>
         <file>standard/view_zoom_out.png</file>
         <file>standard/color_picker.png</file>
+        <file>standard/minus.png</file>
+        <file>standard/plus.png</file>
+        <file>standard/view_zoom_settings.png</file>
+        <file>standard/view_settings.png</file>
     </qresource>
 </RCC>

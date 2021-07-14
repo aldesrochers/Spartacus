@@ -30,6 +30,7 @@ include_directories(
     ${Qt_Core_INCLUDE_DIRS}
     ${Qt_Gui_INCLUDE_DIRS}
     ${Qt_Widgets_INCLUDE_DIRS}
+    ${VTK_INCLUDE_DIRS}
     ${StkFW_INCLUDE_DIRS}
     ${StkFEM_INCLUDE_DIRS}
     ${StkUI_INCLUDE_DIRS}
@@ -64,6 +65,29 @@ if(Spartacus_BUILD_TESTS)
 endif()
 
 ###
+# Test - Database
+###
+if(Spartacus_BUILD_TESTS)
+    add_executable(Test_Database Test_Database.cxx)
+    target_link_libraries(Test_Database ${Qt_Core_LIBRARIES} ${Qt_Sql_LIBRARIES} StkFW StkDB)
+    install(TARGETS Test_Database DESTINATION ${Spartacus_INSTALL_TESTS})
+endif()
+
+###
+# Test - DataBrowser
+###
+if(Spartacus_BUILD_TESTS)
+    add_executable(Test_DataBrowser WIN32 Test_DataBrowser.cxx)
+    target_link_libraries(Test_DataBrowser
+        StkFW StkUI
+        ${Qt_Core_LIBRARIES} ${Qt_Gui_LIBRARIES} ${Qt_Widgets_LIBRARIES}
+        ${OpenCascade_FoundationClasses_LIBRARIES} ${OpenCascade_Visualization_LIBRARIES}
+        ${OpenCascade_ModelingData_LIBRARIES} ${OpenCascade_ModelingAlgorithms_LIBRARIES}
+        ${VTK_LIBRARIES})
+    install(TARGETS Test_DataBrowser DESTINATION ${Spartacus_INSTALL_TESTS})
+endif()
+
+###
 # Test - Viewer3d
 ###
 if(Spartacus_BUILD_TESTS)
@@ -72,7 +96,8 @@ if(Spartacus_BUILD_TESTS)
         StkFW StkUI
         ${Qt_Core_LIBRARIES} ${Qt_Gui_LIBRARIES} ${Qt_Widgets_LIBRARIES}
         ${OpenCascade_FoundationClasses_LIBRARIES} ${OpenCascade_Visualization_LIBRARIES}
-        ${OpenCascade_ModelingData_LIBRARIES} ${OpenCascade_ModelingAlgorithms_LIBRARIES})
+        ${OpenCascade_ModelingData_LIBRARIES} ${OpenCascade_ModelingAlgorithms_LIBRARIES}
+        ${VTK_LIBRARIES})
     install(TARGETS Test_Viewer3d DESTINATION ${Spartacus_INSTALL_TESTS})
 endif()
 

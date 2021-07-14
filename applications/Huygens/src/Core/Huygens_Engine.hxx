@@ -29,8 +29,10 @@
 #include <TDocStd_Document.hxx>
 #include <TColStd_DataMapOfIntegerTransient.hxx>
 
-// Spartacus
+// Huygens
+#include <Huygens_DataObject.hxx>
 #include <Huygens_ICableOperations.hxx>
+#include <Huygens_IGeneralOperations.hxx>
 #include <Huygens_IMaterialOperations.hxx>
 
 // Forward declarations
@@ -60,8 +62,12 @@ public:
     Standard_Boolean                    CloseDocument(const Standard_Integer theDocumentId);
     Handle(TDocStd_Document)            GetDocument(const Standard_Integer theDocumentId,
                                                     const Standard_Boolean force = Standard_True);
+    Handle(Huygens_DataObject)          GetDocumentProperties(const Standard_Integer theDocumentId);
     Handle(Huygens_ICableOperations)    GetICableOperations(const Standard_Integer theDocumentId);
+    Handle(Huygens_IGeneralOperations)  GetIGeneralOperations(const Standard_Integer theDocumentId);
     Handle(Huygens_IMaterialOperations) GetIMaterialOperations(const Standard_Integer theDocumentId);
+    Standard_Boolean                    IsDocument(const Standard_Integer theDocumentId);
+    Standard_Boolean                    NewDocument(const Standard_Integer theDocumentId);
     Handle(Huygens_Material)            NewMaterial(const Standard_Integer theDocumentId,
                                                     const Huygens::Material theType);
     Standard_Boolean                    LoadDocument(const Standard_Integer theDocumentId,
@@ -76,6 +82,7 @@ private:
     Handle(TDocStd_Application)         myApplication;
     TColStd_DataMapOfIntegerTransient   myDocuments;
     TColStd_DataMapOfIntegerTransient   myICableOperations;
+    TColStd_DataMapOfIntegerTransient   myIGeneralOperations;
     TColStd_DataMapOfIntegerTransient   myIMaterialOperations;
 
 public:

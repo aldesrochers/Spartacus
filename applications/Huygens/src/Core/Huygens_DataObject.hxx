@@ -24,6 +24,7 @@
 
 // Huygens
 #include <Huygens_Object.hxx>
+#include <Huygens_Types.hxx>
 
 // Forward declarations
 class Huygens_DataObject;
@@ -40,21 +41,22 @@ DEFINE_STANDARD_HANDLE(Huygens_DataObject, Huygens_Object);
 class Huygens_DataObject : public Huygens_Object
 {
 
-public:
-    // constructors
-    Huygens_DataObject(const TDF_Label& theLabel,
-                       const Huygens::ObjectType theType);
-    // destructors
-    ~Huygens_DataObject();
-
 protected:
     // constructors
     Huygens_DataObject(const TDF_Label& theLabel);
 
 public:
+    // constructors
+    Huygens_DataObject(const TDF_Label& theLabel,
+                       const Huygens::DataObject theType);
+    // destructors
+    ~Huygens_DataObject();
+
+public:
 
     static Standard_GUID&               GetID();
     static Handle(Huygens_DataObject)   GetDataObject(const TDF_Label& theLabel);
+    static Huygens::DataObject          GetType(const TDF_Label& theLabel);
     static Standard_Boolean             IsDataObject(const TDF_Label& theLabel);
 
 public:
@@ -63,6 +65,7 @@ public:
     Standard_Integer            GetIntegerAttribute(const Standard_Integer theIndex);
     Standard_Real               GetRealAttribute(const Standard_Integer theIndex);
     TCollection_AsciiString     GetStringAttribute(const Standard_Integer theIndex);
+    Huygens::DataObject         GetType();
 
     void        SetBooleanAttribute(const Standard_Integer theIndex,
                                     const Standard_Boolean theValue);

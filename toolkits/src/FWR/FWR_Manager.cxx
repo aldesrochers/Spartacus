@@ -75,12 +75,16 @@ QString FWR_Manager::GetFileName(const FWR_Icon theIcon)
         return QString("file_export.png");
     case FWR_ImportFileIcon:
         return QString("file_import.png");
+    case FWR_MinusIcon:
+        return QString("minus.png");
     case FWR_NewFileIcon:
         return QString("file_new.png");
     case FWR_NotFoundIcon:
         return QString("not_found");
     case FWR_OpenFileIcon:
         return QString("file_open.png");
+    case FWR_PlusIcon:
+        return QString("plus.png");
     case FWR_SaveFileIcon:
         return QString("file_save.png");
     case FWR_SpartacusIcon:
@@ -91,10 +95,14 @@ QString FWR_Manager::GetFileName(const FWR_Icon theIcon)
         return QString("view_move.png");
     case FWR_ViewRotate:
         return QString("view_rotate.png");
+    case FWR_ViewSettings:
+        return QString("view_settings.png");
     case FWR_ViewZoomInIcon:
         return QString("view_zoom_in.png");
     case FWR_ViewZoomOutIcon:
         return QString("view_zoom_out.png");
+    case FWR_ViewZoomSettings:
+        return QString("view_zoom_settings.png");
     default:
         return QString("not_found.png");
     }

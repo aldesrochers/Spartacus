@@ -85,16 +85,6 @@ Huygens_Engine::~Huygens_Engine()
 
 // ============================================================================
 /*!
- *  \brief GetApplication()
-*/
-// ============================================================================
-Handle(TDocStd_Application) Huygens_Engine::GetApplication()
-{
-    return myApplication;
-}
-
-// ============================================================================
-/*!
  *  \brief CloseDocument()
 */
 // ============================================================================
@@ -104,6 +94,16 @@ Standard_Boolean Huygens_Engine::CloseDocument(const Standard_Integer theDocumen
         return Standard_False;
     myDocuments.UnBind(theDocumentId);
     return Standard_True;
+}
+
+// ============================================================================
+/*!
+ *  \brief GetApplication()
+*/
+// ============================================================================
+Handle(TDocStd_Application) Huygens_Engine::GetApplication()
+{
+    return myApplication;
 }
 
 // ============================================================================
@@ -130,6 +130,27 @@ Handle(TDocStd_Document) Huygens_Engine::GetDocument(const Standard_Integer theD
 
 // ============================================================================
 /*!
+ *  \brief GetDocumentProperties()
+ *  Retrieve an instance of the data object containing document properties.
+*/
+// ============================================================================
+Handle(Huygens_DataObject) Huygens_Engine::GetDocumentProperties(const Standard_Integer theDocumentId)
+{
+    Handle(TDocStd_Document) aDoc = GetDocument(theDocumentId);
+    TDF_Label aLabel = aDoc->Main().FindChild(TAG_Properties);
+
+    // find or create the document properties data object
+    Handle(Huygens_DataObject) anObject;
+    if(Huygens_DataObject::IsDataObject(aLabel))
+        anObject = Huygens_DataObject::GetDataObject(aLabel);
+    else
+        anObject = new Huygens_DataObject(aLabel, Huygens::DO_DocumentProperties);
+
+    return anObject;
+}
+
+// ============================================================================
+/*!
     \brief GetICableOperations()
 */
 // ============================================================================
@@ -140,6 +161,24 @@ Handle(Huygens_ICableOperations) Huygens_Engine::GetICableOperations(const Stand
         anIOperation = Handle(Huygens_ICableOperations)::DownCast(myICableOperations(theDocumentId));
     } else {
         anIOperation = new Huygens_ICableOperations(this, theDocumentId);
+        // bind in engine
+        myDocuments.Bind(theDocumentId, anIOperation);
+    }
+    return anIOperation;
+}
+
+// ============================================================================
+/*!
+ *  \brief GetIGeneralOperations()
+*/
+// ============================================================================
+Handle(Huygens_IGeneralOperations) Huygens_Engine::GetIGeneralOperations(const Standard_Integer theDocumentId)
+{
+    Handle(Huygens_IGeneralOperations) anIOperation;
+    if(myIGeneralOperations.IsBound(theDocumentId)) {
+        anIOperation = Handle(Huygens_IGeneralOperations)::DownCast(myIGeneralOperations(theDocumentId));
+    } else {
+        anIOperation = new Huygens_IGeneralOperations(this, theDocumentId);
         // bind in engine
         myDocuments.Bind(theDocumentId, anIOperation);
     }
@@ -166,6 +205,18 @@ Handle(Huygens_IMaterialOperations) Huygens_Engine::GetIMaterialOperations(const
 
 // ============================================================================
 /*!
+ *  \brief IsDocument()
+*/
+// ============================================================================
+Standard_Boolean Huygens_Engine::IsDocument(const Standard_Integer theDocumentId)
+{
+    if(myDocuments.IsEmpty())
+        return Standard_False;
+    return myDocuments.IsBound(theDocumentId);
+}
+
+// ============================================================================
+/*!
  *  \brief LoadDocument()
 */
 // ============================================================================
@@ -183,6 +234,19 @@ Standard_Boolean Huygens_Engine::LoadDocument(const Standard_Integer theDocument
     myDocuments.Bind(theDocumentId, aDoc);
     TDataStd_Integer::Set(aDoc->Main(), theDocumentId);
     return Standard_True;
+}
+
+// ============================================================================
+/*!
+ *  \brief NewDocument()
+*/
+// ============================================================================
+Standard_Boolean Huygens_Engine::NewDocument(const Standard_Integer theDocumentId)
+{
+    Handle(TDocStd_Document) aDoc = GetDocument(theDocumentId, Standard_True);
+    if(!aDoc.IsNull())
+        return Standard_True;
+    return Standard_False;
 }
 
 // ============================================================================

@@ -30,6 +30,11 @@
 // ============================================================================
 namespace Huygens {
 
+enum DataObject {
+    DO_Unknown,
+    DO_DocumentProperties,
+};
+
 // materials
 enum Material {
     UnknownMaterial = 0,
