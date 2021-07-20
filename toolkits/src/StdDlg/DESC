@@ -1,0 +1,4 @@
+StdDlg
+
+This package implements standard Spartacus dialogs that can be used to
+build applications.

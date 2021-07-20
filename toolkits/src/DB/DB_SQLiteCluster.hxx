@@ -19,64 +19,51 @@
 //
 // ============================================================================
 
-
-#include <iostream>
-using namespace std;
+#ifndef __DB_SQLiteCluster_hxx__
+#define __DB_SQLiteCluster_hxx__
 
 // Qt
 #include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlTableModel>
 
-// OpenCascade
-#include <UnitsAPI.hxx>
-#include <QApplication>
-#include <QTableView>
-
-struct Quantity
-{
-    QString Unit;
-    double Value;
-};
-
-static QString QuantityToString(const Quantity& theQuantity) {
-    QString aString = QString::number(theQuantity.Value, 'f', 8);
-    aString += " ";
-    aString += theQuantity.Unit;
-    return aString;
-}
+// Spartacus
+#include <DB_Cluster.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief Test()
+ *  \brief DB_SQLiteCluster
+ *  Class implementation of a SQLite database cluster.
 */
 // ============================================================================
-int main(int argc, char** argv)
+class DB_SQLiteCluster : public DB_Cluster
 {
 
-    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
-    aDatabase.setDatabaseName("/home/alexis/Projects/spartacus/toolkits/src/DB/test.db");
-    aDatabase.open();
+public:
+    // constructors
+    DB_SQLiteCluster(const QString& theDirectoryPath);
+    // destructors
+    ~DB_SQLiteCluster();
 
-    QString aString = "CREATE TABLE IF NOT EXISTS users (userName TEXT PRIMARY KEY, password TEXT)";
-    QSqlQuery aQuery(aDatabase);
-    aQuery.exec(aString);
+public:
 
-    Quantity aQuantity;
-    aQuantity.Value = 20.232;
-    aQuantity.Unit = "m";
+    bool            Connect() override;
 
-    QSqlTableModel* aModel = new QSqlTableModel(nullptr, aDatabase);
-    aModel->setTable("users");
-    aModel->select();
+public:
+
+    QString         DirectoryPath() const;
+    QString         Password() const;
+    void            SetDirectoryPath(const QString& theDirectoryPath);
+    void            SetPassword(const QString& thePassword);
+    void            SetUserName(const QString& theUserName);
+    QString         UserName();
+
+private:
+
+    QString         myDirectoryPath;
+    QString         myPassword;
+    QString         myUserName;
 
 
-    QApplication anApp(argc, argv);
-    QTableView* aView = new QTableView();
-    aView->setModel(aModel);
-    aView->show();
-    return anApp.exec();
+};
 
-
-}
+#endif  // __DB_SQLiteCluster_hxx__

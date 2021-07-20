@@ -20,63 +20,41 @@
 // ============================================================================
 
 
-#include <iostream>
-using namespace std;
+#ifndef __DBI_ShapeDatabase_hxx__
+#define __DBI_ShapeDatabase_hxx__
 
 // Qt
 #include <QSqlDatabase>
-#include <QSqlQuery>
 #include <QSqlTableModel>
 
-// OpenCascade
-#include <UnitsAPI.hxx>
-#include <QApplication>
-#include <QTableView>
-
-struct Quantity
-{
-    QString Unit;
-    double Value;
-};
-
-static QString QuantityToString(const Quantity& theQuantity) {
-    QString aString = QString::number(theQuantity.Value, 'f', 8);
-    aString += " ";
-    aString += theQuantity.Unit;
-    return aString;
-}
-
+// Spartacus
+#include <DBI_Database.hxx>
+#include <DBS_LShape.hxx>
 
 // ============================================================================
 /*!
- *  \brief Test()
+ *  \brief DBI_ShapeDatabase
+ *  Base class implementation of an interface for a shape database.
 */
 // ============================================================================
-int main(int argc, char** argv)
+class DBI_ShapeDatabase : public DBI_Database
 {
 
-    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
-    aDatabase.setDatabaseName("/home/alexis/Projects/spartacus/toolkits/src/DB/test.db");
-    aDatabase.open();
+public:
+    // constructors
+    DBI_ShapeDatabase(const QSqlDatabase& theDatabase);
+    // destructors
+    ~DBI_ShapeDatabase();
 
-    QString aString = "CREATE TABLE IF NOT EXISTS users (userName TEXT PRIMARY KEY, password TEXT)";
-    QSqlQuery aQuery(aDatabase);
-    aQuery.exec(aString);
+public:
 
-    Quantity aQuantity;
-    aQuantity.Value = 20.232;
-    aQuantity.Unit = "m";
+    DBS_LShape          GetLShape(const QString& theDesignation);
+    QSqlTableModel*     GetLShapeTableModel();
 
-    QSqlTableModel* aModel = new QSqlTableModel(nullptr, aDatabase);
-    aModel->setTable("users");
-    aModel->select();
+private:
 
+    QSqlTableModel*     myLShapeTableModel;
 
-    QApplication anApp(argc, argv);
-    QTableView* aView = new QTableView();
-    aView->setModel(aModel);
-    aView->show();
-    return anApp.exec();
+};
 
-
-}
+#endif  // __DBI_ShapeDatabase_hxx__

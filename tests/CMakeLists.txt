@@ -19,10 +19,10 @@
 #
 # =============================================================================
 
-project(SpartacusTests)
-
 # include directories
 include_directories(
+    ${PROJECT_SOURCE_DIR}/engines/Mercury
+    ${PROJECT_SOURCE_DIR}/engines/Mercury/src
     ${OpenCascade_FoundationClasses_INCLUDE_DIRS}
     ${OpenCascade_ModelingData_INCLUDE_DIRS}
     ${OpenCascade_ModelingAlgorithms_INCLUDE_DIRS}
@@ -32,6 +32,7 @@ include_directories(
     ${Qt_Widgets_INCLUDE_DIRS}
     ${VTK_INCLUDE_DIRS}
     ${StkFW_INCLUDE_DIRS}
+    ${StkDB_INCLUDE_DIRS}
     ${StkFEM_INCLUDE_DIRS}
     ${StkUI_INCLUDE_DIRS}
     ${Huygens_INCLUDE_DIRS}
@@ -69,7 +70,7 @@ endif()
 ###
 if(Spartacus_BUILD_TESTS)
     add_executable(Test_Database Test_Database.cxx)
-    target_link_libraries(Test_Database ${Qt_Core_LIBRARIES} ${Qt_Sql_LIBRARIES} StkFW StkDB)
+    target_link_libraries(Test_Database ${Qt_Core_LIBRARIES} ${Qt_Gui_LIBRARIES} ${Qt_Widgets_LIBRARIES} ${Qt_Sql_LIBRARIES} StkFW StkDB)
     install(TARGETS Test_Database DESTINATION ${Spartacus_INSTALL_TESTS})
 endif()
 
@@ -100,6 +101,7 @@ if(Spartacus_BUILD_TESTS)
         ${VTK_LIBRARIES})
     install(TARGETS Test_Viewer3d DESTINATION ${Spartacus_INSTALL_TESTS})
 endif()
+
 
 
 

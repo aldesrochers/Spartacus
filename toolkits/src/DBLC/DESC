@@ -1,7 +1,0 @@
-DBLC
-DB -> Database
-LC -> Local Cluster
-
-This package contains classes used to access and manage a local
-database cluster. In Spartacus, a local database cluster is a
-collection of SQLite databases placed in the local filesystem.

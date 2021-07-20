@@ -20,63 +20,46 @@
 // ============================================================================
 
 
-#include <iostream>
-using namespace std;
+#ifndef __DBI_Database_hxx__
+#define __DBI_Database_hxx__
 
 // Qt
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlTableModel>
 
-// OpenCascade
-#include <UnitsAPI.hxx>
-#include <QApplication>
-#include <QTableView>
-
-struct Quantity
-{
-    QString Unit;
-    double Value;
-};
-
-static QString QuantityToString(const Quantity& theQuantity) {
-    QString aString = QString::number(theQuantity.Value, 'f', 8);
-    aString += " ";
-    aString += theQuantity.Unit;
-    return aString;
-}
-
 
 // ============================================================================
 /*!
- *  \brief Test()
+ *  \brief DBI_Database
+ *  Base class implementation of a database interface.
 */
 // ============================================================================
-int main(int argc, char** argv)
+class DBI_Database
 {
 
-    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
-    aDatabase.setDatabaseName("/home/alexis/Projects/spartacus/toolkits/src/DB/test.db");
-    aDatabase.open();
+public:
+    // constructors
+    DBI_Database(const QSqlDatabase& theDatabase);
+    // destructors
+    ~DBI_Database();
 
-    QString aString = "CREATE TABLE IF NOT EXISTS users (userName TEXT PRIMARY KEY, password TEXT)";
-    QSqlQuery aQuery(aDatabase);
-    aQuery.exec(aString);
+public:
 
-    Quantity aQuantity;
-    aQuantity.Value = 20.232;
-    aQuantity.Unit = "m";
+    QSqlDatabase        Database() const;
+    QSqlQuery           Query() const;
 
-    QSqlTableModel* aModel = new QSqlTableModel(nullptr, aDatabase);
-    aModel->setTable("users");
-    aModel->select();
+protected:
 
+    void                SetHeaderDataDisplayRole(QSqlTableModel* theTableModel,
+                                                 const int theSection,
+                                                 const QString& theValue);
 
-    QApplication anApp(argc, argv);
-    QTableView* aView = new QTableView();
-    aView->setModel(aModel);
-    aView->show();
-    return anApp.exec();
+protected:
 
+    QSqlDatabase        myDatabase;
+    QSqlQuery           myQuery;
 
-}
+};
+
+#endif  // __DBI_Database_hxx__

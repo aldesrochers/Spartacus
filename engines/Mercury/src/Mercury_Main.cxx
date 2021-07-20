@@ -19,64 +19,58 @@
 //
 // ============================================================================
 
-
 #include <iostream>
 using namespace std;
 
-// Qt
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QSqlError>
 
-// OpenCascade
-#include <UnitsAPI.hxx>
-#include <QApplication>
-#include <QTableView>
-
-struct Quantity
-{
-    QString Unit;
-    double Value;
+struct User {
+    QString UserName;
+    QString Password;
 };
 
-static QString QuantityToString(const Quantity& theQuantity) {
-    QString aString = QString::number(theQuantity.Value, 'f', 8);
-    aString += " ";
-    aString += theQuantity.Unit;
-    return aString;
-}
 
 
 // ============================================================================
 /*!
- *  \brief Test()
+ *  \brief Mercury_Main
 */
 // ============================================================================
 int main(int argc, char** argv)
 {
 
     QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
-    aDatabase.setDatabaseName("/home/alexis/Projects/spartacus/toolkits/src/DB/test.db");
+    aDatabase.setDatabaseName("/home/alexis/Projects/spartacus/engines/Mercury/src/test.db");
     aDatabase.open();
 
     QString aString = "CREATE TABLE IF NOT EXISTS users (userName TEXT PRIMARY KEY, password TEXT)";
     QSqlQuery aQuery(aDatabase);
     aQuery.exec(aString);
 
-    Quantity aQuantity;
-    aQuantity.Value = 20.232;
-    aQuantity.Unit = "m";
+    QSqlTableModel aModel(nullptr, aDatabase);
+    aModel.setTable("users");
+    aModel.setEditStrategy(QSqlTableModel::OnManualSubmit);
 
-    QSqlTableModel* aModel = new QSqlTableModel(nullptr, aDatabase);
-    aModel->setTable("users");
-    aModel->select();
+    QSqlRecord aRecord = aModel.record();
+    aRecord.setValue("userName", "alexis");
+    aRecord.setValue("password", "test");
+    aModel.insertRecord(-1, aRecord);
+    aModel.submitAll();
 
+    QString aString2 = QString("SELECT * FROM users WHERE userName = 'alexis'");
+    aQuery.exec(aString2);
+    while(aQuery.next())
+        cout << aQuery.value(0).toString().toStdString() << endl;
 
-    QApplication anApp(argc, argv);
-    QTableView* aView = new QTableView();
-    aView->setModel(aModel);
-    aView->show();
-    return anApp.exec();
+    aModel.setFilter("userName = 'alexis'");
+    aModel.select();
+    for(int i=0; i < aModel.rowCount(); i++)
+        cout << aModel.record(i).value("userName").toString().toStdString() << endl;
+
 
 
 }

@@ -19,64 +19,32 @@
 //
 // ============================================================================
 
-
-#include <iostream>
-using namespace std;
+// Mercury
+#include <Mercury_SQLiteBuilder.hxx>
 
 // Qt
-#include <QSqlDatabase>
-#include <QSqlQuery>
 #include <QSqlTableModel>
-
-// OpenCascade
-#include <UnitsAPI.hxx>
-#include <QApplication>
-#include <QTableView>
-
-struct Quantity
-{
-    QString Unit;
-    double Value;
-};
-
-static QString QuantityToString(const Quantity& theQuantity) {
-    QString aString = QString::number(theQuantity.Value, 'f', 8);
-    aString += " ";
-    aString += theQuantity.Unit;
-    return aString;
-}
-
 
 // ============================================================================
 /*!
- *  \brief Test()
+ *  \brief AddUser()
 */
 // ============================================================================
-int main(int argc, char** argv)
+bool Mercury_SQLiteBuilder::AddUser(const QSqlDatabase &theDatabase,
+                                    const Mercury_User &theUser)
 {
 
-    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
-    aDatabase.setDatabaseName("/home/alexis/Projects/spartacus/toolkits/src/DB/test.db");
-    aDatabase.open();
+}
 
-    QString aString = "CREATE TABLE IF NOT EXISTS users (userName TEXT PRIMARY KEY, password TEXT)";
-    QSqlQuery aQuery(aDatabase);
-    aQuery.exec(aString);
-
-    Quantity aQuantity;
-    aQuantity.Value = 20.232;
-    aQuantity.Unit = "m";
-
-    QSqlTableModel* aModel = new QSqlTableModel(nullptr, aDatabase);
-    aModel->setTable("users");
-    aModel->select();
-
-
-    QApplication anApp(argc, argv);
-    QTableView* aView = new QTableView();
-    aView->setModel(aModel);
-    aView->show();
-    return anApp.exec();
-
-
+// ============================================================================
+/*!
+ *  \brief CreateUsersTable()
+*/
+// ============================================================================
+bool Mercury_SQLiteBuilder::CreateUsersTable(QSqlQuery &theQuery)
+{
+    QString aString = "CREATE TABLE IF NOT EXISTS users (";
+    aString += "userName TEXT PRIMARY KEY, ";
+    aString += "password TEXT)";
+    return theQuery.exec(aString);
 }

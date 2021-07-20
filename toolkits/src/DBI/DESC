@@ -1,0 +1,6 @@
+DBH
+DB -> Database
+I -> Interface
+
+This package contains various class interface used to
+operation on databases.

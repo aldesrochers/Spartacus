@@ -20,63 +20,46 @@
 // ============================================================================
 
 
-#include <iostream>
-using namespace std;
+#ifndef __DBI_SQLiteAdminDatabase_hxx__
+#define __DBI_SQLiteAdminDatabase_hxx__
 
 // Qt
 #include <QSqlDatabase>
-#include <QSqlQuery>
 #include <QSqlTableModel>
 
-// OpenCascade
-#include <UnitsAPI.hxx>
-#include <QApplication>
-#include <QTableView>
-
-struct Quantity
-{
-    QString Unit;
-    double Value;
-};
-
-static QString QuantityToString(const Quantity& theQuantity) {
-    QString aString = QString::number(theQuantity.Value, 'f', 8);
-    aString += " ";
-    aString += theQuantity.Unit;
-    return aString;
-}
-
+// Spartacus
+#include <DBI_AdminDatabase.hxx>
+#include <DBS_SQLiteUser.hxx>
 
 // ============================================================================
 /*!
- *  \brief Test()
+ *  \brief DBI_SQLiteAdminDatabase
 */
 // ============================================================================
-int main(int argc, char** argv)
+class DBI_SQLiteAdminDatabase : public DBI_AdminDatabase
 {
 
-    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
-    aDatabase.setDatabaseName("/home/alexis/Projects/spartacus/toolkits/src/DB/test.db");
-    aDatabase.open();
+public:
+    // constructors
+    DBI_SQLiteAdminDatabase(const QSqlDatabase& theDatabase);
+    // destructors
+    ~DBI_SQLiteAdminDatabase();
 
-    QString aString = "CREATE TABLE IF NOT EXISTS users (userName TEXT PRIMARY KEY, password TEXT)";
-    QSqlQuery aQuery(aDatabase);
-    aQuery.exec(aString);
+public:
 
-    Quantity aQuantity;
-    aQuantity.Value = 20.232;
-    aQuantity.Unit = "m";
+    bool                AddUser(const DBS_SQLiteUser& theUser);
+    bool                CreateUsersTable();
+    QSqlTableModel*     GetUsersTableModel();
 
-    QSqlTableModel* aModel = new QSqlTableModel(nullptr, aDatabase);
-    aModel->setTable("users");
-    aModel->select();
+private:
 
+    void                InitializeUsersTableModel();
 
-    QApplication anApp(argc, argv);
-    QTableView* aView = new QTableView();
-    aView->setModel(aModel);
-    aView->show();
-    return anApp.exec();
+private:
+
+    QSqlTableModel*     myUsersTableModel;
 
 
-}
+};
+
+#endif  // __DBI_SQLiteAdminDatabase_hxx__

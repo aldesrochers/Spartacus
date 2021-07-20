@@ -1,7 +1,0 @@
-DBLCR
-DB -> Database
-LC -> Local Cluster
-R -> Registry
-
-This package contains class implementation of a local cluster
-registry.
