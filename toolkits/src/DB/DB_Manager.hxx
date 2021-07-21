@@ -44,11 +44,6 @@ public:
 
     static DB_Manager*  GetManager();
 
-public:
-
-    bool            NewShapeDatabase(const QString& theFileName);
-
-
 private:
 
     static DB_Manager*  myManager;

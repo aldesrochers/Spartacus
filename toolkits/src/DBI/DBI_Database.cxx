@@ -31,7 +31,8 @@
 DBI_Database::DBI_Database(const QSqlDatabase& theDatabase)
     : myDatabase(theDatabase)
 {
-
+    // initialize a query
+    myQuery = QSqlQuery(theDatabase);
 }
 
 // ============================================================================
@@ -54,3 +55,12 @@ QSqlDatabase DBI_Database::Database() const
     return myDatabase;
 }
 
+// ============================================================================
+/*!
+ *  \brief Query()
+*/
+// ============================================================================
+QSqlQuery DBI_Database::Query() const
+{
+    return myQuery;
+}

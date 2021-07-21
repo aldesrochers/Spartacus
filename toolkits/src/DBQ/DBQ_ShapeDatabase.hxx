@@ -20,40 +20,36 @@
 // ============================================================================
 
 
-#ifndef __DBI_Database_hxx__
-#define __DBI_Database_hxx__
+#ifndef __DBQ_ShapeDatabase_hxx__
+#define __DBQ_ShapeDatabase_hxx__
 
 // Qt
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QVariant>
+
+// Spartacus
+#include <DBS_ShapeL.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief DBI_Database
- *  Base class implementation of a database interface.
+ *  \brief DBQ_ShapeDatabase
 */
 // ============================================================================
-class DBI_Database
+class DBQ_ShapeDatabase
 {
 
 public:
-    // constructors
-    DBI_Database(const QSqlDatabase& theDatabase);
-    // destructors
-    ~DBI_Database();
 
-public:
+    static QSqlQuery        CreateTableShapeL(QSqlDatabase& theDatabase,
+                                              const QString& theTableName);
 
-    QSqlDatabase        Database() const;
-    QSqlQuery           Query() const;
-
-protected:
-
-    QSqlDatabase        myDatabase;
-    QSqlQuery           myQuery;
+    static QSqlQuery        GetShapeL(QSqlDatabase& theDatabase,
+                                      const QString& theTableName,
+                                      const QString& theDesignation,
+                                      DBS_ShapeL& theShape);
 
 };
 
-#endif  // __DBI_Database_hxx__
+
+#endif  // __DBQ_ShapeDatabase_hxx__

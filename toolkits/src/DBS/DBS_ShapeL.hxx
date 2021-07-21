@@ -35,7 +35,7 @@
 struct DBS_ShapeL
 {
     QString Designation;
-    double Weigth;
+    double DeadLoad;
     double Mass;
     double Area;
     double B;
@@ -43,17 +43,17 @@ struct DBS_ShapeL
     double T;
     double Ix;
     double Sx;
-    double rx;
+    double Rx;
     double Y;
     double Iy;
     double Sy;
-    double ry;
+    double Ry;
     double X;
     double J;
     double Cw;
-    double Rx;
+    double Rxx;
     double Y0;
-    double Ry;
+    double Ryy;
     double X0;
     double R0;
     double Omega;

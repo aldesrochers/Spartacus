@@ -20,40 +20,31 @@
 // ============================================================================
 
 
-#ifndef __DBI_Database_hxx__
-#define __DBI_Database_hxx__
-
-// Qt
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QVariant>
+// Spartacus
+#include <DBQ_ShapeDatabase.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief DBI_Database
- *  Base class implementation of a database interface.
+ *  \brief CreateTableShapeL()
 */
 // ============================================================================
-class DBI_Database
+QSqlQuery DBQ_ShapeDatabase::CreateTableShapeL(QSqlDatabase &theDatabase,
+                                               const QString& theTableName)
 {
+    QString aString = QString("CREATE TABLE IF NOT EXISTS %1 (").append(theTableName);
+    aString += "designation TEXT PRIMARY KEY, ";
+    aString += "deadLoad REAL, ";
+    aString += "area REAL, ";
+    aString += "Ix REAL, Sx REAL, rx REAL, y REAL, ";
+    aString += "Iy REAL, Sy REAL, ry REAL, x REAL, ";
+    aString += "J REAL, Cw REAL, ";
+    aString += "mass REAL, ";
+    aString += "d REAL, b REAL, t REAL, ";
+    aString += "rxx REAL, y0 REAL, ryy REAL, x0 REAL, r0 REAL, ";
+    aString += "omega REAL, alpha REAL)";
+    QSqlQuery aQuery(aString, theDatabase);
+    aQuery.exec();
+    return aQuery;
+}
 
-public:
-    // constructors
-    DBI_Database(const QSqlDatabase& theDatabase);
-    // destructors
-    ~DBI_Database();
-
-public:
-
-    QSqlDatabase        Database() const;
-    QSqlQuery           Query() const;
-
-protected:
-
-    QSqlDatabase        myDatabase;
-    QSqlQuery           myQuery;
-
-};
-
-#endif  // __DBI_Database_hxx__

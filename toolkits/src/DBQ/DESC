@@ -1,0 +1,6 @@
+DBQ
+DB -> Database
+Q -> Query
+
+This package contains classes and functions used to query on
+databases.

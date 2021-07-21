@@ -60,16 +60,3 @@ DB_Manager* DB_Manager::GetManager()
     return myManager;
 }
 
-// ============================================================================
-/*!
-    \brief NewShapeDatabase()
-*/
-// ============================================================================
-QSqlDatabase DB_Manager::NewShapeDatabase(const QString &theFileName)
-{
-    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
-    aDatabase.setDatabaseName(theFileName);
-    if(!aDatabase.open())
-        return aDatabase;
-
-}

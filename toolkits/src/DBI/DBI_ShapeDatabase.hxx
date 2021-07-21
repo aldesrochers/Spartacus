@@ -25,6 +25,7 @@
 
 // Spartacus
 #include <DBI_Database.hxx>
+#include <DBS_ShapeL.hxx>
 
 
 // ============================================================================
@@ -44,7 +45,20 @@ public:
 
 public:
 
-    bool            CreateTableShapeL();
+    bool            AddShapeL(const QString& theTableName,
+                              const DBS_ShapeL& theShape);
+
+    bool            CreateTableShapeL(const QString& theTableName);
+
+    bool            EditShapeL(const QString& theTableName,
+                               const DBS_ShapeL& theShape);
+
+    DBS_ShapeL      GetShapeL(const QString& theTableName,
+                              const QString& theDesignation);
+
+    bool            RemoveShapeL(const QString& theTableName,
+                                 const DBS_ShapeL& theShape);
+
 
 };
 

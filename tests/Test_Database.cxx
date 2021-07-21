@@ -27,6 +27,8 @@ using namespace std;
 #include <QSqlDatabase>
 #include <QSqlError>
 
+// Spartacus
+#include <DBI_ShapeDatabase.hxx>
 
 
 // ============================================================================
@@ -36,6 +38,21 @@ using namespace std;
 // ============================================================================
 int main(int argc, char** argv)
 {
+    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
+    aDatabase.setDatabaseName("/home/alexis/Projects/spartacus/toolkits/src/DBI/test.db");
+    aDatabase.open();
 
+    DBI_ShapeDatabase i(aDatabase);
+    cout << i.CreateTableShapeL("l_shapes") << endl;
+
+    DBS_ShapeL aShape;
+    aShape.Designation = "test";
+    aShape.D = 102;
+
+    cout << i.AddShapeL("l_shapes", aShape) << endl;
+
+
+    DBS_ShapeL aShape2 = i.GetShapeL("l_shapes", "test");
+    cout << aShape2.Designation.toStdString() << endl;
 
 }
