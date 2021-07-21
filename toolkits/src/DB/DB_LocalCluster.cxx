@@ -19,25 +19,27 @@
 //
 // ============================================================================
 
-
 // Spartacus
 #include <DB_LocalCluster.hxx>
+
+// Qt
+#include <QDir>
+#include <QSqlDatabase>
 
 
 // ============================================================================
 /*!
- *  \brief Constructor
+    \brief Constructor
 */
 // ============================================================================
-DB_LocalCluster::DB_LocalCluster(const QString& theDirectoryPath)
-    : myDirectoryPath(theDirectoryPath)
+DB_LocalCluster::DB_LocalCluster()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief Destructor
+    \brief Destructor
 */
 // ============================================================================
 DB_LocalCluster::~DB_LocalCluster()
@@ -47,10 +49,42 @@ DB_LocalCluster::~DB_LocalCluster()
 
 // ============================================================================
 /*!
- *  \brief DirectoryPath()
+    \brief New()
+    Creates a new local cluster.
 */
 // ============================================================================
-QString DB_LocalCluster::DirectoryPath() const
+DB_LocalCluster* DB_LocalCluster::New(const QString &theDirectoryPath,
+                                      const QString &theAdminUserName,
+                                      const QString &theAdminPassword)
 {
-    return myDirectoryPath;
+    DB_LocalCluster* aCluster;
+
+    QDir aDir(theDirectoryPath);
+    if(!aDir.exists())
+        return aCluster;
+    if(!aDir.isEmpty())
+        return aCluster;
+
+    // create admin database
+    QString adminPath = theDirectoryPath + QDir::separator() + QString("spartacus-admin.db");
+    QSqlDatabase adminDatabase = QSqlDatabase::addDatabase("QSQLITE");
+    adminDatabase.setDatabaseName(adminPath);
+    if(!adminDatabase.open())
+        return aCluster;
+
+    // create cable database
+    QString cablePath = theDirectoryPath + QDir::separator() + QString("spartacus-cable.db");
+    QSqlDatabase cableDatabase = QSqlDatabase::addDatabase("QSQLITE");
+    cableDatabase.setDatabaseName(cablePath);
+    if(!cableDatabase.open())
+        return aCluster;
+
+    // create shape database
+    QString shapePath = theDirectoryPath + QDir::separator() + QString("spartacus-shape.db");
+    QSqlDatabase shapeDatabase = QSqlDatabase::addDatabase("QSQLITE");
+    shapeDatabase.setDatabaseName(shapePath);
+    if(!shapeDatabase.open())
+        return aCluster;
+
+
 }

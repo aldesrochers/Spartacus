@@ -19,32 +19,37 @@
 //
 // ============================================================================
 
-// Mercury
-#include <Mercury_SQLiteBuilder.hxx>
+
+#ifndef __DBS_ShapeHSS_hxx__
+#define __DBS_ShapeHSS_hxx__
 
 // Qt
-#include <QSqlTableModel>
+#include <QString>
 
 // ============================================================================
 /*!
- *  \brief AddUser()
+ *  \brief DBS_ShapeHSS
 */
 // ============================================================================
-bool Mercury_SQLiteBuilder::AddUser(const QSqlDatabase &theDatabase,
-                                    const Mercury_User &theUser)
+struct DBS_ShapeHSS
 {
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double D;
+    double B;
+    double T;
+    double Ix;
+    double Sx;
+    double Rx;
+    double Zx;
+    double Iy;
+    double Sy;
+    double Ry;
+    double Zy;
+    double J;
+    double Crt;
+};
 
-}
-
-// ============================================================================
-/*!
- *  \brief CreateUsersTable()
-*/
-// ============================================================================
-bool Mercury_SQLiteBuilder::CreateUsersTable(QSqlQuery &theQuery)
-{
-    QString aString = "CREATE TABLE IF NOT EXISTS users (";
-    aString += "userName TEXT PRIMARY KEY, ";
-    aString += "password TEXT)";
-    return theQuery.exec(aString);
-}
+#endif  // __DBS_ShapeHSS_hxx__

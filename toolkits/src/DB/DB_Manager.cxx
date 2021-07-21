@@ -19,62 +19,57 @@
 //
 // ============================================================================
 
+
 // Spartacus
-#include <DBI_SQLiteShapeDatabase.hxx>
+#include <DB_Manager.hxx>
+
+// Singleton
+DB_Manager* DB_Manager::myManager = nullptr;
+
 
 
 // ============================================================================
 /*!
- *  \brief Constructor
+    \brief Constructor
 */
 // ============================================================================
-DBI_SQLiteShapeDatabase::DBI_SQLiteShapeDatabase(const QSqlDatabase& theDatabase)
-    : DBI_ShapeDatabase(theDatabase)
+DB_Manager::DB_Manager()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief Destructor
+    \brief Destructor
 */
 // ============================================================================
-DBI_SQLiteShapeDatabase::~DBI_SQLiteShapeDatabase()
+DB_Manager::~DB_Manager()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief CreateLShapeTable()
+    \brief GetManager()
 */
 // ============================================================================
-bool DBI_SQLiteShapeDatabase::CreateLShapeTable()
+DB_Manager* DB_Manager::GetManager()
 {
-    QString aString = "CREATE TABLE IF NOT EXISTS l_shapes (";
-    aString += "id INTEGER PRIMARY KEY AUTOINCREMENT, ";
-    aString += "designation TEXT, ";
-    aString += "dataSource TEXT, ";
-    aString += "d REAL, ";
-    aString += "b REAL, ";
-    aString += "t REAL)";
-    return Query().exec(aString);
+    if(myManager == nullptr)
+        myManager = new DB_Manager();
+    return myManager;
 }
 
 // ============================================================================
 /*!
- *  \brief CreateWShapeTable()
+    \brief NewShapeDatabase()
 */
 // ============================================================================
-bool DBI_SQLiteShapeDatabase::CreateWShapeTable()
+QSqlDatabase DB_Manager::NewShapeDatabase(const QString &theFileName)
 {
-    QString aString = "CREATE TABLE IF NOT EXISTS w_shapes (";
-    aString += "id INTEGER PRIMARY KEY AUTOINCREMENT, ";
-    aString += "designation TEXT, ";
-    aString += "dataSource TEXT, ";
-    aString += "d REAL, ";
-    aString += "b REAL, ";
-    aString += "t REAL, ";
-    aString += "w REAL)";
-    return Query().exec(aString);
+    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
+    aDatabase.setDatabaseName(theFileName);
+    if(!aDatabase.open())
+        return aDatabase;
+
 }

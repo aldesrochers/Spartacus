@@ -1,1 +1,14 @@
-DBS_LShape.hxx
+DBS_Shape2L.hxx
+DBS_ShapeC.hxx
+DBS_ShapeHP.hxx
+DBS_ShapeHSS.hxx
+DBS_ShapeL.hxx
+DBS_ShapeM.hxx
+DBS_ShapeMC.hxx
+DBS_ShapeRHS.hxx
+DBS_ShapeS.hxx
+DBS_ShapeSLB.hxx
+DBS_ShapeW.hxx
+DBS_ShapeWRF.hxx
+DBS_ShapeWT.hxx
+DBS_ShapeWWF.hxx

@@ -87,7 +87,6 @@ include(Configure_Qt)
 ###
 #
 add_subdirectory(databases)
-#add_subdirectory(engines)
 add_subdirectory(toolkits)
 add_subdirectory(tests)
 add_subdirectory(applications)

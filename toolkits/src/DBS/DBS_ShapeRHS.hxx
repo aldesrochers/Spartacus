@@ -19,29 +19,32 @@
 //
 // ============================================================================
 
-#ifndef __DB_Cluster_hxx__
-#define __DB_Cluster_hxx__
 
+#ifndef __DBS_ShapeRHS_hxx__
+#define __DBS_ShapeRHS_hxx__
+
+// Qt
+#include <QString>
 
 // ============================================================================
 /*!
- *  \brief DB_Cluster
- *  Class implementation of a database cluster.
+ *  \brief DBS_ShapeRHS
 */
 // ============================================================================
-class DB_Cluster
+struct DBS_ShapeRHS
 {
-
-public:
-    // constructors
-    DB_Cluster();
-    // destructors
-    ~DB_Cluster();
-
-public:
-
-    virtual bool            Connect() = 0;
-
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double D;
+    double T;
+    double I;
+    double S;
+    double R;
+    double Z;
+    double J;
+    double Crt;
 };
 
-#endif  // __DB_Cluster_hxx__
+#endif  // __DBS_ShapeRHS_hxx__

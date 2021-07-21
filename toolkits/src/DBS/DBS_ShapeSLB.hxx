@@ -19,19 +19,38 @@
 //
 // ============================================================================
 
-#ifndef __DB_Error_hxx__
-#define __DB_Error_hxx__
+
+#ifndef __DBS_ShapeSLB_hxx__
+#define __DBS_ShapeSLB_hxx__
+
+// Qt
+#include <QString>
 
 // ============================================================================
 /*!
- *  \brief DB_Error
- *  Class implementation of DB standard errors.
+ *  \brief DBS_ShapeSLB
 */
 // ============================================================================
-enum DB_Error
+struct DBS_ShapeSLB
 {
-    DB_UnknownError,
-    DB_DirectoryAlreadyExistsError
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double Ix;
+    double Sx;
+    double Rx;
+    double Zx;
+    double Iy;
+    double Sy;
+    double Ry;
+    double Zy;
+    double J;
+    double Cw;
+    double D;
+    double B;
+    double T;
+    double W;
 };
 
-#endif  // __DB_Error_hxx__
+#endif  // __DBS_ShapeSLB_hxx__

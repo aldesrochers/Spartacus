@@ -19,37 +19,4 @@
 //
 // ============================================================================
 
-#ifndef __DB_LocalCluster_hxx__
-#define __DB_LocalCluster_hxx__
 
-// Qt
-#include <QString>
-
-
-// ============================================================================
-/*!
-    \brief DB_LocalCluster
-*/
-// ============================================================================
-class DB_LocalCluster
-{
-
-public:
-
-    static DB_LocalCluster*     New(const QString& theDirectoryPath,
-                                    const QString& theAdminUserName,
-                                    const QString& theAdminPassword);
-
-protected:
-    // constructors
-    DB_LocalCluster();
-    // destructors
-    ~DB_LocalCluster();
-
-public:
-
-
-
-};
-
-#endif  // __DB_LocalCluster_hxx__

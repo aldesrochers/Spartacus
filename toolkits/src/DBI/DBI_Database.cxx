@@ -23,7 +23,6 @@
 #include <DBI_Database.hxx>
 
 
-
 // ============================================================================
 /*!
  *  \brief Constructor
@@ -32,8 +31,7 @@
 DBI_Database::DBI_Database(const QSqlDatabase& theDatabase)
     : myDatabase(theDatabase)
 {
-    // initialize a query on database
-    myQuery = QSqlQuery(myDatabase);
+
 }
 
 // ============================================================================
@@ -56,24 +54,3 @@ QSqlDatabase DBI_Database::Database() const
     return myDatabase;
 }
 
-// ============================================================================
-/*!
- *  \brief Query()
-*/
-// ============================================================================
-QSqlQuery DBI_Database::Query() const
-{
-    return myQuery;
-}
-
-// ============================================================================
-/*!
- *  \brief SetHeaderDataDisplayRole()
-*/
-// ============================================================================
-void DBI_Database::SetHeaderDataDisplayRole(QSqlTableModel *theTableModel,
-                                            const int theSection,
-                                            const QString &theValue)
-{
-    theTableModel->setHeaderData(theSection, Qt::Horizontal, theValue, Qt::DisplayRole);
-}

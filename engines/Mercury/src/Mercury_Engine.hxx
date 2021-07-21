@@ -26,9 +26,6 @@
 #include <QVersionNumber>
 
 
-#include <QSqlError>
-#include <QSqlRecord>
-
 // ============================================================================
 /*!
  *  \brief Mercury_Engine
@@ -46,18 +43,8 @@ public:
 
 public:
 
-    QString             LastError() const;
-
-    bool                NewLocalCluster(const int theClusterId,
-                                        const QString& theDirPath,
-                                        const QString& theUserName,
-                                        const QString& thePassword);
-
     QVersionNumber      Version() const;
 
-private:
-
-    QString             myLastError;
 
 };
 

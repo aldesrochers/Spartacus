@@ -19,27 +19,40 @@
 //
 // ============================================================================
 
-// Spartacus
-#include <DBI_AdminDatabase.hxx>
+#ifndef __DB_Manager_hxx__
+#define __DB_Manager_hxx__
+
+// Qt
+#include <QSqlDatabase>
 
 
 // ============================================================================
 /*!
- *  \brief Constructor
+    \brief DB_Manager
 */
 // ============================================================================
-DBI_AdminDatabase::DBI_AdminDatabase(const QSqlDatabase& theDatabase)
-    : DBI_Database(theDatabase)
+class DB_Manager
 {
 
-}
+protected:
+    // constructors
+    DB_Manager();
+    // destructors
+    ~DB_Manager();
 
-// ============================================================================
-/*!
- *  \brief Destructor
-*/
-// ============================================================================
-DBI_AdminDatabase::~DBI_AdminDatabase()
-{
+public:
 
-}
+    static DB_Manager*  GetManager();
+
+public:
+
+    bool            NewShapeDatabase(const QString& theFileName);
+
+
+private:
+
+    static DB_Manager*  myManager;
+
+};
+
+#endif  // __DB_Manager_hxx__

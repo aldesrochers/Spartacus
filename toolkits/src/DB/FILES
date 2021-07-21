@@ -1,5 +1,6 @@
-DB.cxx
-DB.hxx
-DB_Error.hxx
 DB_LocalCluster.cxx
 DB_LocalCluster.hxx
+DB_Manager.cxx
+DB_Manager.hxx
+DB_RemoteCluster.cxx
+DB_RemoteCluster.hxx

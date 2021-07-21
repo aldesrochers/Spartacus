@@ -19,31 +19,27 @@
 //
 // ============================================================================
 
-#ifndef __Mercury_Utilities_hxx__
-#define __Mercury_Utilities_hxx__
 
-// Qt
-#include <QString>
-
-// Mercury
-#include <Mercury_DatabaseType.hxx>
-#include <Mercury_DriverType.hxx>
+// Spartacus
+#include <DB_RemoteCluster.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief Mercury_Utilities
- *  Class implementation of common utility functions.
+    \brief Constructor
 */
 // ============================================================================
-class Mercury_Utilities
+DB_RemoteCluster::DB_RemoteCluster()
 {
 
-public:
+}
 
-    static QString          DatabaseName(const Mercury_DatabaseType theType);
-    static QString          DriverName(const Mercury_DriverType theType);
+// ============================================================================
+/*!
+    \brief Destructor
+*/
+// ============================================================================
+DB_RemoteCluster::~DB_RemoteCluster()
+{
 
-};
-
-#endif  // __Mercury_Utilities_hxx__
+}

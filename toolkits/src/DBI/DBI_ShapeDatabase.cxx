@@ -46,16 +46,14 @@ DBI_ShapeDatabase::~DBI_ShapeDatabase()
 
 // ============================================================================
 /*!
- *  \brief GetLShape()
+    \brief CreateTableShapeL()
 */
 // ============================================================================
-DBS_LShape DBI_ShapeDatabase::GetLShape(const QString &theDesignation)
+bool DBI_ShapeDatabase::CreateTableShapeL()
 {
-
+    QString aString = "CREATE TABLE IF NOT EXISTS shape_l (";
+    aString += "Designation TEXT PRIMARY KEY, ";
+    aString += "B REAL, ";
+    aString += "D REAL, ";
+    aString += "T REAL)";
 }
-
-// ============================================================================
-/*!
- *  \brief GetLShapeTableModel()
-*/
-// ============================================================================

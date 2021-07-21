@@ -19,8 +19,8 @@
 #
 # =============================================================================
 
-add_subdirectory(CreateCluster)
+#add_subdirectory(CreateCluster)
 
-if(Spartacus_BUILD_Huygens)
-    add_subdirectory(Huygens)
-endif()
+#if(Spartacus_BUILD_Huygens)
+#    add_subdirectory(Huygens)
+#endif()

@@ -20,30 +20,44 @@
 // ============================================================================
 
 
-#ifndef __DBI_AdminDatabase_hxx__
-#define __DBI_AdminDatabase_hxx__
+#ifndef __DBS_ShapeL_hxx__
+#define __DBS_ShapeL_hxx__
 
 // Qt
-#include <QSqlDatabase>
-
-// Spartacus
-#include <DBI_Database.hxx>
+#include <QString>
 
 // ============================================================================
 /*!
- *  \brief DBI_AdminDatabase
- *  Base class implementation of an interface for a shape database.
+ *  \brief DBS_ShapeL
+ *  Structure definition of a L-Shape.
 */
 // ============================================================================
-class DBI_AdminDatabase : public DBI_Database
+struct DBS_ShapeL
 {
-
-public:
-    // constructors
-    DBI_AdminDatabase(const QSqlDatabase& theDatabase);
-    // destructors
-    ~DBI_AdminDatabase();
-
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double B;
+    double D;
+    double T;
+    double Ix;
+    double Sx;
+    double rx;
+    double Y;
+    double Iy;
+    double Sy;
+    double ry;
+    double X;
+    double J;
+    double Cw;
+    double Rx;
+    double Y0;
+    double Ry;
+    double X0;
+    double R0;
+    double Omega;
+    double Alpha;
 };
 
-#endif  // __DBI_AdminDatabase_hxx__
+#endif  // __DBS_ShapeL_hxx__

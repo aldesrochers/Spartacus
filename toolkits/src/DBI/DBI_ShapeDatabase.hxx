@@ -23,18 +23,14 @@
 #ifndef __DBI_ShapeDatabase_hxx__
 #define __DBI_ShapeDatabase_hxx__
 
-// Qt
-#include <QSqlDatabase>
-#include <QSqlTableModel>
-
 // Spartacus
 #include <DBI_Database.hxx>
-#include <DBS_LShape.hxx>
+
 
 // ============================================================================
 /*!
  *  \brief DBI_ShapeDatabase
- *  Base class implementation of an interface for a shape database.
+ *  Base class implementation of a database interface.
 */
 // ============================================================================
 class DBI_ShapeDatabase : public DBI_Database
@@ -48,12 +44,7 @@ public:
 
 public:
 
-    DBS_LShape          GetLShape(const QString& theDesignation);
-    QSqlTableModel*     GetLShapeTableModel();
-
-private:
-
-    QSqlTableModel*     myLShapeTableModel;
+    bool            CreateTableShapeL();
 
 };
 

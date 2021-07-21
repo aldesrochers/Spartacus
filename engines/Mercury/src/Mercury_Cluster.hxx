@@ -19,13 +19,18 @@
 //
 // ============================================================================
 
+#ifndef __Mercury_Cluster_hxx__
+#define __Mercury_Cluster_hxx__
 
-// Spartacus
-#include <DB.hxx>
+// Forward declarations
+class Mercury_Engine;
 
 
 // ============================================================================
 /*!
- *  \brief NewLocalCluster()
+    \brief
 */
 // ============================================================================
+
+
+#endif  // __Mercury_Cluster_hxx__

@@ -20,24 +20,37 @@
 // ============================================================================
 
 
-#ifndef __DBS_LShape_hxx__
-#define __DBS_LShape_hxx__
+#ifndef __DBS_ShapeMC_hxx__
+#define __DBS_ShapeMC_hxx__
 
 // Qt
 #include <QString>
 
 // ============================================================================
 /*!
- *  \brief DBS_LShape
- *  Structure definition of a L-Shape.
+ *  \brief DBS_ShapeMC
 */
 // ============================================================================
-struct DBS_LShape
+struct DBS_ShapeMC
 {
     QString Designation;
-    double B;
+    double Weigth;
+    double Mass;
+    double Area;
+    double Ix;
+    double Sx;
+    double Rx;
+    double Iy;
+    double Sy;
+    double Ry;
+    double X;
+    double X0;
+    double J;
+    double Cw;
     double D;
+    double B;
     double T;
+    double W;
 };
 
-#endif  // __DBS_LShape_hxx__
+#endif  // __DBS_ShapeMC_hxx__

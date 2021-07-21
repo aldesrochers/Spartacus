@@ -19,21 +19,38 @@
 //
 // ============================================================================
 
-#ifndef __Mercury_User_hxx__
-#define __Mercury_User_hxx__
+
+#ifndef __DBS_ShapeC_hxx__
+#define __DBS_ShapeC_hxx__
 
 // Qt
 #include <QString>
 
 // ============================================================================
 /*!
- *  \brief Mercury_User
+ *  \brief DBS_ShapeC
 */
 // ============================================================================
-struct Mercury_User
+struct DBS_ShapeC
 {
-    QString FirstName;
-    QString Password;
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double Ix;
+    double Sx;
+    double Rx;
+    double Iy;
+    double Sy;
+    double Ry;
+    double X;
+    double X0;
+    double J;
+    double Cw;
+    double D;
+    double B;
+    double T;
+    double W;
 };
 
-#endif  // __Mercury_User_hxx__
+#endif  // __DBS_ShapeC_hxx__

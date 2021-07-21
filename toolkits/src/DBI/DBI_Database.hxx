@@ -25,8 +25,6 @@
 
 // Qt
 #include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlTableModel>
 
 
 // ============================================================================
@@ -47,18 +45,10 @@ public:
 public:
 
     QSqlDatabase        Database() const;
-    QSqlQuery           Query() const;
-
-protected:
-
-    void                SetHeaderDataDisplayRole(QSqlTableModel* theTableModel,
-                                                 const int theSection,
-                                                 const QString& theValue);
 
 protected:
 
     QSqlDatabase        myDatabase;
-    QSqlQuery           myQuery;
 
 };
 

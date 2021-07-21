@@ -91,7 +91,7 @@ endif()
 ###
 # Test - Viewer3d
 ###
-if(Spartacus_BUILD_TESTS)
+if(Spartacus_BUILD_TESTS AND NOT WIN32)
     add_executable(Test_Viewer3d WIN32 Test_Viewer3d.cxx)
     target_link_libraries(Test_Viewer3d
         StkFW StkUI

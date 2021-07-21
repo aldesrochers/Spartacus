@@ -19,46 +19,40 @@
 //
 // ============================================================================
 
-// Mercury
-#include <Mercury_Utilities.hxx>
 
+#ifndef __DBS_ShapeWT_hxx__
+#define __DBS_ShapeWT_hxx__
 
-// ============================================================================
-/*!
- *  \brief DatabaseName()
-*/
-// ============================================================================
-QString Mercury_Utilities::DatabaseName(const Mercury_DatabaseType theType)
-{
-    switch (theType) {
-    case Mercury_AdminDatabase:
-        return QString("admin");
-    case Mercury_CableDatabase:
-        return QString("cable");
-    case Mercury_ShapeDatabase:
-        return QString("shape");
-    case Mercury_UnknownDatabase:
-        return QString("unknown");
-    default:
-        return QString("unknown");
-    }
-}
+// Qt
+#include <QString>
 
 // ============================================================================
 /*!
- *  \brief DriverName()
+ *  \brief DBS_ShapeWT
 */
 // ============================================================================
-QString Mercury_Utilities::DriverName(const Mercury_DriverType theType)
+struct DBS_ShapeWT
 {
-    switch (theType) {
-    case Mercury_PostgreSQLDriver:
-        return QString("PQSQL");
-    case Mercury_SQLiteDriver:
-        return QString("QSQLITE");
-    case Mercury_UnknownDriver:
-        return QString("UNKNOWN");
-    default:
-        return QString("UNKNWON");
-    }
-}
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double Ix;
+    double Sx;
+    double Rx;
+    double Y;
+    double Iy;
+    double Sy;
+    double Ry;
+    double J;
+    double Cw;
+    double D;
+    double B;
+    double T;
+    double W;
+    double Y0;
+    double R0;
+    double Omega;
+};
+
+#endif  // __DBS_ShapeWT_hxx__

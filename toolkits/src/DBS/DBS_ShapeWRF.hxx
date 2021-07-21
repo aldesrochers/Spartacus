@@ -19,51 +19,39 @@
 //
 // ============================================================================
 
-#ifndef __DB_SQLiteCluster_hxx__
-#define __DB_SQLiteCluster_hxx__
+
+#ifndef __DBS_ShapeWRF_hxx__
+#define __DBS_ShapeWRF_hxx__
 
 // Qt
-#include <QSqlDatabase>
-
-// Spartacus
-#include <DB_Cluster.hxx>
-
+#include <QString>
 
 // ============================================================================
 /*!
- *  \brief DB_SQLiteCluster
- *  Class implementation of a SQLite database cluster.
+ *  \brief DBS_ShapeWRF
 */
 // ============================================================================
-class DB_SQLiteCluster : public DB_Cluster
+struct DBS_ShapeWRF
 {
-
-public:
-    // constructors
-    DB_SQLiteCluster(const QString& theDirectoryPath);
-    // destructors
-    ~DB_SQLiteCluster();
-
-public:
-
-    bool            Connect() override;
-
-public:
-
-    QString         DirectoryPath() const;
-    QString         Password() const;
-    void            SetDirectoryPath(const QString& theDirectoryPath);
-    void            SetPassword(const QString& thePassword);
-    void            SetUserName(const QString& theUserName);
-    QString         UserName();
-
-private:
-
-    QString         myDirectoryPath;
-    QString         myPassword;
-    QString         myUserName;
-
-
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double Ix;
+    double Sxt;
+    double Sxb;
+    double Rx;
+    double Yt;
+    double Iy;
+    double Sy;
+    double Ry;
+    double J;
+    double Cw;
+    double D;
+    double B1;
+    double B2;
+    double T;
+    double W;
 };
 
-#endif  // __DB_SQLiteCluster_hxx__
+#endif  // __DBS_ShapeWRF_hxx__

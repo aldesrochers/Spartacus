@@ -19,47 +19,25 @@
 //
 // ============================================================================
 
+#ifndef __DB_RemoteCluster_hxx__
+#define __DB_RemoteCluster_hxx__
 
-#ifndef __DBI_SQLiteAdminDatabase_hxx__
-#define __DBI_SQLiteAdminDatabase_hxx__
 
-// Qt
-#include <QSqlDatabase>
-#include <QSqlTableModel>
-
-// Spartacus
-#include <DBI_AdminDatabase.hxx>
-#include <DBS_SQLiteUser.hxx>
 
 // ============================================================================
 /*!
- *  \brief DBI_SQLiteAdminDatabase
+    \brief DB_RemoteCluster
 */
 // ============================================================================
-class DBI_SQLiteAdminDatabase : public DBI_AdminDatabase
+class DB_RemoteCluster
 {
 
 public:
     // constructors
-    DBI_SQLiteAdminDatabase(const QSqlDatabase& theDatabase);
+    DB_RemoteCluster();
     // destructors
-    ~DBI_SQLiteAdminDatabase();
-
-public:
-
-    bool                AddUser(const DBS_SQLiteUser& theUser);
-    bool                CreateUsersTable();
-    QSqlTableModel*     GetUsersTableModel();
-
-private:
-
-    void                InitializeUsersTableModel();
-
-private:
-
-    QSqlTableModel*     myUsersTableModel;
-
+    ~DB_RemoteCluster();
 
 };
 
-#endif  // __DBI_SQLiteAdminDatabase_hxx__
+#endif  // __DB_RemoteCluster_hxx__

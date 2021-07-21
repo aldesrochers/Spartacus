@@ -19,38 +19,38 @@
 //
 // ============================================================================
 
-#ifndef __Mercury_SQLiteBuilder_hxx__
-#define __Mercury_SQLiteBuilder_hxx__
+
+#ifndef __DBS_ShapeM_hxx__
+#define __DBS_ShapeM_hxx__
 
 // Qt
-#include <QSqlQuery>
-
-// Mercury
-#include <Mercury_User.hxx>
-
+#include <QString>
 
 // ============================================================================
 /*!
- *  \brief Mercury_SQLiteBuilder
+ *  \brief DBS_ShapeM
 */
 // ============================================================================
-class Mercury_SQLiteBuilder
+struct DBS_ShapeM
 {
-
-public:
-
-    static QSqlDatabase     NewAdminDatabase(const QString& theFileName);
-    static QSqlDatabase     NewCableDatabase(const QString& theFileName);
-    static QSqlDatabase     NewShapeDatabase(const QString& theFileName);
-
-    // create tables
-    static bool             CreateUsersTable(QSqlQuery& theQuery);
-    static bool             CreateShapeLTable(QSqlQuery& theQuery);
-    static bool             CreateShapeWTable(QSqlQuery& theQuery);
-
-    // records
-    static bool             AddUser(const QSqlDatabase& theDatabase,
-                                    const Mercury_User& theUser);
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double Ix;
+    double Sx;
+    double Rx;
+    double Zx;
+    double Iy;
+    double Sy;
+    double Ry;
+    double Zy;
+    double J;
+    double Cw;
+    double D;
+    double B;
+    double T;
+    double W;
 };
 
-#endif  // __Mercury_SQLiteBuilder_hxx__
+#endif  // __DBS_ShapeM_hxx__

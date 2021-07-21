@@ -47,14 +47,13 @@ set(_linked_libraries
 )
 
 set(_headers
+    src/Mercury_Cluster.hxx
     src/Mercury_Engine.hxx
-    src/Mercury_SQLiteBuilder.hxx
-    src/Mercury_User.hxx
 )
 
 set(_sources
+    src/Mercury_Cluster.cxx
     src/Mercury_Engine.cxx
-    src/Mercury_SQLiteBuilder.cxx
 )
 
 #add_library(Mercury ${_headers} ${_sources})

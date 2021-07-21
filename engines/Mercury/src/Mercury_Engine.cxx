@@ -19,21 +19,13 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
 
 // Mercury
 #include <Mercury_Engine.hxx>
-#include <Mercury_SQLiteBuilder.hxx>
 #include <Mercury_Version.hxx>
 
 // Qt
-#include <QDir>
-#include <QSqlDatabase>
 #include <QVariant>
-
-// Spartacus
-#include <DBI_SQLiteAdminDatabase.hxx>
 
 
 // ============================================================================
@@ -53,45 +45,6 @@ Mercury_Engine::Mercury_Engine()
 // ============================================================================
 Mercury_Engine::~Mercury_Engine()
 {
-
-}
-
-// ============================================================================
-/*!
- *  \brief LastError()
-*/
-// ============================================================================
-QString Mercury_Engine::LastError() const
-{
-    return myLastError;
-}
-
-// ============================================================================
-/*!
- *  \brief NewLocalCluster()
-*/
-// ============================================================================
-bool Mercury_Engine::NewLocalCluster(const int theClusterId,
-                                     const QString &theDirPath,
-                                     const QString &theUserName,
-                                     const QString &thePassword)
-{
-    QDir aDir(theDirPath);
-    if(!aDir.exists())
-        return false;
-    if(!aDir.isEmpty())
-        return false;
-
-    // admin database
-    QString adminPath = theDirPath + QDir::separator() + "spartacus-admin.db";
-    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE");
-    aDatabase.setDatabaseName(adminPath);
-    if(!aDatabase.open())
-        return false;
-
-
-
-
 
 }
 

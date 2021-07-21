@@ -20,35 +20,37 @@
 // ============================================================================
 
 
-#ifndef __DBI_SQLiteShapeDatabase_hxx__
-#define __DBI_SQLiteShapeDatabase_hxx__
+#ifndef __DBS_ShapeWWF_hxx__
+#define __DBS_ShapeWWF_hxx__
 
 // Qt
-#include <QSqlDatabase>
-#include <QSqlTableModel>
-
-// Spartacus
-#include <DBI_ShapeDatabase.hxx>
+#include <QString>
 
 // ============================================================================
 /*!
- *  \brief DBI_SQLiteShapeDatabase
+ *  \brief DBS_ShapeWWF
 */
 // ============================================================================
-class DBI_SQLiteShapeDatabase : public DBI_ShapeDatabase
+struct DBS_ShapeWWF
 {
-
-public:
-    // constructors
-    DBI_SQLiteShapeDatabase(const QSqlDatabase& theDatabase);
-    // destructors
-    ~DBI_SQLiteShapeDatabase();
-
-public:
-
-    virtual bool        CreateLShapeTable() override;
-    virtual bool        CreateWShapeTable() override;
-
+    QString Designation;
+    double Weigth;
+    double Mass;
+    double Area;
+    double Ix;
+    double Sx;
+    double Rx;
+    double Zx;
+    double Iy;
+    double Sy;
+    double Ry;
+    double Zy;
+    double J;
+    double Cw;
+    double D;
+    double B;
+    double T;
+    double W;
 };
 
-#endif  // __DBI_SQLiteShapeDatabase_hxx__
+#endif  // __DBS_ShapeWWF_hxx__
