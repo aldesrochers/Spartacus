@@ -24,6 +24,7 @@ using namespace std;
 
 // Spartacus
 #include <Triangle_Triangulate.hxx>
+#include <Triangle_Parameters.hxx>
 
 
 int main(int argc, char *argv[])

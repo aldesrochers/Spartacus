@@ -42,6 +42,7 @@ struct Triangle_Parameters
 public:
     // default constructor
     Triangle_Parameters();
+    ~Triangle_Parameters();
 
 public:
 

@@ -33,19 +33,20 @@ set(MeshBuilder_SOURCES
 set(MeshBuilder_INCLUDE_DIRS
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
+    ${Qt6Core_INCLUDE_DIRS}
+    ${Qt6Gui_INCLUDE_DIRS}
+    ${Qt6Widgets_INCLUDE_DIRS}
 )
 
 set(MeshBuilder_LINKED_LIBRARIES
-    ${Qt5Core_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
+    ${Qt6Core_LIBRARIES}
+    ${Qt6Gui_LIBRARIES}
+    ${Qt6Widgets_LIBRARIES}
     Venus
 )
-
-set(CMAKE_AUTOMOC ON)
-add_executable(MeshBuilder ${MeshBuilder_HEADERS} ${MeshBuilder_SOURCES})
-target_include_directories(MeshBuilder PUBLIC ${MeshBuilder_INCLUDE_DIRS})
-target_link_libraries(MeshBuilder ${MeshBuilder_LINKED_LIBRARIES})
+qt_wrap_cpp(MeshBuilder_SOURCES ${MeshBuilder_HEADERS} TARGET MeshBuilder)
+qt_add_executable(MeshBuilder ${MeshBuilder_SOURCES} ${MeshBuilder_HEADERS})
+#qt_wrap_cpp(MeshBuilder_MOCS ${MeshBuilder_HEADERS})
+#add_executable(MeshBuilder ${MeshBuilder_HEADERS} ${MeshBuilder_SOURCES} ${MeshBuilder_MOCS})
+target_include_directories(MeshBuilder PRIVATE ${MeshBuilder_INCLUDE_DIRS})
+target_link_libraries(MeshBuilder PRIVATE ${MeshBuilder_LINKED_LIBRARIES})

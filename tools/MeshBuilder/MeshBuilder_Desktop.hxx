@@ -34,8 +34,6 @@
 class MeshBuilder_Desktop : public QMainWindow
 {
 
-public:
-
     Q_OBJECT
 
 public:

@@ -20,6 +20,7 @@
 # =============================================================================
 
 
+
 # =============================================================================
 # Package : Cell
 # =============================================================================
@@ -384,7 +385,7 @@ set(PSLG_PKG_HEADERS
     PSLG/PSLG_Array1OfHole.hxx
     PSLG/PSLG_Array1OfNode.hxx
     PSLG/PSLG_Array1OfRegion.hxx
-    PSLG/PSLG_Array1OfSegment
+    PSLG/PSLG_Array1OfSegment.hxx
     PSLG/PSLG_Hole.hxx
     PSLG/PSLG_Model.hxx
     PSLG/PSLG_Node.hxx
@@ -407,6 +408,7 @@ set(PSLG_PKG_SOURCES
 
 set(Triangle_PKG_HEADERS
     Triangle/Triangle.hxx
+    Triangle/Triangle_Error.hxx
     Triangle/Triangle_Parameters.hxx
     Triangle/Triangle_Triangulate.hxx
     Triangle/Triangle_TypeOfAlgorithm.hxx

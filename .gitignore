@@ -1,5 +1,6 @@
 # Directory
 build/
+install/
 
 # Prerequisites
 *.d

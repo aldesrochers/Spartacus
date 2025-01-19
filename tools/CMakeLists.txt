@@ -20,4 +20,3 @@
 # =============================================================================
 
 add_subdirectory(MeshBuilder)
-add_subdirectory(Tower)

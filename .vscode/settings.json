@@ -78,5 +78,10 @@
         "valarray": "cpp",
         "variant": "cpp",
         "*.lxx": "cpp"
+    },
+    "cmake.useVsDeveloperEnvironment": "always",
+    "cmake.cacheInit": null,
+    "cmake.configureSettings": {
+        
     }
 }

@@ -79,3 +79,5 @@ set(Apollo_SOURCES
 add_library(Apollo SHARED ${Apollo_HEADERS} ${Apollo_SOURCES})
 target_include_directories(Apollo PUBLIC ${Apollo_INCLUDE_DIRS})
 target_link_libraries(Apollo ${Apollo_LINKED_LIBRARIES})
+
+#install(TARGETS Apollo DESTINATION lib)

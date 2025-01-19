@@ -24,15 +24,9 @@
 
 // Qt
 #include <QMainWindow>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QResizeEvent>
+
+// OpenCASCADE
 #include <AIS_InteractiveContext.hxx>
-#include <V3d_View.hxx>
-#include <V3d_Viewer.hxx>
-#include <Aspect_DisplayConnection.hxx>
-#include <OpenGl_GraphicDriver.hxx>
-#include <WNT_Window.hxx>
 
 // ============================================================================
 /*!
@@ -42,6 +36,7 @@
 class MeshBuilder_Viewer : public QMainWindow
 {
 
+    
 
 };
 

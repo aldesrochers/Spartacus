@@ -22,14 +22,24 @@
 cmake_minimum_required(VERSION 3.10)
 project(Spartacus VERSION 0.1.0 LANGUAGES C CXX)
 cmake_policy(SET CMP0167 NEW)
+cmake_policy(SET CMP0115 NEW)
+
 
 find_package(ADIOS2 REQUIRED)
 find_package(Boost REQUIRED)
-find_package(CGAL REQUIRED)
+if(NOT WIN32)
+    find_package(CGAL REQUIRED)
+endif()
 find_package(OpenCASCADE REQUIRED)
-find_package(OpenCV REQUIRED)
+if(NOT WIN32)
+    find_package(OpenCV REQUIRED)  
+endif()
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 find_package(VTK REQUIRED)
+
+if(WIN32)
+    add_definitions(-fpermissive)
+endif()
 
 add_subdirectory(tests)
 add_subdirectory(thirdparty)
