@@ -19,19 +19,21 @@
 //
 // ============================================================================
 
-
+#include <iostream>
+using namespace std;
 
 // Spartacus
-#include <Triangle.hxx>
+#include <Tetgen.hxx>
 
 
 // ============================================================================
 /*!
     \brief Triangulation()
-    Populate a triangulation based on a triangle model.
+    Populate a triangulation based on a tetgen model.
+    Only faces of the volumnes are represented in the triangulation.
 */
 // ============================================================================
-Handle(Poly_Triangulation) Triangle::Triangulation(const Handle(Triangle_Model)& theModel)
+Handle(Poly_Triangulation) Tetgen::Triangulation(const Handle(Tetgen_Model)& theModel)
 {
     // initialize data structures
     TColgp_Array1OfPnt myPoints;
@@ -41,17 +43,15 @@ Handle(Poly_Triangulation) Triangle::Triangulation(const Handle(Triangle_Model)&
 
     // process nodes
     for(Standard_Integer i = 1; i <= theModel->NbPoints(); i++) {
-        Standard_Real X, Y;
-        theModel->Point(i, X, Y);
-        myPoints.SetValue(i, gp_Pnt(X, Y, 0.0));
+        Standard_Real X, Y, Z;
+        theModel->Point(i, X, Y, Z);
+        myPoints.SetValue(i, gp_Pnt(X, Y, Z));
     }
-
-    // process triangles
+    
+    // process Tetgens
     for(Standard_Integer i = 1; i <= theModel->NbTriangles(); i++) {
         Standard_Integer N1, N2, N3;
-        theModel->TriangleCorner(i, 1, N1);
-        theModel->TriangleCorner(i, 2, N2);
-        theModel->TriangleCorner(i, 3, N3);
+        theModel->Triangle(i, N1, N2, N3);
         Poly_Triangle aTriangle(N1, N2, N3);
         myTriangles.SetValue(i, aTriangle);
     }

@@ -20,35 +20,33 @@
 // ============================================================================
 
 
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
+#ifndef __Desktop_MainWindow_hxx__
+#define __Desktop_MainWindow_hxx__
 
 // OpenCASCADE
 #include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
 
-// Spartacus
-#include <Triangle_Model.hxx>
+// Qt
+#include <QMainWindow>
+
 
 
 // ============================================================================
-/*
-    \brief Triangle
+/*!
+ *  \brief Desktop_MainWindow
 */
 // ============================================================================
-class Triangle
+class Standard_EXPORT Desktop_MainWindow : public QMainWindow
 {
+    Q_OBJECT
 
 public:
-
-    DEFINE_STANDARD_ALLOC;
-
-public:
-
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
+    // constructors
+    Desktop_MainWindow(QWidget* theParent = nullptr,
+                       Qt::WindowFlags theFlags = Qt::WindowFlags());
+    // destructors
+    ~Desktop_MainWindow();
 
 };
 
-
-#endif // __Triangle_hxx__
+#endif // __Desktop_MainWindow_hxx__

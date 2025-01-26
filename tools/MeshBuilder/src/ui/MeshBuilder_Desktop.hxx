@@ -19,20 +19,33 @@
 //
 // ============================================================================
 
-// Qt
-#include <QApplication>
+#ifndef __MeshBuilder_Desktop_hxx__
+#define __MeshBuilder_Desktop_hxx__
 
 // Spartacus
-#include <MeshBuilder_Desktop.hxx>
+#include <Desktop_MainWindow.hxx>
 
 
-int main(int argc, char *argv[])
+// ============================================================================
+/*!
+ *  \brief MeshBuilder_Desktop
+ */
+// ============================================================================
+class MeshBuilder_Desktop : public Desktop_MainWindow
 {
-    QApplication anApp(argc, argv);
 
-    MeshBuilder_Desktop aDesktop;
-    aDesktop.show();
+    Q_OBJECT
 
-    return anApp.exec();
+public:
+    // constructors
+    MeshBuilder_Desktop(QWidget *theParent = 0);
+    // destructors
+    ~MeshBuilder_Desktop();
 
-}
+public:
+
+    void        initialize();
+    
+};
+
+#endif  // __MeshBuilder_Desktop_hxx__

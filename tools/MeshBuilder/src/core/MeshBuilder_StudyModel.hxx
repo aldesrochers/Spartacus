@@ -19,36 +19,33 @@
 //
 // ============================================================================
 
-
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
+#ifndef __MeshBuilder_StudyModel_hxx__
+#define __MeshBuilder_StudyModel_hxx__
 
 // OpenCASCADE
 #include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
 
-// Spartacus
-#include <Triangle_Model.hxx>
+// Qt
+#include <QStandardItemModel>
 
 
 // ============================================================================
-/*
-    \brief Triangle
-*/
+/*!
+ *  \brief MeshBuilder_StudyModel
+ */
 // ============================================================================
-class Triangle
+class Standard_EXPORT MeshBuilder_StudyModel : public QStandardItemModel
 {
 
-public:
-
-    DEFINE_STANDARD_ALLOC;
+    Q_OBJECT
 
 public:
+    // constructors
+    MeshBuilder_StudyModel(QObject *theParent = 0);
+    // destructors
+    ~MeshBuilder_StudyModel();
 
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
-
+    
 };
 
-
-#endif // __Triangle_hxx__
+#endif  // __MeshBuilder_StudyModel_hxx__

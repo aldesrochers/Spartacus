@@ -21,4 +21,5 @@
 
 add_subdirectory(Apollo)
 add_subdirectory(Jupiter)
+add_subdirectory(Minerva)
 add_subdirectory(Venus)

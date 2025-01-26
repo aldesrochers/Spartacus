@@ -21,7 +21,11 @@
 
 
 // Spartacus
-#include <Triangle_Parameters.hxx>
+#include <MeshBuilder_Study.hxx>
+
+// OpenCASCADE
+#include <BinDrivers_DocumentRetrievalDriver.hxx>
+#include <BinDrivers_DocumentStorageDriver.hxx>
 
 
 // ============================================================================
@@ -29,21 +33,19 @@
     \brief Constructor
 */
 // ============================================================================
-Triangle_Parameters::Triangle_Parameters()
+MeshBuilder_Study::MeshBuilder_Study()
 {
-    myAlgorithm = Triangle_ALGO_DivideAndConquer;
-    myCheckConformity = Standard_False;
-    myConformingDelaunay = Standard_False;
-    myEncloseConvexHull = Standard_False;
-    myExactArithmetic = Standard_True;
-    myGenerateSecondOrder = Standard_False;
-    myIgnoreHoles = Standard_False;
-    myIsQuiet = Standard_True;
-    myIsVerbose = Standard_False;
-    myQualityMesh = Standard_True;
-    myMaxArea = 0.0;   
-    myMeshPSLG = Standard_True;
-    myRefineMesh = Standard_False;
+
+    // define application format
+    myApplication = new TDocStd_Application();
+    myApplication->DefineFormat("MeshBuilder", 
+                                "A standard data format for MeshBuilder", 
+                                ".mbs", 
+                                new BinDrivers_DocumentRetrievalDriver(),
+                                new BinDrivers_DocumentStorageDriver());
+
+    // initialize study document
+    myApplication->NewDocument("MeshBuilder", myDocument);
 }
 
 // ============================================================================
@@ -51,7 +53,13 @@ Triangle_Parameters::Triangle_Parameters()
     \brief Destructor
 */
 // ============================================================================
-Triangle_Parameters::~Triangle_Parameters()
+MeshBuilder_Study::~MeshBuilder_Study()
 {
     
 }
+
+// ****************************************************************************
+// Handles
+// ****************************************************************************
+IMPLEMENT_STANDARD_HANDLE(MeshBuilder_Study, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(MeshBuilder_Study, Standard_Transient)

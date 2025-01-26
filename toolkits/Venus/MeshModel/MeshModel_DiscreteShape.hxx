@@ -19,25 +19,51 @@
 //
 // ============================================================================
 
-#ifndef __MeshBuilder_Viewer_hxx__
-#define __MeshBuilder_Viewer_hxx__
 
-// Qt
-#include <QMainWindow>
+#ifndef __MeshModel_DiscreteShape_hxx__
+#define __MeshModel_DiscreteShape_hxx__
 
 // OpenCASCADE
-#include <AIS_InteractiveContext.hxx>
+#include <Standard.hxx>
+#include <Standard_DefineHandle.hxx>
+#include <Standard_Transient.hxx>
+#include <TopoDS_Shape.hxx>
+
+// Handles
+DEFINE_STANDARD_HANDLE(MeshModel_DiscreteShape, Standard_Transient)
 
 // ============================================================================
-/*!
- *  \brief MeshBuilder_Viewer
- */
+/*
+    \brief MeshModel_DiscreteShape
+*/
 // ============================================================================
-class MeshBuilder_Viewer : public QMainWindow
+class MeshModel_DiscreteShape : public Standard_Transient
 {
 
-    
+public:
+
+    DEFINE_STANDARD_ALLOC;
+
+public:
+    // constructors
+    Standard_EXPORT MeshModel_DiscreteShape();
+    Standard_EXPORT MeshModel_DiscreteShape(const TopoDS_Shape& theShape);
+    // destructors
+    Standard_EXPORT ~MeshModel_DiscreteShape();
+
+public:
+
+    Standard_EXPORT void                SetShape(const TopoDS_Shape& theShape);
+    Standard_EXPORT const TopoDS_Shape& Shape() const;
+
+private:
+
+    TopoDS_Shape    myShape;
+
+public:
+
+    DEFINE_STANDARD_RTTIEXT(MeshModel_DiscreteShape, Standard_Transient)
 
 };
 
-#endif  // __MeshBuilder_Viewer_hxx__
+#endif // __MeshModel_DiscreteShape_hxx__

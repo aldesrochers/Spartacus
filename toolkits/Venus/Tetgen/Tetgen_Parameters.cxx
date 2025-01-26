@@ -20,35 +20,44 @@
 // ============================================================================
 
 
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
-
-// OpenCASCADE
-#include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
-
 // Spartacus
-#include <Triangle_Model.hxx>
+#include <Tetgen_Parameters.hxx>
+
 
 
 // ============================================================================
-/*
-    \brief Triangle
+/*!
+    \brief Constructor
 */
 // ============================================================================
-class Triangle
+Tetgen_Parameters::Tetgen_Parameters()    
 {
+    myCheckConformity = Standard_False;
+    myDetectSelfIntersections = Standard_False;
+    myExactArithmetic = Standard_True;
+    myGenerateSecondOrder = Standard_False;
+    myIsQuiet = Standard_True;
+    myIsVerbose = Standard_True;
+    myMaxVolume = 0.0;
+    myMergeCoplanarFacets = Standard_False;
+    myMeshCoarsening = Standard_False;
+    myMeshOptimization = 2;
+    myMeshPLC = Standard_True;
+    myPreserveInputMesh = Standard_False;
+    myQualityMesh = Standard_True;
+    myRefineMesh = Standard_False;
+    myRetainsConvexHull = Standard_False;
+    myTolerance = 10^-6;
+    myWeightedDelaunay = Standard_False;
+}
 
-public:
+// ============================================================================
+/*!
+    \brief Destructor
+*/
+// ============================================================================
+Tetgen_Parameters::~Tetgen_Parameters()    
+{
+    
+}
 
-    DEFINE_STANDARD_ALLOC;
-
-public:
-
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
-
-};
-
-
-#endif // __Triangle_hxx__

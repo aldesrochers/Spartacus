@@ -20,7 +20,16 @@
 // ============================================================================
 
 
+#ifndef __Tetgen_Array1OfFacet_hxx__
+#define __Tetgen_Array1OfFacet_hxx__
+
+// OpenCASCADE
+#include <NCollection_Array1.hxx>
+
 // Spartacus
-#include <MeshBuilder_Viewer.hxx>
+#include <Tetgen_Facet.hxx>
 
+// Type definition
+typedef NCollection_Array1<Handle(Tetgen_Facet)>    Tetgen_Array1OfFacet;
 
+#endif // __Tetgen_Array1OfFacet_hxx__

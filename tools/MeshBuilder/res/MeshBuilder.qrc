@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>MeshBuilder.png</file>
+    </qresource>
+</RCC>

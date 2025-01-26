@@ -20,35 +20,31 @@
 // ============================================================================
 
 
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
+#ifndef __Viewer3d_Viewer_hxx__
+#define __Viewer3d_Viewer_hxx__
 
-// OpenCASCADE
+
+// OpenCascade
 #include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
-
-// Spartacus
-#include <Triangle_Model.hxx>
+#include <V3d_Viewer.hxx>
 
 
 // ============================================================================
-/*
-    \brief Triangle
+/*!
+ *  \brief Viewer3d
+ *  Class implementation of utility functions for the package.
 */
 // ============================================================================
-class Triangle
+class Viewer3d
 {
 
 public:
 
-    DEFINE_STANDARD_ALLOC;
-
-public:
-
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
+    static Standard_EXPORT Handle(V3d_Viewer)   CreateViewer(const Standard_Real theProjection = 1000.0,
+                                                             const V3d_TypeOfOrientation theOrientation = V3d_XposYnegZpos,
+                                                             const Standard_Boolean theComputedMode = Standard_True,
+                                                             const Standard_Boolean theDefaultComputedMode = Standard_True);
 
 };
 
-
-#endif // __Triangle_hxx__
+#endif // __Viewer3d_Viewer_hxx__

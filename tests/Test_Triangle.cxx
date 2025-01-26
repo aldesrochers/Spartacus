@@ -22,41 +22,49 @@
 #include <iostream>
 using namespace std;
 
+
+int main(int argc, char *argv[])
+{
+    
+}
+
+
+/*
+
 // Spartacus
+#include <Triangle.hxx>
+#include <Triangle_Builder.hxx>
 #include <Triangle_Triangulate.hxx>
-#include <Triangle_Parameters.hxx>
 
 
 int main(int argc, char *argv[])
 {
 
-    Handle(PSLG_Model) aModel = new PSLG_Model();
-    aModel->ResizeNodes(3);
-    aModel->SetNode(1, new PSLG_Node(gp_Pnt2d(0,0)));
-    aModel->SetNode(2, new PSLG_Node(gp_Pnt2d(1,0)));    
-    aModel->SetNode(3, new PSLG_Node(gp_Pnt2d(0,1)));
-    aModel->ResizeSegments(3);
-    aModel->SetSegment(1, new PSLG_Segment(1,2));
-    aModel->SetSegment(2, new PSLG_Segment(2,3));
-    aModel->SetSegment(3, new PSLG_Segment(3,1));
+    Triangle_Builder aBuilder;
+    aBuilder.ResizePoints(3, 0);
+    aBuilder.SetPoint(1, 0., 0.);
+    aBuilder.SetPoint(2, 1., 0.);
+    aBuilder.SetPoint(3, 0., 1.);
+    aBuilder.ResizeSegments(3);
+    aBuilder.SetSegment(1, 1, 2);
+    aBuilder.SetSegment(2, 2, 3);
+    aBuilder.SetSegment(3, 3, 1);
+
+    Handle(Triangle_Model) anInputModel = aBuilder.Model();
     
     Triangle_Parameters aParameters;
-    aParameters.MaximumArea = 0.01;
+    aParameters.SetMaxArea(0.1);
+    Triangle_Triangulate anAlgo(anInputModel, aParameters);
+    anAlgo.Perform();
 
-    Triangle_Triangulate aTriangulator;
-    aTriangulator.SetModel(aModel);
-    aTriangulator.SetParameters(aParameters);
-    aTriangulator.Perform();
+    Handle(Triangle_Model) anOutputModel = anAlgo.OutputModel();
 
-    cout << aTriangulator.IsDone () << endl;
+    Handle(Poly_Triangulation) aTriangulation = Triangle::Triangulation(anOutputModel);
 
-    Handle(Mesh2d_Grid) aGrid = aTriangulator.Grid();
+    cout << aTriangulation->NbTriangles() << endl;
+    cout << aTriangulation->NbNodes() << endl;
 
-    cout << aGrid->NbCells() << endl;
-    cout << aGrid->NbNodes() << endl;
-    
     return 0;
-
-
-
 }
+
+*/

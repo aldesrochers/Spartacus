@@ -19,36 +19,23 @@
 //
 // ============================================================================
 
-
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
-
-// OpenCASCADE
-#include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
+// Qt
+#include <QApplication>
+#include <QResource>
 
 // Spartacus
-#include <Triangle_Model.hxx>
+#include <MeshBuilder_Desktop.hxx>
 
 
-// ============================================================================
-/*
-    \brief Triangle
-*/
-// ============================================================================
-class Triangle
+int main(int argc, char *argv[])
 {
+    Q_INIT_RESOURCE(MeshBuilder);
 
-public:
+    QApplication anApp(argc, argv);
 
-    DEFINE_STANDARD_ALLOC;
+    MeshBuilder_Desktop aDesktop;
+    aDesktop.show();
 
-public:
+    return anApp.exec();
 
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
-
-};
-
-
-#endif // __Triangle_hxx__
+}

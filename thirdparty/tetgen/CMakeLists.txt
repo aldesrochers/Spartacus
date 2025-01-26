@@ -48,7 +48,6 @@ set(Tetgen_SOURCES
 
 # rules
 add_library(tetgen SHARED ${Tetgen_HEADERS} ${Tetgen_SOURCES})
-target_compile_definitions(tetgen PRIVATE -DTETLIBRARY)
 target_include_directories(tetgen PUBLIC ${Tetgen_INCLUDE_DIRS})
 target_link_libraries(tetgen PUBLIC ${Tetgen_LINKED_LIBRARIES})
 target_sources(tetgen PRIVATE ${Tetgen_SOURCES} ${Tetgen_HEADERS})

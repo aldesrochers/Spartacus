@@ -19,20 +19,40 @@
 #
 # =============================================================================
 
-set(MeshBuilder_HEADERS
-    MeshBuilder_Desktop.hxx
-    MeshBuilder_Viewer.hxx
+###
+# Core
+###
+
+set(MeshBuilder_CORE_HEADERS
+    src/core/MeshBuilder_Study.hxx
+    src/core/MeshBuilder_StudyModel.hxx
 )
 
-set(MeshBuilder_SOURCES
-    MeshBuilder_Desktop.cxx
-    MeshBuilder_Main.cxx
-    MeshBuilder_Viewer.cxx
+set(MeshBuilder_CORE_SOURCES
+    src/core/MeshBuilder_Study.cxx
+    src/core/MeshBuilder_StudyModel.cxx
+)
+
+
+###
+# UI
+###
+
+set(MeshBuilder_UI_HEADERS
+    src/ui/MeshBuilder_Desktop.hxx
+    src/ui/MeshBuilder_Explorer.hxx
+)
+
+set(MeshBuilder_UI_SOURCES
+    src/ui/MeshBuilder_Desktop.cxx
+    src/ui/MeshBuilder_Explorer.cxx
+    src/ui/MeshBuilder_Main.cxx
 )
 
 set(MeshBuilder_INCLUDE_DIRS
     ${CMAKE_CURRENT_BINARY_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ui
     ${Qt6Core_INCLUDE_DIRS}
     ${Qt6Gui_INCLUDE_DIRS}
     ${Qt6Widgets_INCLUDE_DIRS}
@@ -42,10 +62,23 @@ set(MeshBuilder_LINKED_LIBRARIES
     ${Qt6Core_LIBRARIES}
     ${Qt6Gui_LIBRARIES}
     ${Qt6Widgets_LIBRARIES}
-    Venus
+    Minerva
 )
+
+set(MeshBuilder_HEADERS
+    ${MeshBuilder_CORE_HEADERS}
+    ${MeshBuilder_UI_HEADERS}
+)
+
+set(MeshBuilder_SOURCES
+    ${MeshBuilder_CORE_SOURCES}
+    ${MeshBuilder_UI_SOURCES}
+)
+
+qt_add_resources(MeshBuilder_RESOURCES res/MeshBuilder.qrc)
 qt_wrap_cpp(MeshBuilder_SOURCES ${MeshBuilder_HEADERS} TARGET MeshBuilder)
-qt_add_executable(MeshBuilder ${MeshBuilder_SOURCES} ${MeshBuilder_HEADERS})
+qt_add_executable(MeshBuilder ${MeshBuilder_SOURCES} ${MeshBuilder_HEADERS} ${MeshBuilder_RESOURCES})
+
 #qt_wrap_cpp(MeshBuilder_MOCS ${MeshBuilder_HEADERS})
 #add_executable(MeshBuilder ${MeshBuilder_HEADERS} ${MeshBuilder_SOURCES} ${MeshBuilder_MOCS})
 target_include_directories(MeshBuilder PRIVATE ${MeshBuilder_INCLUDE_DIRS})

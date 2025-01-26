@@ -1,0 +1,8 @@
+MeshModel_DiscreteCurve.cxx
+MeshModel_DiscreteCurve.hxx
+MeshModel_DiscreteEdge.cxx
+MeshModel_DiscreteEdge.hxx
+MeshModel_DiscreteShape.cxx
+MeshModel_DiscreteShape.hxx
+MeshModel_Model.cxx
+MeshModel_Model.hxx

@@ -32,8 +32,10 @@
 enum Triangle_Error
 {
     Triangle_NoError,
-    Triangle_ModelError,
-    Triangle_TriangulationError
+    Triangle_InputModelError,
+    Triangle_OutputModelError,
+    Triangle_TriangulationError,
+    Triangle_VoronoiModelError
 };
 
 #endif // __Triangle_Error_hxx__

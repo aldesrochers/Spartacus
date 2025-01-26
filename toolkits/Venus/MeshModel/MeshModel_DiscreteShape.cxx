@@ -21,7 +21,7 @@
 
 
 // Spartacus
-#include <Triangle_Parameters.hxx>
+#include <MeshModel_DiscreteShape.hxx>
 
 
 // ============================================================================
@@ -29,21 +29,20 @@
     \brief Constructor
 */
 // ============================================================================
-Triangle_Parameters::Triangle_Parameters()
+MeshModel_DiscreteShape::MeshModel_DiscreteShape()    
 {
-    myAlgorithm = Triangle_ALGO_DivideAndConquer;
-    myCheckConformity = Standard_False;
-    myConformingDelaunay = Standard_False;
-    myEncloseConvexHull = Standard_False;
-    myExactArithmetic = Standard_True;
-    myGenerateSecondOrder = Standard_False;
-    myIgnoreHoles = Standard_False;
-    myIsQuiet = Standard_True;
-    myIsVerbose = Standard_False;
-    myQualityMesh = Standard_True;
-    myMaxArea = 0.0;   
-    myMeshPSLG = Standard_True;
-    myRefineMesh = Standard_False;
+    
+}
+
+// ============================================================================
+/*!
+    \brief Constructor
+*/
+// ============================================================================
+MeshModel_DiscreteShape::MeshModel_DiscreteShape(const TopoDS_Shape& theShape)
+    : myShape(theShape)    
+{
+    
 }
 
 // ============================================================================
@@ -51,7 +50,34 @@ Triangle_Parameters::Triangle_Parameters()
     \brief Destructor
 */
 // ============================================================================
-Triangle_Parameters::~Triangle_Parameters()
+MeshModel_DiscreteShape::~MeshModel_DiscreteShape()    
 {
     
 }
+
+// ============================================================================
+/*!
+    \brief SetShape()
+*/
+// ============================================================================
+void MeshModel_DiscreteShape::SetShape(const TopoDS_Shape& theShape)
+{
+    myShape = theShape;
+}
+
+// ============================================================================
+/*!
+    \brief Shape()
+*/
+// ============================================================================
+const TopoDS_Shape& MeshModel_DiscreteShape::Shape() const
+{
+    return myShape;
+}
+
+
+// ****************************************************************************
+// Handles
+// ****************************************************************************
+IMPLEMENT_STANDARD_HANDLE(MeshModel_DiscreteShape, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(MeshModel_DiscreteShape, Standard_Transient)

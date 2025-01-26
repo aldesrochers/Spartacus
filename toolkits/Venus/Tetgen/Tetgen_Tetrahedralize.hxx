@@ -20,58 +20,56 @@
 // ============================================================================
 
 
-#ifndef __Triangle_Triangulate_hxx__
-#define __Triangle_Triangulate_hxx__
+#ifndef __Tetgen_Tetrahedralize_hxx__
+#define __Tetgen_Tetrahedralize_hxx__
 
 // OpenCASCADE
 #include <Standard.hxx>
 #include <Standard_DefineAlloc.hxx>
 
 // Spartacus
-#include <Triangle_Error.hxx>
-#include <Triangle_Model.hxx>
-#include <Triangle_Parameters.hxx>
+#include <Tetgen_Error.hxx>
+#include <Tetgen_Model.hxx>
+#include <Tetgen_Parameters.hxx>
 
 
 
 // ============================================================================
 /*
-    \brief Triangle_Triangulate
+    \brief Tetgen_Tetrahedralize
 */
 // ============================================================================
-class Triangle_Triangulate 
+class Tetgen_Tetrahedralize 
 {
 
 public:
     // constructors
-    Standard_EXPORT Triangle_Triangulate();
-    Standard_EXPORT Triangle_Triangulate(const Handle(Triangle_Model)& theInputModel,
-                                         const Triangle_Parameters& theParameters = Triangle_Parameters());
+    Standard_EXPORT Tetgen_Tetrahedralize();
+    Standard_EXPORT Tetgen_Tetrahedralize(const Handle(Tetgen_Model)& theInputModel,
+                                         const Tetgen_Parameters& theParameters = Tetgen_Parameters());
     // destructors
-    Standard_EXPORT ~Triangle_Triangulate();
+    Standard_EXPORT ~Tetgen_Tetrahedralize();
 
 public:
 
-    Standard_EXPORT const Triangle_Error&           Error() const;
-    Standard_EXPORT const Handle(Triangle_Model)&   InputModel() const;
+    Standard_EXPORT const Tetgen_Error&             Error() const;
+    Standard_EXPORT const Handle(Tetgen_Model)&     InputModel() const;
     Standard_EXPORT Standard_Boolean                IsDone() const;
-    Standard_EXPORT const Handle(Triangle_Model)&   OutputModel() const;
-    Standard_EXPORT const Triangle_Parameters&      Parameters() const;
+    Standard_EXPORT const Handle(Tetgen_Model)&     OutputModel() const;
+    Standard_EXPORT const Tetgen_Parameters&        Parameters() const;
     Standard_EXPORT void                            Perform();
-    Standard_EXPORT void                            SetInputModel(const Handle(Triangle_Model)& theModel); 
-    Standard_EXPORT void                            SetParameters(const Triangle_Parameters& theParameters);
-    Standard_EXPORT const Handle(Triangle_Model)&   VoronoiModel() const;
+    Standard_EXPORT void                            SetInputModel(const Handle(Tetgen_Model)& theModel); 
+    Standard_EXPORT void                            SetParameters(const Tetgen_Parameters& theParameters);
 
 private:
 
-    Triangle_Error          myError;
-    Handle(Triangle_Model)  myInputModel;
-    Standard_Boolean        myIsDone;
-    Handle(Triangle_Model)  myOutputModel;
-    Triangle_Parameters     myParameters;
-    Handle(Triangle_Model)  myVoronoiModel;
+    Tetgen_Error          myError;
+    Handle(Tetgen_Model)  myInputModel;
+    Standard_Boolean      myIsDone;
+    Handle(Tetgen_Model)  myOutputModel;
+    Tetgen_Parameters     myParameters;
 
 };
 
 
-#endif // __Triangle_Triangulate_hxx__
+#endif // __Tetgen_Tetrahedralize_hxx__

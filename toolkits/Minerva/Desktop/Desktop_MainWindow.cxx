@@ -21,26 +21,29 @@
 
 
 // Spartacus
-#include <MeshBuilder_Desktop.hxx>
+#include <Desktop_MainWindow.hxx>
+
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Constructor
 */
 // ============================================================================
-MeshBuilder_Desktop::MeshBuilder_Desktop(QWidget* theParent)
-    : QMainWindow(theParent)
+Desktop_MainWindow::Desktop_MainWindow(QWidget* theParent, Qt::WindowFlags theFlags)
+    : QMainWindow(theParent, theFlags)
 {
-    
+
 }
 
 // ============================================================================
 /*!
-    \brief Destructor
+ *  \brief Destructor
 */
 // ============================================================================
-MeshBuilder_Desktop::~MeshBuilder_Desktop()
+Desktop_MainWindow::~Desktop_MainWindow()
 {
-    
+
 }
+
+

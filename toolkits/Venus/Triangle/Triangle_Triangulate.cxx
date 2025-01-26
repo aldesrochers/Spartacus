@@ -20,58 +20,75 @@
 // ============================================================================
 
 
+// OpenCASCADE
+#include <TCollection_AsciiString.hxx>
+
 // Spartacus
 #include <Triangle_Triangulate.hxx>
 
-// Triangle
+// triangle
 #include <triangle.h>
+
 
 
 // ============================================================================
 /*!
- *  \brief Constructor()
+    \brief Constructor
 */
 // ============================================================================
 Triangle_Triangulate::Triangle_Triangulate()
-    : myError(Triangle_NoError),
-    myIsDone(Standard_False)
+    : myError(Triangle_NoError)
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief Destructor()
+    \brief Constructor
+*/
+// ============================================================================
+Triangle_Triangulate::Triangle_Triangulate(const Handle(Triangle_Model)& theInputModel,
+                                           const Triangle_Parameters& myParameters)
+    : myError(Triangle_NoError), 
+    myInputModel(theInputModel), 
+    myParameters(myParameters)
+{
+
+}
+
+// ============================================================================
+/*!
+    \brief Destructor
 */
 // ============================================================================
 Triangle_Triangulate::~Triangle_Triangulate()
 {
-
+    
 }
 
 // ============================================================================
 /*!
- *  \brief Error()
+    \brief Error()
 */
 // ============================================================================
-Triangle_Error Triangle_Triangulate::Error() const
+const Triangle_Error& Triangle_Triangulate::Error() const
 {
     return myError;
 }
 
 // ============================================================================
 /*!
- *  \brief Grid()
+    \brief InputModel()
 */
 // ============================================================================
-const Handle(Mesh2d_Grid)& Triangle_Triangulate::Grid() const
+const Handle(Triangle_Model)& Triangle_Triangulate::InputModel() const
 {
-    return myGrid;
+    return myInputModel;
 }
 
 // ============================================================================
 /*!
- *  \brief IsDone()
+    \brief IsDone()
 */
 // ============================================================================
 Standard_Boolean Triangle_Triangulate::IsDone() const
@@ -81,17 +98,17 @@ Standard_Boolean Triangle_Triangulate::IsDone() const
 
 // ============================================================================
 /*!
- *  \brief Model()
+    \brief OutputModel()
 */
 // ============================================================================
-const Handle(PSLG_Model)& Triangle_Triangulate::Model() const
+const Handle(Triangle_Model)& Triangle_Triangulate::OutputModel() const
 {
-    return myModel;
+    return myOutputModel;
 }
 
 // ============================================================================
 /*!
- *  \brief Parameters()
+    \brief Parameters()
 */
 // ============================================================================
 const Triangle_Parameters& Triangle_Triangulate::Parameters() const
@@ -101,182 +118,490 @@ const Triangle_Parameters& Triangle_Triangulate::Parameters() const
 
 // ============================================================================
 /*!
- *  \brief Perform()
+    \brief Perform()
 */
 // ============================================================================
 void Triangle_Triangulate::Perform()
 {
-    // check model validity
-    if(myModel.IsNull()) {
-        myError = Triangle_ModelError;
+
+    // ===
+    // process input model
+    // ===
+
+    struct triangulateio anInput;
+
+    // check if valid input model
+    if(myInputModel.IsNull()) {
+        myError = Triangle_InputModelError;
         return;
     }
-    
-    // retrieve internal data from the PSLG model
-    const PSLG_Array1OfHole& holes = myModel->Holes();
-    const PSLG_Array1OfNode& points = myModel->Nodes();
-    const PSLG_Array1OfRegion& regions = myModel->Regions();
-    const PSLG_Array1OfSegment& segments = myModel->Segments();
 
-    // initialize triangulateio data structures
-    struct triangulateio in, out, vorout;
-    
-    // populate input triangulateio data structures
-    in.numberofpoints = points.Size();
-    in.pointlist = (REAL*) malloc(in.numberofpoints * 2 * sizeof(REAL));
-    for (Standard_Integer i = 0; i < in.numberofpoints; i++) {
-        in.pointlist[2 * i + 0] = points(i + 1)->X();
-        in.pointlist[2 * i + 1] = points(i + 1)->Y();
-    }
-
-    in.numberofsegments = segments.Size();
-    in.segmentlist = (int*) malloc(in.numberofsegments * 2 * sizeof(int));
-    for (Standard_Integer i = 0; i < in.numberofsegments; i++) {
-        in.segmentlist[2 * i + 0] = segments(i + 1)->Node1();
-        in.segmentlist[2 * i + 1] = segments(i + 1)->Node2();
-    }
-
-    in.numberofholes = holes.Size();
-    in.holelist = (REAL*) malloc(in.numberofholes * 2 * sizeof(REAL));
-    for (Standard_Integer i = 0; i < in.numberofholes; i++) {
-        in.holelist[2 * i + 0] = holes(i + 1)->X();
-        in.holelist[2 * i + 1] = holes(i + 1)->Y();
-    }
-
-    in.numberofregions = regions.Size();
-    in.regionlist = (REAL*) malloc(in.numberofregions * 4 * sizeof(REAL));
-    for (Standard_Integer i = 0; i < in.numberofregions; i++) {
-        in.regionlist[4 * i + 0] = regions(i + 1)->X();
-        in.regionlist[4 * i + 1] = regions(i + 1)->Y();
-        in.regionlist[4 * i + 2] = regions(i + 1)->Attribute();
-        in.regionlist[4 * i + 3] = regions(i + 1)->MaximumArea();
-    }
-
-    // prepare triangulate switches based on parameters
-    TCollection_AsciiString switches;
-    switches += "p";
-    if(myParameters.ComformingDelaunay)
-        switches += "D";
-    if(myParameters.Algorithm == Triangle_ALGO_Incremental)
-        switches += "i";
-    if(myParameters.Algorithm == Triangle_ALGO_Sweepline)
-        switches += "F";
-    if(myParameters.ComformingDelaunay)
-        switches += "D";
-    if(!myParameters.ExactArithmetic)
-        switches += "X";
-    if(myParameters.QualityMesh)
-        switches += "q";
-    if(myParameters.SecondOrder)
-        switches += "o2";
-    if(myParameters.MaximumArea > 0.) {
-        switches += "a";
-        switches += myParameters.MaximumArea;
-    }
-    switches += "Q";
-
-    // initialize output data structures
-    out.pointlist = (REAL*) NULL;
-    out.trianglelist = (int*) NULL;
-    out.segmentlist = (int*) NULL;
-
-    // perform triangulation
+    // try to populate input model
     try {
-        triangulate((char*) switches.ToCString(), &in, &out, &vorout);
+
+        // process edges
+        anInput.numberofedges = myInputModel->NbEdges();
+
+        anInput.edgelist = (int*) malloc(anInput.numberofedges * 2 * sizeof(int));
+        anInput.edgemarkerlist = new int[anInput.numberofedges];
+        for(Standard_Integer i = 0; i < anInput.numberofedges; i++) {
+            Standard_Integer aNode1, aNode2;
+            myInputModel->Edge(i+1, aNode1, aNode2);
+            anInput.edgelist[2 * i + 0] = aNode1;
+            anInput.edgelist[2 * i + 1] = aNode2;
+
+            Standard_Integer aMarker;
+            myInputModel->EdgeMarker(i+1, aMarker);
+            anInput.edgemarkerlist[i] = aMarker;
+        }
+
+        // process holes
+        anInput.numberofholes = myInputModel->NbHoles();
+        anInput.holelist = (REAL*) malloc(anInput.numberofholes * 2 * sizeof(REAL));
+        for(Standard_Integer i = 0; i < anInput.numberofholes; i++) {
+            Standard_Real X, Y;
+            myInputModel->Hole(i+1, X, Y);
+            anInput.holelist[2 * i + 0] = X;
+            anInput.holelist[2 * i + 1] = Y;
+        }
+
+        // process normals
+        Standard_Integer nbNormals = myInputModel->NbNormals();
+        anInput.normlist = (REAL*) malloc(nbNormals * 2 * sizeof(REAL));
+        for(Standard_Integer i = 0; i < nbNormals; i++) {
+            Standard_Real X, Y;
+            myInputModel->Normal(i+1, X, Y);
+            anInput.normlist[2 * i + 0] = X;
+            anInput.normlist[2 * i + 1] = Y;
+        }
+
+        // process points
+        anInput.numberofpoints = myInputModel->NbPoints();
+        anInput.numberofpointattributes = myInputModel->NbPointAttributes();
+
+        anInput.pointlist = (REAL*) malloc(anInput.numberofpoints * 2 * sizeof(REAL));
+        anInput.pointattributelist = (REAL*) malloc(anInput.numberofpoints * anInput.numberofpointattributes * sizeof(REAL));
+        anInput.pointmarkerlist = new int[anInput.numberofpoints];
+
+        for(Standard_Integer i = 0; i < anInput.numberofpoints; i++) {
+            Standard_Real X, Y;
+            myInputModel->Point(i+1, X, Y);
+            anInput.pointlist[2 * i + 0] = X;
+            anInput.pointlist[2 * i + 1] = Y;
+
+            Standard_Integer aMarker;
+            myInputModel->PointMarker(i+1, aMarker);
+            anInput.pointmarkerlist[i] = aMarker;
+
+            if(myInputModel->NbPointAttributes() > 0) {
+                for(Standard_Integer j = 0; j < anInput.numberofpointattributes; j++) {
+                    Standard_Real aValue;
+                    myInputModel->PointAttribute(i+1, j+1, aValue);
+                    anInput.pointattributelist[anInput.numberofpoints * j + i] = aValue;
+                }
+            }
+
+        }
+
+        // process regions
+        anInput.numberofregions = myInputModel->NbRegions();
+        anInput.regionlist = (REAL *) malloc(anInput.numberofregions * 3 * sizeof(REAL));
+        for(Standard_Integer i = 0; i < anInput.numberofregions; i++) {
+            Standard_Real X, Y, MaxArea;
+            myInputModel->Region(i+1, X, Y, MaxArea);
+            anInput.regionlist[3 * i + 0] = X;
+            anInput.regionlist[3 * i + 1] = Y;
+            anInput.regionlist[3 * i + 2] = MaxArea;
+        }
+
+        // process segments
+        anInput.numberofsegments = myInputModel->NbSegments();
+
+        anInput.segmentlist = (int*) malloc(anInput.numberofsegments * 2 * sizeof(int));
+        anInput.segmentmarkerlist = new int[anInput.numberofsegments];
+
+        for(Standard_Integer i = 0; i < anInput.numberofsegments; i++) {
+            Standard_Integer aPoint1, aPoint2;
+            myInputModel->Segment(i+1, aPoint1, aPoint2);
+            anInput.segmentlist[2 * i + 0] = aPoint1;
+            anInput.segmentlist[2 * i + 1] = aPoint2;
+
+            Standard_Integer aMarker;
+            myInputModel->SegmentMarker(i+1, aMarker);
+            anInput.segmentmarkerlist[i] = aMarker;
+        }
+
+        // process triangles
+        anInput.numberoftriangles = myInputModel->NbTriangles();
+        anInput.numberofcorners = myInputModel->NbTriangleCorners();
+        anInput.numberoftriangleattributes = myInputModel->NbTriangleAttributes();
+
+        anInput.trianglelist = (int*) malloc(anInput.numberoftriangles * anInput.numberofcorners * sizeof(int));
+        anInput.triangleattributelist = (REAL*) malloc(anInput.numberoftriangles * anInput.numberoftriangleattributes * sizeof(REAL));
+        
+        for(Standard_Integer i = 0; i < anInput.numberoftriangles; i++) {
+            for(Standard_Integer j = 0; j < anInput.numberofcorners; j++) {
+                Standard_Integer aPoint;
+                myInputModel->TriangleCorner(i+1, j+1, aPoint);
+                anInput.trianglelist[anInput.numberofcorners * i + j] = aPoint;
+            }
+
+            for(Standard_Integer j = 0; j < anInput.numberoftriangleattributes; j++) {
+                Standard_Real aValue;
+                myInputModel->TriangleAttribute(i+1, j+1, aValue);
+                anInput.triangleattributelist[anInput.numberoftriangleattributes * i + j] = aValue;
+            }
+        }
+
+        // process triangle neighbors
+        anInput.neighborlist = (int*) malloc(3 * anInput.numberoftriangles * sizeof(int));
+        for(Standard_Integer i = 0; i < anInput.numberoftriangles; i++) {
+            for(Standard_Integer j = 0; j < 3; j++) {
+                Standard_Integer aNeighbor;
+                myInputModel->TriangleNeighbor(i+1, j+1, aNeighbor);
+                anInput.neighborlist[3 * i + j] = aNeighbor;
+            }
+        }
+
+        // process triangle areas
+        anInput.trianglearealist = (REAL*) malloc(anInput.numberoftriangles * sizeof(REAL));
+        for(Standard_Integer i = 0; i < anInput.numberoftriangles; i++) {
+            Standard_Real aArea;
+            myInputModel->TriangleMaxArea(i+1, aArea);
+            anInput.trianglearealist[i] = aArea;
+        }
+
+    } catch (const std::exception& e) {
+        myError = Triangle_InputModelError;
+        return;
+    }
+
+    // ===
+    // process meshing parameters
+    // ===
+
+    TCollection_AsciiString aString;
+    if(myParameters.MeshPSLG())
+        aString += "p";
+    if(myParameters.RefineMesh())
+        aString += "r";
+    if(myParameters.QualityMesh())
+        aString += "q";
+    if(myParameters.HasMaxArea()) {
+        aString += "a";
+        aString += myParameters.MaxArea();
+    }
+    if(myParameters.EncloseConvexHull())
+        aString += "c";
+    if(myParameters.ConformingDelaunay())
+        aString += "D";
+    if(myParameters.IgnoreHoles())
+        aString += "O";
+    if(!myParameters.ExactArithmetic())
+        aString += "X";
+    if(myParameters.GenerateSecondOrder())
+        aString += "o2";
+    if(myParameters.Algorithm() == Triangle_ALGO_Incremental)
+        aString += "i";
+    if(myParameters.Algorithm() == Triangle_ALGO_Sweepline)
+        aString += "F";
+    if(myParameters.CheckConformity())
+        aString += "C";
+    if(myParameters.IsQuiet())
+        aString += "Q";
+    if(myParameters.IsVerbose())
+        aString += "V";
+    aString += "e";
+    aString += "v";
+    aString += "n";
+
+    // ===
+    // initialize output data structures
+    // ===
+
+    struct triangulateio anOutput, aVoronoi;
+
+    // initialize output
+    anOutput.pointattributelist = (REAL*) NULL;
+    anOutput.pointlist = (REAL*) NULL;
+    anOutput.pointmarkerlist = (int*) NULL;
+    anOutput.segmentlist = (int*) NULL;
+    anOutput.segmentmarkerlist = (int*) NULL;
+    anOutput.trianglelist = (int*) NULL;
+    anOutput.triangleattributelist = (REAL*) NULL;
+    anOutput.trianglearealist = (REAL*) NULL;
+    anOutput.neighborlist = (int*) NULL;
+    anOutput.regionlist = (REAL*) NULL;
+    anOutput.holelist = (REAL*) NULL;
+    anOutput.edgelist = (int*) NULL;
+
+    // initialize Voronoi
+    aVoronoi.pointattributelist = (REAL*) NULL;
+    aVoronoi.pointlist = (REAL*) NULL;
+    aVoronoi.edgelist = (int*) NULL;
+    aVoronoi.normlist = (REAL*) NULL;
+
+    // ===
+    // triangulate
+    // ===
+    try {
+        triangulate((char*) aString.ToCString(), &anInput, &anOutput, &aVoronoi);
     } catch (const std::exception& e) {
         myError = Triangle_TriangulationError;
         return;
     }
 
-    #include <iostream>
-    using namespace std;
 
-    // populate Mesh2d grid from output triangulateio data structures
-    myGrid = new Mesh2d_Grid();
-    myGrid->ResizeCells(out.numberoftriangles, Standard_False);
-    myGrid->ResizeNodes(out.numberofpoints, Standard_False);
+    // ===
+    // process output model
+    // ===
 
-    // add nodes to grid
-    for(Standard_Integer i = 0; i<out.numberofpoints; i++) {
-        Standard_Real X = out.pointlist[2 * i + 0];
-        Standard_Real Y = out.pointlist[2 * i + 1];
-        gp_Pnt2d aPoint(X, Y);
-        myGrid->SetNode(i + 1, new Mesh2d_Node(aPoint));
-    }
-    
-    // add triangles to grid
-    for(Standard_Integer i = 0; i<out.numberoftriangles; i++) {
-        if(out.numberofcorners == 3) {
-            Handle(Mesh2d_Cell) aCell = new Mesh2d_Cell(3, Mesh2d_CELL_LinearTriangle3N);
-            aCell->SetNode(1, out.trianglelist[3 * i + 0]);
-            aCell->SetNode(2, out.trianglelist[3 * i + 1]);
-            aCell->SetNode(3, out.trianglelist[3 * i + 2]);
-            myGrid->SetCell(i + 1, aCell);
-        } else if (out.numberofcorners == 6) {
-            Handle(Mesh2d_Cell) aCell = new Mesh2d_Cell(6, Mesh2d_CELL_QuadraticTriangle6N);
-            aCell->SetNode(1, out.trianglelist[3 * i + 0]);
-            aCell->SetNode(2, out.trianglelist[3 * i + 1]);
-            aCell->SetNode(3, out.trianglelist[3 * i + 2]);
-            aCell->SetNode(4, out.trianglelist[3 * i + 3]);
-            aCell->SetNode(5, out.trianglelist[3 * i + 4]);
-            aCell->SetNode(6, out.trianglelist[3 * i + 5]);
-            myGrid->SetCell(i + 1, aCell);
+    // initialize output model
+    myOutputModel = new Triangle_Model();
+
+    try {
+
+        // process edges
+        if(anOutput.numberofedges > 0) {
+            myOutputModel->ResizeEdges(anOutput.numberofedges);
+            for(Standard_Integer i = 0; i < anOutput.numberofedges; i++) {
+                Standard_Integer aPoint1 = anOutput.edgelist[2 * i + 0] + 1;
+                Standard_Integer aPoint2 = anOutput.edgelist[2 * i + 1] + 1;
+                myOutputModel->SetEdge(i+1, aPoint1, aPoint2);
+
+                if(anOutput.edgemarkerlist != NULL) {
+                    Standard_Integer aMarker = anOutput.edgemarkerlist[i];
+                    myOutputModel->SetEdgeMarker(i+1, aMarker);
+                }
+            }
         }
+
+        // process holes
+        if(anOutput.numberofholes > 0) {
+            myOutputModel->ResizeHoles(anOutput.numberofholes);
+            for(Standard_Integer i = 0; i < anOutput.numberofholes; i++) {
+                Standard_Real aX = anOutput.holelist[2 * i + 0];
+                Standard_Real aY = anOutput.holelist[2 * i + 1];
+                myOutputModel->SetHole(i+1, aX, aY);
+            }
+        }
+        
+        // process points
+        if(anOutput.numberofpoints > 0) {
+            myOutputModel->ResizePoints(anOutput.numberofpoints, anOutput.numberofpointattributes);
+            for(Standard_Integer i = 0; i < anOutput.numberofpoints; i++) {
+                Standard_Real aX = anOutput.pointlist[2 * i + 0];
+                Standard_Real aY = anOutput.pointlist[2 * i + 1];
+                myOutputModel->SetPoint(i+1, aX, aY);
+
+                if(anOutput.pointattributelist != NULL) {
+                    for(Standard_Integer j = 0; j < anOutput.numberofpointattributes; j++) {
+                        Standard_Real aValue = anOutput.pointattributelist[anOutput.numberofpoints * j + i];
+                        myOutputModel->SetPointAttribute(i+1, j+1, aValue);
+                    }
+                }
+
+                if(anOutput.pointmarkerlist != NULL) {
+                    Standard_Integer aMarker = anOutput.pointmarkerlist[i];
+                    myOutputModel->SetPointMarker(i+1, aMarker);
+                }
+            }
+        }
+        
+        // process regions
+        if(anOutput.numberofregions > 0 ) {
+            myOutputModel->ResizeRegions(anOutput.numberofregions);
+            for(Standard_Integer i = 0; i < anOutput.numberofregions; i++) {
+                Standard_Real aX = anOutput.regionlist[3 * i + 0];
+                Standard_Real aY = anOutput.regionlist[3 * i + 1];
+                Standard_Real aMaxArea = anOutput.regionlist[3 * i + 2];
+                myOutputModel->SetRegion(i+1, aX, aY, aMaxArea);
+            }
+        }
+
+        // process segments
+        if(anOutput.numberofsegments > 0) {
+            myOutputModel->ResizeSegments(anOutput.numberofsegments);
+            for(Standard_Integer i = 0; i < anOutput.numberofsegments; i++) {
+                Standard_Integer aPoint1 = anOutput.segmentlist[2 * i + 0];
+                Standard_Integer aPoint2 = anOutput.segmentlist[2 * i + 1];
+                myOutputModel->SetSegment(i+1, aPoint1, aPoint2);
+
+                if(anOutput.segmentmarkerlist != NULL) {
+                    Standard_Integer aMarker = anOutput.segmentmarkerlist[i];
+                    myOutputModel->SetSegmentMarker(i+1, aMarker);
+                }
+            }
+        }
+
+        // process triangles
+        if(anOutput.numberoftriangles > 0 && anOutput.numberofcorners > 0) {
+            Standard_Boolean hasMaxArea = (anOutput.trianglearealist != NULL);
+            myOutputModel->ResizeTriangles(anOutput.numberoftriangles, 
+                                    anOutput.numberofcorners, 
+                                    anOutput.numberoftriangleattributes,
+                                    hasMaxArea);
+
+            for(Standard_Integer i = 0; i < anOutput.numberoftriangles; i++) {
+                for(Standard_Integer j = 0; j < anOutput.numberofcorners; j++) {
+                    Standard_Integer aPoint = anOutput.trianglelist[anOutput.numberofcorners * i + j];
+                    myOutputModel->SetTriangleCorner(i+1, j+1, aPoint);
+                }
+
+                if(anOutput.numberofpointattributes > 0) {
+                    for(Standard_Integer j = 0; j < anOutput.numberoftriangleattributes; j++) {
+                        Standard_Real aValue = anOutput.triangleattributelist[anOutput.numberoftriangleattributes * i + j];
+                        myOutputModel->SetTriangleAttribute(i+1, j+1, aValue);
+                    }
+                }
+            }
+        }
+
+        if(anOutput.neighborlist != NULL) {
+            for(Standard_Integer i = 0; i < anOutput.numberoftriangles; i++) {
+                for(Standard_Integer j = 0; j < 3; j++) {
+                    Standard_Integer aNeighbor = anOutput.neighborlist[3 * i + j];
+                    myOutputModel->SetTriangleNeighbor(i+1, j+1, aNeighbor);
+                }
+            }
+        }
+
+        if(anOutput.trianglearealist != NULL) {
+            for(Standard_Integer i = 0; i < anOutput.numberoftriangles; i++) {
+                Standard_Real aArea = anOutput.trianglearealist[i];
+                myOutputModel->SetTriangleMaxArea(i+1, aArea);
+            }
+        }
+
+    } catch (const std::exception& e) {
+        myError = Triangle_OutputModelError;
+        return;
     }
 
-    // free allocated memory
-    free(in.pointlist);
-    free(in.segmentlist);
-    free(in.holelist);
-    free(in.regionlist);
 
-    free(out.pointlist);
-    free(out.trianglelist);
-    free(out.segmentlist);
+    // ===
+    // process voronoi model
+    // ===
 
-    //free(vorout.pointlist);
-    //free(vorout.edgelist);
+    try {
+
+        // initialize voronoi model
+        myVoronoiModel = new Triangle_Model();
+    
+        // process edges
+        if(aVoronoi.numberofedges > 0) {
+            myVoronoiModel->ResizeEdges(aVoronoi.numberofedges);
+            for(Standard_Integer i = 0; i < aVoronoi.numberofedges; i++) {
+                Standard_Integer aPoint1 = aVoronoi.edgelist[2 * i + 0];
+                Standard_Integer aPoint2 = aVoronoi.edgelist[2 * i + 1];
+                myVoronoiModel->SetEdge(i+1, aPoint1, aPoint2);
+
+                if(aVoronoi.edgemarkerlist != NULL) {
+                    Standard_Integer aMarker = aVoronoi.edgemarkerlist[i];
+                    myVoronoiModel->SetEdgeMarker(i+1, aMarker);
+                }
+            }
+        }
+
+        // process points
+        if(aVoronoi.numberofpoints > 0) {
+            myVoronoiModel->ResizePoints(aVoronoi.numberofpoints, aVoronoi.numberofpointattributes);
+            for(Standard_Integer i = 0; i < aVoronoi.numberofpoints; i++) {
+                Standard_Real aX = aVoronoi.pointlist[2 * i + 0];
+                Standard_Real aY = aVoronoi.pointlist[2 * i + 1];
+                myVoronoiModel->SetPoint(i+1, aX, aY);
+
+                if(aVoronoi.pointattributelist != NULL) {
+                    for(Standard_Integer j = 0; j < aVoronoi.numberofpointattributes; j++) {
+                        Standard_Real aValue = aVoronoi.pointattributelist[aVoronoi.numberofpoints * j + i];
+                        myVoronoiModel->SetPointAttribute(i+1, j+1, aValue);
+                    }
+                }
+            }
+        }
+    
+        // process norms
+        if(aVoronoi.numberofedges > 0) {
+            myVoronoiModel->ResizeNormals(aVoronoi.numberofedges);
+            for(Standard_Integer i = 0; i < aVoronoi.numberofedges; i++) {
+                Standard_Real aNormX = aVoronoi.normlist[2 * i + 0];
+                Standard_Real aNormY = aVoronoi.normlist[2 * i + 1];
+                myVoronoiModel->SetNormal(i+1, aNormX, aNormY);
+            }
+        }
+
+    } catch (const std::exception& e) {
+        myError = Triangle_OutputModelError;
+        return;
+    }
+
+    // free input memory
+    free(anInput.edgelist);
+    free(anInput.edgemarkerlist);
+    free(anInput.holelist);
+    free(anInput.normlist);
+    free(anInput.pointlist);
+    free(anInput.pointattributelist);
+    free(anInput.pointmarkerlist);
+    free(anInput.regionlist);
+    free(anInput.trianglelist);
+    free(anInput.trianglearealist);
+    free(anInput.triangleattributelist);
+    free(anInput.segmentlist);
+    free(anInput.segmentmarkerlist);
+
+    // free output memory
+    free(anOutput.edgelist);
+    free(anOutput.edgemarkerlist);
+    //free(anOutput.holelist);
+    //free(anOutput.normlist);
+    free(anOutput.pointlist);
+    free(anOutput.pointattributelist);
+    free(anOutput.pointmarkerlist);
+    //free(anOutput.regionlist);
+    free(anOutput.trianglelist);
+    free(anOutput.trianglearealist);
+    free(anOutput.triangleattributelist);
+    free(anOutput.segmentlist);
+    free(anOutput.segmentmarkerlist);
+
+    // free voronoi memory
+    free(aVoronoi.edgelist);
+    free(aVoronoi.pointlist);
+    free(aVoronoi.pointattributelist);
+    free(aVoronoi.normlist);
 
     // update internal state
+    myError = Triangle_NoError;
     myIsDone = Standard_True;
 }
 
 // ============================================================================
 /*!
- *  \brief SetDone()
+    \brief SetInputModel()
 */
 // ============================================================================
-void Triangle_Triangulate::SetDone()
+void Triangle_Triangulate::SetInputModel(const Handle(Triangle_Model)& theInputModel)
 {
-    myIsDone = Standard_True;
+    myInputModel = theInputModel;
 }
 
 // ============================================================================
 /*!
- *  \brief SetNotDone()
-*/
-// ============================================================================
-void Triangle_Triangulate::SetNotDone()
-{
-    myIsDone = Standard_False;
-}
-
-// ============================================================================
-/*!
- *  \brief SetModel()
-*/
-// ============================================================================
-void Triangle_Triangulate::SetModel(const Handle(PSLG_Model)& theModel)
-{
-    myModel = theModel;
-}
-
-// ============================================================================
-/*!
- *  \brief SetParameters()
+    \brief SetParameters()
 */
 // ============================================================================
 void Triangle_Triangulate::SetParameters(const Triangle_Parameters& theParameters)
 {
     myParameters = theParameters;
+}
+
+// ============================================================================
+/*!
+    \brief VoronoiModel()
+*/
+// ============================================================================
+const Handle(Triangle_Model)& Triangle_Triangulate::VoronoiModel() const
+{
+    return myVoronoiModel;
 }

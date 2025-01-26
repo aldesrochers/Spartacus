@@ -20,8 +20,8 @@
 // ============================================================================
 
 
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
+#ifndef __Tetgen_hxx__
+#define __Tetgen_hxx__
 
 // OpenCASCADE
 #include <Standard.hxx>
@@ -29,15 +29,15 @@
 #include <Poly_Triangulation.hxx>
 
 // Spartacus
-#include <Triangle_Model.hxx>
+#include <Tetgen_Model.hxx>
 
 
 // ============================================================================
 /*
-    \brief Triangle
+    \brief Tetgen
 */
 // ============================================================================
-class Triangle
+class Tetgen
 {
 
 public:
@@ -46,9 +46,9 @@ public:
 
 public:
 
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
+    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Tetgen_Model)& theModel);
 
 };
 
 
-#endif // __Triangle_hxx__
+#endif // __Tetgen_hxx__

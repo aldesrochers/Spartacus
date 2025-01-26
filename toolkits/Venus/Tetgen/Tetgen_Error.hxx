@@ -20,35 +20,20 @@
 // ============================================================================
 
 
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
-
-// OpenCASCADE
-#include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
-
-// Spartacus
-#include <Triangle_Model.hxx>
-
+#ifndef __Tetgen_Error_hxx__
+#define __Tetgen_Error_hxx__
 
 // ============================================================================
 /*
-    \brief Triangle
+    \brief Tetgen_Error
 */
 // ============================================================================
-class Triangle
+enum Tetgen_Error
 {
-
-public:
-
-    DEFINE_STANDARD_ALLOC;
-
-public:
-
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
-
+    Tetgen_NoError,
+    Tetgen_InputModelError,
+    Tetgen_OutputModelError,
+    Tetgen_TetrahedralizationError
 };
 
-
-#endif // __Triangle_hxx__
+#endif // __Tetgen_Error_hxx__

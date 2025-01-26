@@ -19,36 +19,42 @@
 //
 // ============================================================================
 
-
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
+#ifndef __MeshBuilder_Study_hxx__
+#define __MeshBuilder_Study_hxx__
 
 // OpenCASCADE
 #include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
+#include <Standard_DefineHandle.hxx>
+#include <Standard_Transient.hxx>
+#include <TDocStd_Application.hxx>
+#include <TDocStd_Document.hxx>
 
-// Spartacus
-#include <Triangle_Model.hxx>
-
+// Handles
+DEFINE_STANDARD_HANDLE(MeshBuilder_Study, Standard_Transient)
 
 // ============================================================================
-/*
-    \brief Triangle
-*/
+/*!
+ *  \brief MeshBuilder_Study
+ */
 // ============================================================================
-class Triangle
+class MeshBuilder_Study : public Standard_Transient
 {
 
 public:
+    // constructors
+    MeshBuilder_Study();
+    // destructors
+    ~MeshBuilder_Study();
 
-    DEFINE_STANDARD_ALLOC;
+private:
+
+    Handle(TDocStd_Application)     myApplication;
+    Handle(TDocStd_Document)        myDocument;
 
 public:
 
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
-
+    DEFINE_STANDARD_RTTIEXT(MeshBuilder_Study, Standard_Transient)
+    
 };
 
-
-#endif // __Triangle_hxx__
+#endif  // __MeshBuilder_Study_hxx__

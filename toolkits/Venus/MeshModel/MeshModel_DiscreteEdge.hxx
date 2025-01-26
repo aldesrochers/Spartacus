@@ -19,29 +19,52 @@
 //
 // ============================================================================
 
-#ifndef __MeshBuilder_Desktop_hxx__
-#define __MeshBuilder_Desktop_hxx__
 
-// Qt
-#include <QMainWindow>
+#ifndef __MeshModel_DiscreteEdge_hxx__
+#define __MeshModel_DiscreteEdge_hxx__
 
+// Spartacus
+#include <MeshModel_DiscreteCurve.hxx>
+#include <MeshModel_DiscreteShape.hxx>
+
+// OpenCascade
+#include <TopoDS_Edge.hxx>
+
+// Handles
+DEFINE_STANDARD_HANDLE(MeshModel_DiscreteEdge, MeshModel_DiscreteShape)
 
 // ============================================================================
-/*!
- *  \brief MeshBuilder_Desktop
- */
+/*
+    \brief MeshModel_DiscreteEdge
+*/
 // ============================================================================
-class MeshBuilder_Desktop : public QMainWindow
+class MeshModel_DiscreteEdge : public MeshModel_DiscreteShape
 {
 
-    Q_OBJECT
+public:
+
+    DEFINE_STANDARD_ALLOC;
 
 public:
     // constructors
-    MeshBuilder_Desktop(QWidget *theParent = 0);
+    Standard_EXPORT MeshModel_DiscreteEdge();
     // destructors
-    ~MeshBuilder_Desktop();
-    
+    Standard_EXPORT ~MeshModel_DiscreteEdge();
+
+public:
+
+    Standard_EXPORT const Handle(MeshModel_DiscreteCurve)&  DiscreteCurve() const;
+    Standard_EXPORT const TopoDS_Edge&                      Edge() const;
+    Standard_EXPORT void                                    SetDiscreteCurve(const Handle(MeshModel_DiscreteCurve)& theDiscreteCurve);
+
+private:
+
+    Handle(MeshModel_DiscreteCurve)     myDiscreteCurve;
+
+public:
+
+    DEFINE_STANDARD_RTTIEXT(MeshModel_DiscreteEdge, MeshModel_DiscreteShape)
+
 };
 
-#endif  // __MeshBuilder_Desktop_hxx__
+#endif // __MeshModel_DiscreteEdge_hxx__

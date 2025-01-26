@@ -20,24 +20,21 @@
 // ============================================================================
 
 
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
-
-// OpenCASCADE
-#include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
+#ifndef __MeshModel_Model_hxx__
+#define __MeshModel_Model_hxx__
 
 // Spartacus
-#include <Triangle_Model.hxx>
+#include <MeshModel_DiscreteShape.hxx>
 
+// Handles
+DEFINE_STANDARD_HANDLE(MeshModel_Model, MeshModel_DiscreteShape)
 
 // ============================================================================
 /*
-    \brief Triangle
+    \brief MeshModel_Model
 */
 // ============================================================================
-class Triangle
+class MeshModel_Model : public MeshModel_DiscreteShape
 {
 
 public:
@@ -45,10 +42,15 @@ public:
     DEFINE_STANDARD_ALLOC;
 
 public:
+    // constructors
+    Standard_EXPORT MeshModel_Model();
+    // destructors
+    Standard_EXPORT ~MeshModel_Model();
 
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
+public:
+
+    DEFINE_STANDARD_RTTIEXT(MeshModel_Model, MeshModel_DiscreteShape)
 
 };
 
-
-#endif // __Triangle_hxx__
+#endif // __MeshModel_Model_hxx__

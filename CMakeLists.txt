@@ -25,6 +25,15 @@ cmake_policy(SET CMP0167 NEW)
 cmake_policy(SET CMP0115 NEW)
 
 
+# check for project cmake files
+if(EXISTS ${PROJECT_SOURCE_DIR}/cmakes)
+    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmakes)
+    include(SpartacusMacros)
+else()
+    message(FATAL_ERROR "Could not locate project cmake files.")
+endif()
+
+
 find_package(ADIOS2 REQUIRED)
 find_package(Boost REQUIRED)
 if(NOT WIN32)

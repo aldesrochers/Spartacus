@@ -19,14 +19,17 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
 
+#ifndef __Tetgen_Array1OfPolygon_hxx__
+#define __Tetgen_Array1OfPolygon_hxx__
 
+// OpenCASCADE
+#include <NCollection_Array1.hxx>
 
-int main(int argc, char *argv[])
-{
+// Spartacus
+#include <Tetgen_Polygon.hxx>
 
- 
+// Type definition
+typedef NCollection_Array1<Handle(Tetgen_Polygon)>  Tetgen_Array1OfPolygon;
 
-}
+#endif // __Tetgen_Array1OfPolygon_hxx__

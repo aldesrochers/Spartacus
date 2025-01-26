@@ -19,36 +19,30 @@
 //
 // ============================================================================
 
+#ifndef __MeshBuilder_Explorer_hxx__
+#define __MeshBuilder_Explorer_hxx__
 
-#ifndef __Triangle_hxx__
-#define __Triangle_hxx__
-
-// OpenCASCADE
-#include <Standard.hxx>
-#include <Standard_DefineAlloc.hxx>
-#include <Poly_Triangulation.hxx>
-
-// Spartacus
-#include <Triangle_Model.hxx>
+// Qt
+#include <QTreeView>
 
 
 // ============================================================================
-/*
-    \brief Triangle
-*/
+/*!
+ *  \brief MeshBuilder_Explorer
+ */
 // ============================================================================
-class Triangle
+class MeshBuilder_Explorer : public QTreeView
 {
 
-public:
-
-    DEFINE_STANDARD_ALLOC;
+    Q_OBJECT
 
 public:
+    // constructors
+    MeshBuilder_Explorer(QWidget *theParent = 0);
+    // destructors
+    ~MeshBuilder_Explorer();
 
-    static Standard_EXPORT Handle(Poly_Triangulation)   Triangulation(const Handle(Triangle_Model)& theModel);
-
+    
 };
 
-
-#endif // __Triangle_hxx__
+#endif  // __MeshBuilder_Explorer_hxx__

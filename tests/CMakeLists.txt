@@ -19,3 +19,8 @@
 #
 # =============================================================================
 
+add_executable(Test_Tetgen Test_Tetgen.cxx)
+target_link_libraries(Test_Tetgen Minerva)
+
+add_executable(Test_Triangle Test_Triangle.cxx)
+target_link_libraries(Test_Triangle Venus)
